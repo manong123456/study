@@ -1,0 +1,14 @@
+[Unit]
+Description=CapeOS Message Bus
+After=capeos-gateway.service
+Requires=capeos-gateway.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/capeos-message-bus
+Restart=always
+RestartSec=3
+Environment=RUST_LOG=info
+
+[Install]
+WantedBy=multi-user.target

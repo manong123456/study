@@ -1,0 +1,14 @@
+[server]
+gateway_port = 80
+run_mode = "release"
+
+[paths]
+config = "/etc/capeos"
+data = "/var/lib/capeos"
+log = "/var/log/capeos"
+runtime = "/var/run/capeos"
+db = "/var/lib/capeos/db"
+
+[auth]
+token_expiry_hours = 3
+refresh_expiry_days = 7

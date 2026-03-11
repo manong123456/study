@@ -1,0 +1,14 @@
+[Unit]
+Description=CapeOS Local Storage
+After=capeos-message-bus.service
+Requires=capeos-message-bus.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/capeos-local-storage
+Restart=always
+RestartSec=3
+Environment=RUST_LOG=info
+
+[Install]
+WantedBy=multi-user.target

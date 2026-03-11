@@ -1,0 +1,23 @@
+[package]
+name = "capeos-message-bus"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "capeos-message-bus"
+path = "src/main.rs"
+
+[dependencies]
+capeos-common = { workspace = true }
+axum = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tower-http = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow = { workspace = true }
+dashmap = { workspace = true }
+uuid = { workspace = true }
+tower = { version = "0.5", default-features = false }
