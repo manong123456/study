@@ -1,199 +1,196 @@
-# CapeOS ÏµÍ³»ù´¡Ä£¿éÉè¼ÆÎÄµµ
+# CapeOS ç³»ç»ŸåŸºç¡€æ¨¡å—è®¾è®¡æ–‡æ¡£
 
-> **²Î¿¼ÊµÏÖ**: CasaOS (https://github.com/IceWhaleTech/CasaOS.git, commit `63f0148`)  
-> **²Î¿¼¹«¹²¿â**: CasaOS-Common (https://github.com/IceWhaleTech/CasaOS-Common.git, commit `909dcbd`)  
-> **¼Ü¹¹²Î¿¼**: https://wiki.casaos.io/en/contribute/development  
-> **±àĞ´ÈÕÆÚ**: 2026-03-11
-
----
-
-## Ä¿Â¼
-
-1. [ÏîÄ¿¸ÅÊö](#1-ÏîÄ¿¸ÅÊö)
-2. [ÏµÍ³¼Ü¹¹](#2-ÏµÍ³¼Ü¹¹)
-3. [ÏµÍ³¹¦ÄÜÄ£¿é×ÜÀÀ](#3-ÏµÍ³¹¦ÄÜÄ£¿é×ÜÀÀ)
-4. [¸÷¹¦ÄÜÄ£¿éÏêÏ¸½éÉÜ](#4-¸÷¹¦ÄÜÄ£¿éÏêÏ¸½éÉÜ)
-5. [API ½Ó¿ÚÊáÀí](#5-api-½Ó¿ÚÊáÀí)
-6. [´úÂë¿ò¼Ü½á¹¹](#6-´úÂë¿ò¼Ü½á¹¹)
-7. [ºó¶ËÊı¾İ¿âÊµÏÖ](#7-ºó¶ËÊı¾İ¿âÊµÏÖ)
+> **å‚è€ƒå®ç°**: CasaOS (https://github.com/IceWhaleTech/CasaOS.git, commit `63f0148`)
+> **å‚è€ƒå…¬å…±åº“**: CasaOS-Common (https://github.com/IceWhaleTech/CasaOS-Common.git, commit `909dcbd`)
+> **æ¶æ„å‚è€ƒ**: https://wiki.casaos.io/en/contribute/development
+> **ç¼–å†™æ—¥æœŸ**: 2026-03-11
 
 ---
 
-## 1. ÏîÄ¿¸ÅÊö
+## ç›®å½•
 
-CapeOS ¶¨ÒåÎªÔËĞĞ±ßÔµ AI Æ½Ì¨µÄ²Ù×÷ÏµÍ³£¬±ßÔµ AI Ê±´úµÄµ×²ã¼Ü¹¹£¬ÊµÏÖÁË¶Ë²àÎïÁªÍøµÄÉî¶È¼¯³ÉÓë±¾µØ»¯Á¬½ÓºÍ¿ØÖÆ¡£Í¨¹ı¿ª·ÅµÄÏµÍ³¼¶À©Õ¹ÓëºËĞÄÖ´ĞĞÒıÇæ£¬ÖÂÁ¦ÓÚ½µµÍ AI ¿ª·¢ÃÅ¼÷£¬ÎªÓÃ»§´òÔìĞÔÄÜ×¿Ô½µÄ¶Ë²àÓ¦ÓÃÖĞ¼ä²ã¡£
+1. [é¡¹ç›®æ¦‚è¿°](#1-é¡¹ç›®æ¦‚è¿°)
+2. [ç³»ç»Ÿæ¶æ„](#2-ç³»ç»Ÿæ¶æ„)
+3. [ç³»ç»ŸåŠŸèƒ½æ¨¡å—æ€»è§ˆ](#3-ç³»ç»ŸåŠŸèƒ½æ¨¡å—æ€»è§ˆ)
+4. [å„åŠŸèƒ½æ¨¡å—è¯¦ç»†ä»‹ç»](#4-å„åŠŸèƒ½æ¨¡å—è¯¦ç»†ä»‹ç»)
+5. [API æ¥å£æ¢³ç†](#5-api-æ¥å£æ¢³ç†)
+6. [ä»£ç æ¡†æ¶ç»“æ„](#6-ä»£ç æ¡†æ¶ç»“æ„)
+7. [åç«¯æ•°æ®åº“å®ç°](#7-åç«¯æ•°æ®åº“å®ç°)
 
-CapeOS ²ÉÓÃ **Î¢·şÎñÍø¹Ø¼Ü¹¹**£¬ÓÉ¶à¸ö¶ÀÁ¢µÄ Rust ·şÎñ×é³É£¬Í¨¹ı CapeOS-Gateway Í³Ò»¶ÔÍâÌá¹©·şÎñ£¬Í¨¹ı CapeOS-MessageBus ÊµÏÖ¿ç·şÎñÊÂ¼şÍ¨ĞÅ¡£Ç°ºó¶Ë¾ùÊ¹ÓÃ Rust ÊµÏÖ£¬Ç°¶Ë±àÒëÎª WebAssembly ÔËĞĞÔÚä¯ÀÀÆ÷ÖĞ£¬ºó¶ËÒÔÔ­Éú¶ş½øÖÆÔËĞĞ¡£
+---
 
-### ºËĞÄ¼¼ÊõÕ»
+## 1. é¡¹ç›®æ¦‚è¿°
 
-| Àà±ğ | ¼¼ÊõÑ¡ĞÍ | Crate / ¹¤¾ß | Ğí¿ÉÖ¤ |
+CapeOS å®šä¹‰ä¸ºè¿è¡Œè¾¹ç¼˜ AI å¹³å°çš„æ“ä½œç³»ç»Ÿï¼Œè¾¹ç¼˜ AI æ—¶ä»£çš„åº•å±‚æ¶æ„ï¼Œå®ç°äº†ç«¯ä¾§ç‰©è”ç½‘çš„æ·±åº¦é›†æˆä¸æœ¬åœ°åŒ–è¿æ¥å’Œæ§åˆ¶ã€‚é€šè¿‡å¼€æ”¾çš„ç³»ç»Ÿçº§æ‰©å±•ä¸æ ¸å¿ƒæ‰§è¡Œå¼•æ“ï¼Œè‡´åŠ›äºé™ä½ AI å¼€å‘é—¨æ§›ï¼Œä¸ºç”¨æˆ·æ‰“é€ æ€§èƒ½å“è¶Šçš„ç«¯ä¾§åº”ç”¨ä¸­é—´å±‚ã€‚
+
+CapeOS é‡‡ç”¨ **å¾®æœåŠ¡ç½‘å…³æ¶æ„**ï¼Œç”±å¤šä¸ªç‹¬ç«‹çš„ Rust æœåŠ¡ç»„æˆï¼Œé€šè¿‡ CapeOS-Gateway ç»Ÿä¸€å¯¹å¤–æä¾›æœåŠ¡ï¼Œé€šè¿‡ CapeOS-MessageBus å®ç°è·¨æœåŠ¡äº‹ä»¶é€šä¿¡ã€‚å‰åç«¯å‡ä½¿ç”¨ Rust å®ç°ï¼Œå‰ç«¯ç¼–è¯‘ä¸º WebAssembly è¿è¡Œåœ¨æµè§ˆå™¨ä¸­ï¼Œåç«¯ä»¥åŸç”ŸäºŒè¿›åˆ¶è¿è¡Œã€‚
+
+### æ ¸å¿ƒæŠ€æœ¯æ ˆ
+
+| ç±»åˆ« | æŠ€æœ¯é€‰å‹ | Crate / å·¥å…· | è®¸å¯è¯ |
 |------|----------|-------------|--------|
-| ±à³ÌÓïÑÔ | Rust (Edition 2024) | rustc 1.85+ | ¡ª |
-| Ç°¶Ë¿ò¼Ü | Leptos (È«Õ» Rust, SSR + WASM) | `leptos` 0.7+ | MIT |
-| Ç°¶Ë UI ×é¼ş | Thaw UI | `thaw` | MIT |
-| Ç°¶ËÑùÊ½ | TailwindCSS | `tailwindcss` | MIT |
-| Ç°¶Ë¹¹½¨ | cargo-leptos | `cargo-leptos` | MIT |
-| ºó¶Ë Web ¿ò¼Ü | Axum | `axum` 0.8+ | MIT |
-| Òì²½ÔËĞĞÊ± | Tokio | `tokio` | MIT |
-| Êı¾İ¿â | SQLite (rusqlite) | `rusqlite` 0.38+ | MIT |
-| Êı¾İ¿âÒì²½·â×° | tokio-rusqlite | `tokio-rusqlite` 0.7+ | MIT |
-| Êı¾İ¿âÇ¨ÒÆ | rusqlite_migration | `rusqlite_migration` | Apache-2.0 |
-| API ÎÄµµÉú³É | utoipa + utoipa-axum | `utoipa` 5.0+ | MIT/Apache-2.0 |
-| ĞòÁĞ»¯ | serde + serde_json | `serde` | MIT/Apache-2.0 |
-| JWT ÈÏÖ¤ | jsonwebtoken + p256 (ECDSA) | `jsonwebtoken`, `p256` | MIT |
-| ÏµÍ³ĞÅÏ¢²É¼¯ | sysinfo | `sysinfo` | MIT |
-| systemd ½»»¥ | zbus_systemd | `zbus_systemd` | MIT |
-| ¶¨Ê±ÈÎÎñ | tokio-cron-scheduler | `tokio-cron-scheduler` | MIT/Apache-2.0 |
-| HTTP ¿Í»§¶Ë | reqwest | `reqwest` | MIT/Apache-2.0 |
-| ÄÚ´æ»º´æ | moka | `moka` | MIT/Apache-2.0 |
-| ÈÕÖ¾/×·×Ù | tracing + tracing-subscriber | `tracing` | MIT |
-| ÎÄ¼şÑ¹Ëõ | zip / tar / flate2 | `zip`, `tar`, `flate2` | MIT |
-| Í¼Æ¬´¦Àí | image | `image` | MIT/Apache-2.0 |
+| ç¼–ç¨‹è¯­è¨€ | Rust (Edition 2024) | rustc 1.85+ | -- |
+| å‰ç«¯æ¡†æ¶ | Leptos (å…¨æ ˆ Rust, SSR + WASM) | `leptos` 0.7+ | MIT |
+| å‰ç«¯ UI ç»„ä»¶ | Thaw UI | `thaw` | MIT |
+| å‰ç«¯æ ·å¼ | TailwindCSS | `tailwindcss` | MIT |
+| å‰ç«¯æ„å»º | cargo-leptos | `cargo-leptos` | MIT |
+| åç«¯ Web æ¡†æ¶ | Axum | `axum` 0.8+ | MIT |
+| å¼‚æ­¥è¿è¡Œæ—¶ | Tokio | `tokio` | MIT |
+| æ•°æ®åº“ | SQLite (rusqlite) | `rusqlite` 0.38+ | MIT |
+| æ•°æ®åº“å¼‚æ­¥å°è£… | tokio-rusqlite | `tokio-rusqlite` 0.7+ | MIT |
+| æ•°æ®åº“è¿ç§» | rusqlite_migration | `rusqlite_migration` | Apache-2.0 |
+| API æ–‡æ¡£ç”Ÿæˆ | utoipa + utoipa-axum | `utoipa` 5.0+ | MIT/Apache-2.0 |
+| åºåˆ—åŒ– | serde + serde_json | `serde` | MIT/Apache-2.0 |
+| JWT è®¤è¯ | jsonwebtoken + p256 (ECDSA) | `jsonwebtoken`, `p256` | MIT |
+| ç³»ç»Ÿä¿¡æ¯é‡‡é›† | sysinfo | `sysinfo` | MIT |
+| systemd äº¤äº’ | zbus_systemd | `zbus_systemd` | MIT |
+| å®šæ—¶ä»»åŠ¡ | tokio-cron-scheduler | `tokio-cron-scheduler` | MIT/Apache-2.0 |
+| HTTP å®¢æˆ·ç«¯ | reqwest | `reqwest` | MIT/Apache-2.0 |
+| å†…å­˜ç¼“å­˜ | moka | `moka` | MIT/Apache-2.0 |
+| æ—¥å¿—/è¿½è¸ª | tracing + tracing-subscriber | `tracing` | MIT |
+| æ–‡ä»¶å‹ç¼© | zip / tar / flate2 | `zip`, `tar`, `flate2` | MIT |
+| å›¾ç‰‡å¤„ç† | image | `image` | MIT/Apache-2.0 |
 | SMB/CIFS | pavao | `pavao` | LGPL-3.0 |
-| ÔÆ´æ´¢ OAuth | oauth2 | `oauth2` | MIT/Apache-2.0 |
-| Docker ¹ÜÀí | bollard | `bollard` | Apache-2.0 |
-| ·´Ïò´úÀí | axum-reverse-proxy | `axum-reverse-proxy` | MIT |
-| ÅäÖÃÎÄ¼ş | TOML | `toml`, `serde` | MIT/Apache-2.0 |
-| ÃÜÂë¹şÏ£ | argon2 | `argon2` | MIT/Apache-2.0 |
+| äº‘å­˜å‚¨ OAuth | oauth2 | `oauth2` | MIT/Apache-2.0 |
+| Docker ç®¡ç† | bollard | `bollard` | Apache-2.0 |
+| åå‘ä»£ç† | axum-reverse-proxy | `axum-reverse-proxy` | MIT |
+| é…ç½®æ–‡ä»¶ | TOML | `toml`, `serde` | MIT/Apache-2.0 |
+| å¯†ç å“ˆå¸Œ | argon2 | `argon2` | MIT/Apache-2.0 |
 | UUID | uuid | `uuid` | MIT/Apache-2.0 |
-| ÏûÏ¢×ÜÏß | Tokio broadcast + Axum WebSocket | `tokio::sync::broadcast` | MIT |
-| ´ÅÅÌºÏ²¢ | MergerFS (Íâ²¿½ø³Ìµ÷ÓÃ) | `tokio::process` | MIT |
-| ·şÎñ¹ÜÀí | systemd | `zbus_systemd` | MIT |
-| ¹¹½¨/·¢²¼ | cargo + cross | `cross` | MIT/Apache-2.0 |
-| Ä¿±ê¼Ü¹¹ | amd64 / arm64 / armv7 | ¡ª | ¡ª |
+| æ¶ˆæ¯æ€»çº¿ | Tokio broadcast + Axum WebSocket | `tokio::sync::broadcast` | MIT |
+| ç£ç›˜åˆå¹¶ | MergerFS (å¤–éƒ¨è¿›ç¨‹è°ƒç”¨) | `tokio::process` | MIT |
+| æœåŠ¡ç®¡ç† | systemd | `zbus_systemd` | MIT |
+| æ„å»º/å‘å¸ƒ | cargo + cross | `cross` | MIT/Apache-2.0 |
+| ç›®æ ‡æ¶æ„ | amd64 / arm64 / armv7 | -- | -- |
 
 ---
 
-## 2. ÏµÍ³¼Ü¹¹
+## 2. ç³»ç»Ÿæ¶æ„
 
-### 2.1 ÕûÌå¼Ü¹¹Í¼
+### 2.1 æ•´ä½“æ¶æ„å›¾
 
-CapeOS ²ÉÓÃÄ£¿é»¯Î¢·şÎñ¼Ü¹¹£¬ËùÓĞ·şÎñÍ¨¹ı Gateway Í³Ò»¶ÔÍâ±©Â¶£¬Í¨¹ı MessageBus ÊµÏÖÊÂ¼şÇı¶¯Í¨ĞÅ¡£Ç°¶ËÊ¹ÓÃ Leptos ±àÒëÎª WASM£¬Í¨¹ı SSR + Hydration Ä£Ê½ÔÚ·şÎñ¶ËäÖÈ¾ºó½»ÓÉä¯ÀÀÆ÷½Ó¹Ü¡£
+CapeOS é‡‡ç”¨æ¨¡å—åŒ–å¾®æœåŠ¡æ¶æ„ï¼Œæ‰€æœ‰æœåŠ¡é€šè¿‡ Gateway ç»Ÿä¸€å¯¹å¤–æš´éœ²ï¼Œé€šè¿‡ MessageBus å®ç°äº‹ä»¶é©±åŠ¨é€šä¿¡ã€‚å‰ç«¯ä½¿ç”¨ Leptos ç¼–è¯‘ä¸º WASMï¼Œé€šè¿‡ SSR + Hydration æ¨¡å¼åœ¨æœåŠ¡ç«¯æ¸²æŸ“åäº¤ç”±æµè§ˆå™¨æ¥ç®¡ã€‚
 
-```
-©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦                            ÓÃ»§ä¯ÀÀÆ÷                                             ©¦
-©¦                  Leptos WASM (SSR Hydration ºóÓÉä¯ÀÀÆ÷½Ó¹Ü)                        ©¦
-©¦                  UI ×é¼ş: Thaw UI + TailwindCSS                                  ©¦
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-                                   ©¦ HTTP / WebSocket / Server Functions
-                                   ¨‹
-©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦                                                                                  ©¦
-©¦                        CapeOS-Gateway  (¶Ë¿Ú 80)                                 ©¦
-©¦                     Î¨Ò»¶ÔÍâ±©Â¶µÄÍøÂçÈë¿Ú / ·´Ïò´úÀí                                ©¦
-©¦                     ÊµÏÖ: Axum + axum-reverse-proxy                               ©¦
-©¦                                                                                  ©¦
-©¦    ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´   ©¦
-©¦    ©¦                       ¶¯Ì¬Â·ÓÉ±í (RwLock<HashMap>)                      ©¦   ©¦
-©¦    ©¦                                                                         ©¦   ©¦
-©¦    ©¦  /v1/user_service/*   ©¤©¤¡ú  http://127.0.0.1:<port_A>                   ©¦   ©¦
-©¦    ©¦  /v1/local_storage/*  ©¤©¤¡ú  http://127.0.0.1:<port_B>                   ©¦   ©¦
-©¦    ©¦  /v1/app_management/* ©¤©¤¡ú  http://127.0.0.1:<port_C>                   ©¦   ©¦
-©¦    ©¦  /v1/message_bus/*    ©¤©¤¡ú  http://127.0.0.1:<port_D>                   ©¦   ©¦
-©¦    ©¦  /v1/sys, /v1/file... ©¤©¤¡ú  http://127.0.0.1:<port_E>  (CapeOSÖ÷·şÎñ)   ©¦   ©¦
-©¦    ©¦  /v1/capeos/*         ©¤©¤¡ú  http://127.0.0.1:<port_E>                   ©¦   ©¦
-©¦    ©¦  /v1/file             ©¤©¤¡ú  http://127.0.0.1:<port_E>                   ©¦   ©¦
-©¦    ©¦                                                                         ©¦   ©¦
-©¦    ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼   ©¦
-©¦                                                                                  ©¦
-©¦    Management API (ÄÚ²¿¶Ë¿Ú£¬½ö localhost):                                       ©¦
-©¦      POST /v1/gateway/routes   ¡û ¸÷·şÎñÆô¶¯Ê±×¢²áÂ·ÓÉ                              ©¦
-©¦      GET  /v1/gateway/port     ¡û ²éÑ¯Íø¹Ø¶Ë¿Ú                                    ©¦
-©¦      PUT  /v1/gateway/port     ¡û ĞŞ¸ÄÍø¹Ø¶Ë¿Ú                                    ©¦
-©¦                                                                                  ©¦
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-          ©¦              ©¦             ©¦              ©¦              ©¦
-          ¨‹              ¨‹             ¨‹              ¨‹              ¨‹
-©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´ ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´ ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´ ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´ ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦  CapeOS      ©¦ ©¦ UserService  ©¦ ©¦ Local      ©¦ ©¦ App        ©¦ ©¦  MessageBus      ©¦
-©¦  Ö÷·şÎñ       ©¦ ©¦              ©¦ ©¦ Storage    ©¦ ©¦ Management ©¦ ©¦                  ©¦
-©¦ (Leptos+Axum)©¦ ©¦ (Axum)       ©¦ ©¦ (Axum)     ©¦ ©¦ (Axum)     ©¦ ©¦ (Axum)           ©¦
-©¦              ©¦ ©¦              ©¦ ©¦            ©¦ ©¦            ©¦ ©¦                  ©¦
-©¦ Ç°¶ËSSR+WASM ©¦ ©¦ ÓÃ»§ÈÏÖ¤      ©¦ ©¦ ´ÅÅÌ¹ÜÀí   ©¦ ©¦ DockerÓ¦ÓÃ  ©¦ ©¦  ÊÂ¼ş/¶¯×÷        ©¦
-©¦ ÎÄ¼ş¹ÜÀí     ©¦ ©¦ JWTÇ©·¢(p256)©¦ ©¦ USB¹ÜÀí    ©¦ ©¦ Ó¦ÓÃÉÌµê    ©¦ ©¦  ·¢²¼/¶©ÔÄ        ©¦
-©¦ ÏµÍ³¼à¿Ø     ©¦ ©¦ JWKS¶Ëµã     ©¦ ©¦ MergerFS   ©¦ ©¦ ÈİÆ÷ÉúÃüÖÜÆÚ ©¦ ©¦                  ©¦
-©¦ Samba¹²Ïí    ©¦ ©¦ ÕËºÅ¹ÜÀí      ©¦ ©¦ ·ÖÇø¹ÜÀí    ©¦ ©¦ (bollard)  ©¦ ©¦  REST + WS       ©¦
-©¦ ÔÆ´æ´¢¹ÒÔØ   ©¦ ©¦ (argon2)     ©¦ ©¦            ©¦ ©¦            ©¦ ©¦  + Unix Socket   ©¦
-©¦ ZeroTier     ©¦ ©¦              ©¦ ©¦            ©¦ ©¦            ©¦ ©¦                  ©¦
-©¦              ©¦ ©¦              ©¦ ©¦            ©¦ ©¦            ©¦ ©¦                  ©¦
-©¦ 127.0.0.1:? ©¦ ©¦ 127.0.0.1:? ©¦ ©¦127.0.0.1:?©¦ ©¦127.0.0.1:?©¦ ©¦ 127.0.0.1:?      ©¦
-©¦              ©¦ ©¦              ©¦ ©¦            ©¦ ©¦            ©¦ ©¦                  ©¦
-©¦ DB:rusqlite  ©¦ ©¦ DB:rusqlite  ©¦ ©¦DB:rusqlite ©¦ ©¦DB:rusqlite ©¦ ©¦ (ÄÚ´æ´æ´¢)        ©¦
-©¸©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¼ ©¸©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¼ ©¸©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¼ ©¸©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¼ ©¸©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-       ©¦                ©¦               ©¦              ©¦                 ©¦
-       ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ø©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ø©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ø©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-                                        ©¦
-                              ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤¨‹©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-                              ©¦  capeos-common     ©¦
-                              ©¦  (Cargo crate)     ©¦
-                              ©¦                    ©¦
-                              ©¦ ? Gateway ¿Í»§¶Ë    ©¦ reqwest ¡ú POST /v1/gateway/routes
-                              ©¦ ? JWT ÑéÖ¤¹¤¾ß      ©¦ jsonwebtoken + p256
-                              ©¦ ? MessageBus ¿Í»§¶Ë ©¦ tokio UnixStream
-                              ©¦ ? ·şÎñ·¢ÏÖ          ©¦ ¶ÁÈ¡ /var/run/capeos/*.url
-                              ©¦ ? ¹²ÏíÄ£ĞÍ/¹¤¾ß      ©¦ serde models
-                              ©¦ ? Axum ÖĞ¼ä¼ş       ©¦ tower-http (CORS/Compression)
-                              ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
+```text
++==================================================================================+
+|                            ç”¨æˆ·æµè§ˆå™¨                                             |
+|                  Leptos WASM (SSR Hydration åç”±æµè§ˆå™¨æ¥ç®¡)                        |
+|                  UI ç»„ä»¶: Thaw UI + TailwindCSS                                  |
++====================================+=============================================+
+                                     | HTTP / WebSocket / Server Functions
+                                     v
++==================================================================================+
+|                                                                                  |
+|                        CapeOS-Gateway  (ç«¯å£ 80)                                 |
+|                     å”¯ä¸€å¯¹å¤–æš´éœ²çš„ç½‘ç»œå…¥å£ / åå‘ä»£ç†                              |
+|                     å®ç°: Axum + axum-reverse-proxy                               |
+|                                                                                  |
+|    +-------------------------------------------------------------------------+   |
+|    |                       åŠ¨æ€è·¯ç”±è¡¨ (RwLock<HashMap>)                       |   |
+|    |                                                                         |   |
+|    |  /v1/user_service/*   --> http://127.0.0.1:<port_A>                     |   |
+|    |  /v1/local_storage/*  --> http://127.0.0.1:<port_B>                     |   |
+|    |  /v1/app_management/* --> http://127.0.0.1:<port_C>                     |   |
+|    |  /v1/message_bus/*    --> http://127.0.0.1:<port_D>                     |   |
+|    |  /v1/sys, /v1/file... --> http://127.0.0.1:<port_E>  (CapeOSä¸»æœåŠ¡)    |   |
+|    |  /v1/capeos/*         --> http://127.0.0.1:<port_E>                     |   |
+|    |  /v1/file             --> http://127.0.0.1:<port_E>                     |   |
+|    +-------------------------------------------------------------------------+   |
+|                                                                                  |
+|    Management API (å†…éƒ¨ç«¯å£, ä»… localhost):                                      |
+|      POST /v1/gateway/routes   <-- å„æœåŠ¡å¯åŠ¨æ—¶æ³¨å†Œè·¯ç”±                           |
+|      GET  /v1/gateway/port     <-- æŸ¥è¯¢ç½‘å…³ç«¯å£                                  |
+|      PUT  /v1/gateway/port     <-- ä¿®æ”¹ç½‘å…³ç«¯å£                                  |
+|                                                                                  |
++==================================================================================+
+          |              |             |              |              |
+          v              v             v              v              v
++--------------+ +--------------+ +------------+ +------------+ +------------------+
+| CapeOS       | | UserService  | | Local      | | App        | | MessageBus       |
+| ä¸»æœåŠ¡       | |              | | Storage    | | Management | |                  |
+| (Leptos+Axum)| | (Axum)       | | (Axum)     | | (Axum)     | | (Axum)           |
+|              | |              | |            | |            | |                  |
+| å‰ç«¯SSR+WASM | | ç”¨æˆ·è®¤è¯     | | ç£ç›˜ç®¡ç†   | | Dockeråº”ç”¨ | | äº‹ä»¶/åŠ¨ä½œ        |
+| æ–‡ä»¶ç®¡ç†     | | JWTç­¾å‘(p256)| | USBç®¡ç†    | | åº”ç”¨å•†åº—   | | å‘å¸ƒ/è®¢é˜…        |
+| ç³»ç»Ÿç›‘æ§     | | JWKSç«¯ç‚¹     | | MergerFS   | | å®¹å™¨ç”Ÿå‘½   | |                  |
+| Sambaå…±äº«    | | è´¦å·ç®¡ç†     | | åˆ†åŒºç®¡ç†   | | å‘¨æœŸç®¡ç†   | | REST + WS        |
+| äº‘å­˜å‚¨æŒ‚è½½   | | (argon2)     | |            | | (bollard)  | | + Unix Socket    |
+|              | |              | |            | |            | |                  |
+| 127.0.0.1:? | | 127.0.0.1:? | |127.0.0.1:? | |127.0.0.1:?| | 127.0.0.1:?      |
+| DB:rusqlite  | | DB:rusqlite  | |DB:rusqlite | |DB:rusqlite | | (å†…å­˜å­˜å‚¨)       |
++--------------+ +--------------+ +------------+ +------------+ +------------------+
+       |                |               |              |                 |
+       +----------------+---------------+--------------+-----------------+
+                                        |
+                              +---------v----------+
+                              |  capeos-common     |
+                              |  (Cargo crate)     |
+                              |                    |
+                              | - Gateway å®¢æˆ·ç«¯   | reqwest -> POST /v1/gateway/routes
+                              | - JWT éªŒè¯å·¥å…·     | jsonwebtoken + p256
+                              | - MessageBus å®¢æˆ·ç«¯| tokio UnixStream
+                              | - æœåŠ¡å‘ç°         | è¯»å– /var/run/capeos/*.url
+                              | - å…±äº«æ¨¡å‹/å·¥å…·    | serde models
+                              | - Axum ä¸­é—´ä»¶      | tower-http (CORS/Compression)
+                              +--------------------+
 ```
 
-### 2.2 Î¢·şÎñ×é¼şÁĞ±í
+### 2.2 å¾®æœåŠ¡ç»„ä»¶åˆ—è¡¨
 
-| ·şÎñ | Cargo crate Ãû | ¶ş½øÖÆÎÄ¼ş | ºËĞÄÒÀÀµ | Ö°Ôğ |
+| æœåŠ¡ | Cargo crate å | äºŒè¿›åˆ¶æ–‡ä»¶ | æ ¸å¿ƒä¾èµ– | èŒè´£ |
 |------|----------------|-----------|----------|------|
-| **CapeOS-Gateway** | `capeos-gateway` | `capeos-gateway` | axum, axum-reverse-proxy | ·´Ïò´úÀíÍø¹Ø£¬Î¨Ò»¶ÔÍâ±©Â¶¶Ë¿Ú(80)£¬¶¯Ì¬Â·ÓÉ |
-| **CapeOS** (Ö÷·şÎñ) | `capeos-main` | `capeos` | leptos, leptos_axum, axum, rusqlite, sysinfo | Ç°¶Ë SSR+WASM, ÎÄ¼ş¹ÜÀí, ÏµÍ³¼à¿Ø, Samba, ÔÆ´æ´¢ |
-| **CapeOS-UserService** | `capeos-user-service` | `capeos-user-service` | axum, rusqlite, jsonwebtoken, p256, argon2 | ÓÃ»§×¢²á/µÇÂ¼, JWT Ç©·¢, JWKS ¹«Ô¿ |
-| **CapeOS-LocalStorage** | `capeos-local-storage` | `capeos-local-storage` | axum, sysinfo, tokio::process | ´ÅÅÌ¹ÜÀí, USB ¹ÒÔØ, MergerFS |
-| **CapeOS-AppManagement** | `capeos-app-management` | `capeos-app-management` | axum, bollard, rusqlite | Docker Ó¦ÓÃÉúÃüÖÜÆÚ, Ó¦ÓÃÉÌµê |
-| **CapeOS-MessageBus** | `capeos-message-bus` | `capeos-message-bus` | axum, tokio::sync::broadcast | ÊÂ¼ş/¶¯×÷ ·¢²¼¶©ÔÄ, WebSocket ÍÆËÍ |
-| **CapeOS-Common** | `capeos-common` | (¿â crate£¬ÎŞ¶ş½øÖÆ) | reqwest, jsonwebtoken, serde, tower-http | ¹²Ïí¿â£ºGateway ¿Í»§¶Ë, JWT, ÖĞ¼ä¼ş, ·şÎñ·¢ÏÖ |
-| **CapeOS-CLI** | `capeos-cli` | `capeos-cli` | clap, reqwest | ÃüÁîĞĞÕï¶ÏºÍ²âÊÔ¹¤¾ß |
+| **CapeOS-Gateway** | `capeos-gateway` | `capeos-gateway` | axum, axum-reverse-proxy | åå‘ä»£ç†ç½‘å…³, å”¯ä¸€å¯¹å¤–æš´éœ²ç«¯å£(80), åŠ¨æ€è·¯ç”± |
+| **CapeOS** (ä¸»æœåŠ¡) | `capeos-main` | `capeos` | leptos, leptos_axum, axum, rusqlite, sysinfo | å‰ç«¯ SSR+WASM, æ–‡ä»¶ç®¡ç†, ç³»ç»Ÿç›‘æ§, Samba, äº‘å­˜å‚¨ |
+| **CapeOS-UserService** | `capeos-user-service` | `capeos-user-service` | axum, rusqlite, jsonwebtoken, p256, argon2 | ç”¨æˆ·æ³¨å†Œ/ç™»å½•, JWT ç­¾å‘, JWKS å…¬é’¥ |
+| **CapeOS-LocalStorage** | `capeos-local-storage` | `capeos-local-storage` | axum, sysinfo, tokio::process | ç£ç›˜ç®¡ç†, USB æŒ‚è½½, MergerFS |
+| **CapeOS-AppManagement** | `capeos-app-management` | `capeos-app-management` | axum, bollard, rusqlite | Docker åº”ç”¨ç”Ÿå‘½å‘¨æœŸ, åº”ç”¨å•†åº— |
+| **CapeOS-MessageBus** | `capeos-message-bus` | `capeos-message-bus` | axum, tokio::sync::broadcast | äº‹ä»¶/åŠ¨ä½œ å‘å¸ƒè®¢é˜…, WebSocket æ¨é€ |
+| **CapeOS-Common** | `capeos-common` | (åº“ crate, æ— äºŒè¿›åˆ¶) | reqwest, jsonwebtoken, serde, tower-http | å…±äº«åº“: Gateway å®¢æˆ·ç«¯, JWT, ä¸­é—´ä»¶, æœåŠ¡å‘ç° |
+| **CapeOS-CLI** | `capeos-cli` | `capeos-cli` | clap, reqwest | å‘½ä»¤è¡Œè¯Šæ–­å’Œæµ‹è¯•å·¥å…· |
 
-### 2.3 ·şÎñÆô¶¯Ë³ĞòÓëÒÀÀµ
+### 2.3 æœåŠ¡å¯åŠ¨é¡ºåºä¸ä¾èµ–
 
+```text
+capeos-gateway                          <-- æœ€å…ˆå¯åŠ¨, ç»‘å®šç«¯å£ 80
+    |
+    +-- capeos-message-bus              <-- ä¾èµ– Gateway
+    |       |
+    |       +-- capeos-user-service     <-- ä¾èµ– MessageBus
+    |       |
+    |       +-- capeos-local-storage    <-- ä¾èµ– MessageBus
+    |       |
+    |       +-- capeos-app-management   <-- ä¾èµ– MessageBus + Docker
+    |       |
+    |       +-- capeos (ä¸»æœåŠ¡)         <-- ä¾èµ– MessageBus + rclone
+    |
+    +-- (æ‰€æœ‰æœåŠ¡å¯åŠ¨æ—¶å‘ Gateway æ³¨å†Œè·¯ç”±)
 ```
-capeos-gateway                          ¡û ×îÏÈÆô¶¯£¬°ó¶¨¶Ë¿Ú 80
-    ©¦
-    ©À©¤©¤ capeos-message-bus              ¡û ÒÀÀµ Gateway
-    ©¦       ©¦
-    ©¦       ©À©¤©¤ capeos-user-service     ¡û ÒÀÀµ MessageBus
-    ©¦       ©¦
-    ©¦       ©À©¤©¤ capeos-local-storage    ¡û ÒÀÀµ MessageBus
-    ©¦       ©¦
-    ©¦       ©À©¤©¤ capeos-app-management   ¡û ÒÀÀµ MessageBus + Docker
-    ©¦       ©¦
-    ©¦       ©¸©¤©¤ capeos (Ö÷·şÎñ)          ¡û ÒÀÀµ MessageBus + rclone
-    ©¦
-    ©¸©¤©¤ (ËùÓĞ·şÎñÆô¶¯Ê±Ïò Gateway ×¢²áÂ·ÓÉ)
-```
 
-ËùÓĞ·şÎñÒÔ `systemd` ·½Ê½¹ÜÀí£¬Ê¹ÓÃ `Type=notify` Í¨Öª¾ÍĞ÷£¨Í¨¹ı `sd-notify` crate£©£¬`Restart=always` ±£Ö¤¸ß¿ÉÓÃ¡£
+æ‰€æœ‰æœåŠ¡ä»¥ `systemd` æ–¹å¼ç®¡ç†ï¼Œä½¿ç”¨ `Type=notify` é€šçŸ¥å°±ç»ª (é€šè¿‡ `sd-notify` crate)ï¼Œ`Restart=always` ä¿è¯é«˜å¯ç”¨ã€‚
 
-### 2.4 ·şÎñ·¢ÏÖ»úÖÆ
+### 2.4 æœåŠ¡å‘ç°æœºåˆ¶
 
-CapeOS ²ÉÓÃ **»ùÓÚÎÄ¼şµÄ·şÎñ·¢ÏÖ** Ä£Ê½£¬ÔËĞĞÊ±Ä¿Â¼Îª `/var/run/capeos/`£º
+CapeOS é‡‡ç”¨ **åŸºäºæ–‡ä»¶çš„æœåŠ¡å‘ç°** æ¨¡å¼ï¼Œè¿è¡Œæ—¶ç›®å½•ä¸º `/var/run/capeos/`:
 
-| ÎÄ¼şÃû | Ğ´ÈëÕß | ÄÚÈİ | ¶ÁÈ¡Õß |
+| æ–‡ä»¶å | å†™å…¥è€… | å†…å®¹ | è¯»å–è€… |
 |--------|--------|------|--------|
-| `management.url` | Gateway | ¹ÜÀí API µØÖ· (Èç `http://127.0.0.1:34703`) | ËùÓĞ·şÎñ (×¢²áÂ·ÓÉ) |
-| `gateway.url` | Gateway | Íø¹Ø¼àÌıµØÖ· (Èç `http://[::]:80`) | ¡ª |
-| `message-bus.url` | MessageBus | MessageBus API µØÖ· | ËùÓĞ·şÎñ (·¢²¼ÊÂ¼ş) |
-| `user-service.url` | UserService | UserService µØÖ· | CapeOS (»ñÈ¡ JWKS ¹«Ô¿) |
-| `app-management.url` | AppManagement | AppManagement µØÖ· | capeos-common |
-| `capeos.url` | CapeOS Ö÷·şÎñ | CapeOS Ö÷·şÎñµØÖ· | ÆäËû·şÎñ (·¢ËÍÍ¨Öª) |
+| `management.url` | Gateway | ç®¡ç† API åœ°å€ (å¦‚ `http://127.0.0.1:34703`) | æ‰€æœ‰æœåŠ¡ (æ³¨å†Œè·¯ç”±) |
+| `gateway.url` | Gateway | ç½‘å…³ç›‘å¬åœ°å€ (å¦‚ `http://[::]:80`) | -- |
+| `message-bus.url` | MessageBus | MessageBus API åœ°å€ | æ‰€æœ‰æœåŠ¡ (å‘å¸ƒäº‹ä»¶) |
+| `user-service.url` | UserService | UserService åœ°å€ | CapeOS (è·å– JWKS å…¬é’¥) |
+| `app-management.url` | AppManagement | AppManagement åœ°å€ | capeos-common |
+| `capeos.url` | CapeOS ä¸»æœåŠ¡ | CapeOS ä¸»æœåŠ¡åœ°å€ | å…¶ä»–æœåŠ¡ (å‘é€é€šçŸ¥) |
 
-·şÎñ·¢ÏÖÊµÏÖÎ»ÓÚ `capeos-common` crate£º
+æœåŠ¡å‘ç°å®ç°ä½äº `capeos-common` crate:
 
 ```rust
-/// ´Ó URL ÎÄ¼ş¶ÁÈ¡·şÎñµØÖ·
+/// ä» URL æ–‡ä»¶è¯»å–æœåŠ¡åœ°å€
 pub async fn get_service_address(runtime_path: &Path, filename: &str) -> Result<String> {
     let path = runtime_path.join(filename);
     tokio::fs::read_to_string(&path).await.map(|s| s.trim().to_string())
 }
 
-/// µÈ´ı·şÎñ¾ÍĞ÷£¨ÖØÊÔ»úÖÆ£©
+/// ç­‰å¾…æœåŠ¡å°±ç»ª (é‡è¯•æœºåˆ¶)
 pub async fn wait_for_service(runtime_path: &Path, filename: &str, retries: u32) -> Result<String> {
     for i in 0..retries {
         if let Ok(addr) = get_service_address(runtime_path, filename).await {
@@ -208,178 +205,179 @@ pub async fn wait_for_service(runtime_path: &Path, filename: &str, retries: u32)
 }
 ```
 
-### 2.5 ÈÏÖ¤¼Ü¹¹
+### 2.5 è®¤è¯æ¶æ„
 
-```
-ÓÃ»§µÇÂ¼
-    ©¦
-    ©¦  POST /v1/user_service/users/login
-    ¨‹
-©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦  UserService     ©¦
-©¦  (Axum)          ©¦
-©¦  1. argon2 ÑéÖ¤   ©¦
-©¦  2. p256 Ç© JWT  ©¦©¤©¤¡ú  ECDSA P-256 Ç©Ãû
-©¦  3. ·µ»Ø Token   ©¦
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-         ©¦
-         ©¦  JWT Token
-         ¨‹
-©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦  ºóĞøÇëÇó: Authorization: Bearer <JWT>        ©¦
-©¦                                              ©¦
-©¦  ¸÷·şÎñµÄ Axum JWT ÖĞ¼ä¼ş (capeos-common):    ©¦
-©¦  1. ´Ó Header »ò Query ÖĞÌáÈ¡ token           ©¦
-©¦  2. reqwest ´Ó UserService JWKS ¶Ëµã»ñÈ¡¹«Ô¿   ©¦
-©¦     GET http://<user-service>/.well-known/jwks.json ©¦
-©¦  3. jsonwebtoken ÓÃ ECDSA ¹«Ô¿ÑéÖ¤Ç©Ãû         ©¦
-©¦  4. localhost ÇëÇóÌø¹ıÈÏÖ¤                     ©¦
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
+```text
+ç”¨æˆ·ç™»å½•
+    |
+    |  POST /v1/user_service/users/login
+    v
++------------------+
+|  UserService     |
+|  (Axum)          |
+|  1. argon2 éªŒè¯  |
+|  2. p256 ç­¾ JWT  |--->  ECDSA P-256 ç­¾å
+|  3. è¿”å› Token   |
++------------------+
+         |
+         |  JWT Token
+         v
++----------------------------------------------+
+|  åç»­è¯·æ±‚: Authorization: Bearer <JWT>       |
+|                                              |
+|  å„æœåŠ¡çš„ Axum JWT ä¸­é—´ä»¶ (capeos-common):   |
+|  1. ä» Header æˆ– Query ä¸­æå– token          |
+|  2. reqwest ä» UserService JWKS ç«¯ç‚¹è·å–å…¬é’¥ |
+|     GET http://<user-service>/.well-known/jwks.json |
+|  3. jsonwebtoken ç”¨ ECDSA å…¬é’¥éªŒè¯ç­¾å       |
+|  4. localhost è¯·æ±‚è·³è¿‡è®¤è¯                   |
++----------------------------------------------+
 ```
 
-### 2.6 ÊÂ¼şÇı¶¯Í¨ĞÅ
+### 2.6 äº‹ä»¶é©±åŠ¨é€šä¿¡
 
-```
+```text
                          CapeOS-MessageBus
-                    ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-                    ©¦  (Axum + tokio::broadcast)©¦
-                    ©¦                          ©¦
-  ·¢²¼ÊÂ¼ş ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¦©¤¡ú  Event Store           ©¦
-  (REST / Unix Socket)  ©¦                     ©¦
-                    ©¦    ©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´      ©¦
-                    ©¦    ©¦ Event Types  ©¦      ©¦
-                    ©¦    ©¦ Action Types ©¦      ©¦
-                    ©¦    ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼      ©¦
-                    ©¦           ©¦               ©¦
-  ¶©ÔÄÊÂ¼ş ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¦©¤¡ú  WebSocket ÍÆËÍ  ©¤©¤©¤©¤©¤©¤©¦©¤©¤¡ú Ç°¶Ë / ÆäËû·şÎñ
-  (axum::extract::ws)   ©¦                     ©¦
-                    ©¦                          ©¦
-                    ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
+                    (Axum + tokio::broadcast)
+                    +--------------------------+
+                    |                          |
+  å‘å¸ƒäº‹ä»¶ -------->|--> Event Store           |
+  (REST / Unix Socket)                        |
+                    |    +--------------+      |
+                    |    | Event Types  |      |
+                    |    | Action Types |      |
+                    |    +--------------+      |
+                    |           |              |
+  è®¢é˜…äº‹ä»¶ -------->|--> WebSocket æ¨é€ ------>|--> å‰ç«¯ / å…¶ä»–æœåŠ¡
+  (axum::extract::ws)                         |
+                    |                          |
+                    +--------------------------+
 
-ÊÂ¼ş·¢²¼·½Ê½:
+äº‹ä»¶å‘å¸ƒæ–¹å¼:
   1. REST API:  POST /v1/message_bus/event/{source_id}/{name}
-  2. Unix Socket: tokio::net::UnixStream ¡ú /tmp/message-bus.sock
+  2. Unix Socket: tokio::net::UnixStream -> /tmp/message-bus.sock
 ```
 
-CapeOS Ö÷·şÎñ×¢²áµÄÊÂ¼şÀàĞÍ£º
+CapeOS ä¸»æœåŠ¡æ³¨å†Œçš„äº‹ä»¶ç±»å‹:
 
-| ÊÂ¼şÃû³Æ | Source ID | ËµÃ÷ |
+| äº‹ä»¶åç§° | Source ID | è¯´æ˜ |
 |----------|-----------|------|
-| `capeos:system:utilization` | `capeos` | ÏµÍ³×ÊÔ´ÀûÓÃÂÊ£¨Ã¿ 5 ÃëÍÆËÍ£© |
-| `capeos:file:recover` | `capeos` | ÔÆ´æ´¢ OAuth »Øµ÷Íê³É |
-| `capeos:file:operate` | `capeos` | ÎÄ¼ş²Ù×÷½ø¶È£¨¸´ÖÆ/ÒÆ¶¯£© |
+| `capeos:system:utilization` | `capeos` | ç³»ç»Ÿèµ„æºåˆ©ç”¨ç‡ (æ¯ 5 ç§’æ¨é€) |
+| `capeos:file:recover` | `capeos` | äº‘å­˜å‚¨ OAuth å›è°ƒå®Œæˆ |
+| `capeos:file:operate` | `capeos` | æ–‡ä»¶æ“ä½œè¿›åº¦ (å¤åˆ¶/ç§»åŠ¨) |
 
-### 2.7 ÍêÕûÇëÇóÁ÷³ÌÊ¾Àı
+### 2.7 å®Œæ•´è¯·æ±‚æµç¨‹ç¤ºä¾‹
 
-ÒÔ `GET /v1/capeos/health/services` ÎªÀı£º
+ä»¥ `GET /v1/capeos/health/services` ä¸ºä¾‹:
 
-```
-1. ä¯ÀÀÆ÷·¢ËÍÇëÇó
+```text
+1. æµè§ˆå™¨å‘é€è¯·æ±‚
    GET http://192.168.1.100:80/v1/capeos/health/services
    Header: Authorization: Bearer eyJhbGciOiJFUzI1NiI...
 
-2. CapeOS-Gateway (¶Ë¿Ú 80) ½ÓÊÕÇëÇó
-   ©À©¤ axum-reverse-proxy Æ¥ÅäÂ·ÓÉ±í: /v1/capeos ¡ú http://127.0.0.1:43821
-   ©¸©¤ ·´Ïò´úÀí×ª·¢µ½ CapeOS Ö÷·şÎñ
+2. CapeOS-Gateway (ç«¯å£ 80) æ¥æ”¶è¯·æ±‚
+   +-- axum-reverse-proxy åŒ¹é…è·¯ç”±è¡¨: /v1/capeos -> http://127.0.0.1:43821
+   +-- åå‘ä»£ç†è½¬å‘åˆ° CapeOS ä¸»æœåŠ¡
 
-3. CapeOS Ö÷·şÎñ (127.0.0.1:43821) ´¦ÀíÇëÇó
-   ©À©¤ Axum Router::nest() Æ¥Åäµ½ /v1/capeos Â·ÓÉ×é
-   ©À©¤ tower-http CorsLayer ÖĞ¼ä¼ş
-   ©À©¤ JWT ÖĞ¼ä¼ş (capeos-common)
-   ©¦   ©À©¤ ÌáÈ¡ Authorization Header ÖĞµÄ Token
-   ©¦   ©À©¤ reqwest GET http://<user-service>/.well-known/jwks.json »ñÈ¡¹«Ô¿
-   ©¦   ©¸©¤ jsonwebtoken ECDSA ÑéÇ©³É¹¦£¬ÌáÈ¡ user_id
-   ©À©¤ utoipa OpenAPI Â·ÓÉ
-   ©¸©¤ get_health_services Handler
-       ©À©¤ zbus_systemd ÁĞ³öËùÓĞ capeos-* ·şÎñ×´Ì¬
-       ©¸©¤ ·µ»Ø JSON: { running: [...], not_running: [...] }
+3. CapeOS ä¸»æœåŠ¡ (127.0.0.1:43821) å¤„ç†è¯·æ±‚
+   +-- Axum Router::nest() åŒ¹é…åˆ° /v1/capeos è·¯ç”±ç»„
+   +-- tower-http CorsLayer ä¸­é—´ä»¶
+   +-- JWT ä¸­é—´ä»¶ (capeos-common)
+   |   +-- æå– Authorization Header ä¸­çš„ Token
+   |   +-- reqwest GET http://<user-service>/.well-known/jwks.json è·å–å…¬é’¥
+   |   +-- jsonwebtoken ECDSA éªŒç­¾æˆåŠŸ, æå– user_id
+   +-- utoipa OpenAPI è·¯ç”±
+   +-- get_health_services Handler
+       +-- zbus_systemd åˆ—å‡ºæ‰€æœ‰ capeos-* æœåŠ¡çŠ¶æ€
+       +-- è¿”å› JSON: { running: [...], not_running: [...] }
 
-4. ÏìÓ¦Ô­Â··µ»Ø: CapeOS ¡ú Gateway ¡ú ä¯ÀÀÆ÷
+4. å“åº”åŸè·¯è¿”å›: CapeOS -> Gateway -> æµè§ˆå™¨
 ```
 
 ---
 
-## 3. ÏµÍ³¹¦ÄÜÄ£¿é×ÜÀÀ
+## 3. ç³»ç»ŸåŠŸèƒ½æ¨¡å—æ€»è§ˆ
 
-CapeOS µÄ¹¦ÄÜ·Ö²¼ÔÚ¶à¸öÎ¢·şÎñÖĞ£¬ÒÔÏÂÊÇ°´·şÎñ»®·ÖµÄÄ£¿é¸ÅÀÀ£º
+CapeOS çš„åŠŸèƒ½åˆ†å¸ƒåœ¨å¤šä¸ªå¾®æœåŠ¡ä¸­ï¼Œä»¥ä¸‹æ˜¯æŒ‰æœåŠ¡åˆ’åˆ†çš„æ¨¡å—æ¦‚è§ˆ:
 
-```
-CapeOS ÉúÌ¬ÏµÍ³
-©¦
-©À©¤©¤ CapeOS-Gateway ©¤©¤©¤©¤ Íø¹ØÓëÂ·ÓÉ¹ÜÀí
-©¦   ÊµÏÖ: Axum + axum-reverse-proxy + RwLock<HashMap> Â·ÓÉ±í
-©¦
-©À©¤©¤ CapeOS (Ö÷·şÎñ)
-©¦   Ç°¶Ë: Leptos SSR + WASM Hydration + Thaw UI
-©¦   ºó¶Ë: Axum + rusqlite
-©¦   ©¦
-©¦   ©À©¤©¤ ÏµÍ³¹ÜÀíÄ£¿é (System)
-©¦   ©¦   ©À©¤©¤ Ó²¼şĞÅÏ¢²É¼¯ (CPU/ÄÚ´æ/´ÅÅÌ/ÍøÂç) ©¤©¤ sysinfo crate
-©¦   ©¦   ©À©¤©¤ ÏµÍ³×ÊÔ´ÊµÊ±¼à¿Ø ©¤©¤ tokio-cron-scheduler + MessageBus
-©¦   ©¦   ©À©¤©¤ °æ±¾¹ÜÀíÓëÔÚÏß¸üĞÂ
-©¦   ©¦   ©À©¤©¤ µçÔ´¿ØÖÆ (ÖØÆô/¹Ø»ú) ©¤©¤ zbus_systemd
-©¦   ©¦   ©À©¤©¤ SSH WebSocket ÖÕ¶Ë ©¤©¤ axum::extract::ws
-©¦   ©¦   ©¸©¤©¤ ÈÕÖ¾¹ÜÀí ©¤©¤ tracing
-©¦   ©¦
-©¦   ©À©¤©¤ ÎÄ¼ş¹ÜÀíÄ£¿é (File)
-©¦   ©¦   ©À©¤©¤ ÎÄ¼ş/Ä¿Â¼ä¯ÀÀÓë²Ù×÷ ©¤©¤ tokio::fs
-©¦   ©¦   ©À©¤©¤ ·Ö¿éÎÄ¼şÉÏ´« ©¤©¤ axum::extract::Multipart
-©¦   ©¦   ©À©¤©¤ µ¥ÎÄ¼ş/ÅúÁ¿´ò°üÏÂÔØ ©¤©¤ zip / tar / flate2
-©¦   ©¦   ©À©¤©¤ ÎÄ¼ş¸´ÖÆ/ÒÆ¶¯ (Òì²½ÈÎÎñ) ©¤©¤ tokio::spawn
-©¦   ©¦   ©À©¤©¤ Í¼Æ¬ËõÂÔÍ¼Éú³É ©¤©¤ image crate
-©¦   ©¦   ©¸©¤©¤ WebSocket ÊµÊ±Í¨ĞÅ ©¤©¤ axum::extract::ws
-©¦   ©¦
-©¦   ©À©¤©¤ ÍøÂç´æ´¢Ä£¿é (Samba/CIFS)
-©¦   ©¦   ©À©¤©¤ Samba ±¾µØ¹²Ïí¹ÜÀí ©¤©¤ rusqlite + smb.conf Éú³É
-©¦   ©¦   ©À©¤©¤ Ô¶³Ì CIFS Á¬½Ó¹ÜÀí ©¤©¤ pavao (libsmbclient)
-©¦   ©¦   ©¸©¤©¤ ÍøÂç¹ÒÔØ×Ô¶¯»Ö¸´ ©¤©¤ Æô¶¯Ê± tokio::spawn »Ö¸´
-©¦   ©¦
-©¦   ©À©¤©¤ ÔÆ´æ´¢Ä£¿é (Cloud Storage)
-©¦   ©¦   ©À©¤©¤ Google Drive / OneDrive / Dropbox ©¤©¤ oauth2 crate
-©¦   ©¦   ©À©¤©¤ OAuth 2.0 ÈÏÖ¤»Øµ÷
-©¦   ©¦   ©¸©¤©¤ rclone ¹ÒÔØ¹ÜÀí ©¤©¤ tokio::process::Command
-©¦   ©¦
-©¦   ©À©¤©¤ Í¨ÖªÄ£¿é (Notify) ©¤©¤ rusqlite + MessageBus
-©¦   ©À©¤©¤ ½¡¿µ¼ì²éÄ£¿é (Health) ©¤©¤ zbus_systemd + /proc/net
-©¦   ©À©¤©¤ ZeroTier ÍøÂçÄ£¿é ©¤©¤ reqwest ´úÀí×ª·¢
-©¦   ©¸©¤©¤ Éè±¸·¢ÏÖÄ£¿é (Peer) ©¤©¤ rusqlite
-©¦
-©À©¤©¤ CapeOS-UserService ©¤©¤©¤©¤ ÓÃ»§¹ÜÀíÓëÈÏÖ¤
-©¦   ÊµÏÖ: Axum + rusqlite + jsonwebtoken + p256 + argon2
-©¦
-©À©¤©¤ CapeOS-LocalStorage ©¤©¤©¤©¤ ±¾µØ´æ´¢¹ÜÀí
-©¦   ÊµÏÖ: Axum + sysinfo + tokio::process (MergerFS)
-©¦
-©À©¤©¤ CapeOS-AppManagement ©¤©¤©¤©¤ Ó¦ÓÃ¹ÜÀí
-©¦   ÊµÏÖ: Axum + bollard (Docker API) + rusqlite
-©¦
-©¸©¤©¤ CapeOS-MessageBus ©¤©¤©¤©¤ ÏûÏ¢×ÜÏß
-    ÊµÏÖ: Axum + tokio::sync::broadcast + tokio::net::UnixListener
+```text
+CapeOS ç”Ÿæ€ç³»ç»Ÿ
+|
++-- CapeOS-Gateway ---- ç½‘å…³ä¸è·¯ç”±ç®¡ç†
+|   å®ç°: Axum + axum-reverse-proxy + RwLock<HashMap> è·¯ç”±è¡¨
+|
++-- CapeOS (ä¸»æœåŠ¡)
+|   å‰ç«¯: Leptos SSR + WASM Hydration + Thaw UI
+|   åç«¯: Axum + rusqlite
+|   |
+|   +-- ç³»ç»Ÿç®¡ç†æ¨¡å— (System)
+|   |   +-- ç¡¬ä»¶ä¿¡æ¯é‡‡é›† (CPU/å†…å­˜/ç£ç›˜/ç½‘ç»œ) -- sysinfo crate
+|   |   +-- ç³»ç»Ÿèµ„æºå®æ—¶ç›‘æ§ -- tokio-cron-scheduler + MessageBus
+|   |   +-- ç‰ˆæœ¬ç®¡ç†ä¸åœ¨çº¿æ›´æ–°
+|   |   +-- ç”µæºæ§åˆ¶ (é‡å¯/å…³æœº) -- zbus_systemd
+|   |   +-- SSH WebSocket ç»ˆç«¯ -- axum::extract::ws
+|   |   +-- æ—¥å¿—ç®¡ç† -- tracing
+|   |
+|   +-- æ–‡ä»¶ç®¡ç†æ¨¡å— (File)
+|   |   +-- æ–‡ä»¶/ç›®å½•æµè§ˆä¸æ“ä½œ -- tokio::fs
+|   |   +-- åˆ†å—æ–‡ä»¶ä¸Šä¼  -- axum::extract::Multipart
+|   |   +-- å•æ–‡ä»¶/æ‰¹é‡æ‰“åŒ…ä¸‹è½½ -- zip / tar / flate2
+|   |   +-- æ–‡ä»¶å¤åˆ¶/ç§»åŠ¨ (å¼‚æ­¥ä»»åŠ¡) -- tokio::spawn
+|   |   +-- å›¾ç‰‡ç¼©ç•¥å›¾ç”Ÿæˆ -- image crate
+|   |   +-- WebSocket å®æ—¶é€šä¿¡ -- axum::extract::ws
+|   |
+|   +-- ç½‘ç»œå­˜å‚¨æ¨¡å— (Samba/CIFS)
+|   |   +-- Samba æœ¬åœ°å…±äº«ç®¡ç† -- rusqlite + smb.conf ç”Ÿæˆ
+|   |   +-- è¿œç¨‹ CIFS è¿æ¥ç®¡ç† -- pavao (libsmbclient)
+|   |   +-- ç½‘ç»œæŒ‚è½½è‡ªåŠ¨æ¢å¤ -- å¯åŠ¨æ—¶ tokio::spawn æ¢å¤
+|   |
+|   +-- äº‘å­˜å‚¨æ¨¡å— (Cloud Storage)
+|   |   +-- Google Drive / OneDrive / Dropbox -- oauth2 crate
+|   |   +-- OAuth 2.0 è®¤è¯å›è°ƒ
+|   |   +-- rclone æŒ‚è½½ç®¡ç† -- tokio::process::Command
+|   |
+|   +-- é€šçŸ¥æ¨¡å— (Notify) -- rusqlite + MessageBus
+|   +-- å¥åº·æ£€æŸ¥æ¨¡å— (Health) -- zbus_systemd + /proc/net
+|   +-- ZeroTier ç½‘ç»œæ¨¡å— -- reqwest ä»£ç†è½¬å‘
+|   +-- è®¾å¤‡å‘ç°æ¨¡å— (Peer) -- rusqlite
+|
++-- CapeOS-UserService ---- ç”¨æˆ·ç®¡ç†ä¸è®¤è¯
+|   å®ç°: Axum + rusqlite + jsonwebtoken + p256 + argon2
+|
++-- CapeOS-LocalStorage ---- æœ¬åœ°å­˜å‚¨ç®¡ç†
+|   å®ç°: Axum + sysinfo + tokio::process (MergerFS)
+|
++-- CapeOS-AppManagement ---- åº”ç”¨ç®¡ç†
+|   å®ç°: Axum + bollard (Docker API) + rusqlite
+|
++-- CapeOS-MessageBus ---- æ¶ˆæ¯æ€»çº¿
+    å®ç°: Axum + tokio::sync::broadcast + tokio::net::UnixListener
 ```
 
 ---
 
-## 4. ¸÷¹¦ÄÜÄ£¿éÏêÏ¸½éÉÜ
+## 4. å„åŠŸèƒ½æ¨¡å—è¯¦ç»†ä»‹ç»
 
-### 4.1 CapeOS-Gateway ¡ª Íø¹Ø·şÎñ
+### 4.1 CapeOS-Gateway -- ç½‘å…³æœåŠ¡
 
-Gateway ÊÇÕû¸ö CapeOS ÏµÍ³µÄÎ¨Ò»ÍøÂçÈë¿Ú£¬ÊµÏÖ¶¯Ì¬ API Â·ÓÉ¡£
+Gateway æ˜¯æ•´ä¸ª CapeOS ç³»ç»Ÿçš„å”¯ä¸€ç½‘ç»œå…¥å£ï¼Œå®ç°åŠ¨æ€ API è·¯ç”±ã€‚
 
-**ÊµÏÖ·½°¸**: Axum + `axum-reverse-proxy` crate
+**å®ç°æ–¹æ¡ˆ**: Axum + `axum-reverse-proxy` crate
 
-**¹¤×÷Ô­Àí**:
-1. Gateway Æô¶¯ºó°ó¶¨Íâ²¿¶Ë¿Ú£¨Ä¬ÈÏ 80£©ºÍÄÚ²¿¹ÜÀí¶Ë¿Ú£¨Ëæ»ú£©
-2. ½«¹ÜÀí¶Ë¿ÚµØÖ·Ğ´Èë `/var/run/capeos/management.url`
-3. ÆäËûÎ¢·şÎñÆô¶¯Ê±¶ÁÈ¡¸ÃÎÄ¼ş£¬Í¨¹ı `reqwest` µ÷ÓÃ `POST /v1/gateway/routes` ×¢²á×ÔÉíÂ·ÓÉ
-4. Gateway Î¬»¤ `RwLock<HashMap<String, String>>` ¶¯Ì¬Â·ÓÉ±í£¬¸ù¾İÇëÇóÂ·¾¶Ç°×º×ª·¢
+**å·¥ä½œåŸç†**:
 
-**Â·ÓÉ×¢²áÄ£ĞÍ** (¶¨ÒåÔÚ `capeos-common`):
+1. Gateway å¯åŠ¨åç»‘å®šå¤–éƒ¨ç«¯å£ (é»˜è®¤ 80) å’Œå†…éƒ¨ç®¡ç†ç«¯å£ (éšæœº)
+2. å°†ç®¡ç†ç«¯å£åœ°å€å†™å…¥ `/var/run/capeos/management.url`
+3. å…¶ä»–å¾®æœåŠ¡å¯åŠ¨æ—¶è¯»å–è¯¥æ–‡ä»¶ï¼Œé€šè¿‡ `reqwest` è°ƒç”¨ `POST /v1/gateway/routes` æ³¨å†Œè‡ªèº«è·¯ç”±
+4. Gateway ç»´æŠ¤ `RwLock<HashMap<String, String>>` åŠ¨æ€è·¯ç”±è¡¨ï¼Œæ ¹æ®è¯·æ±‚è·¯å¾„å‰ç¼€è½¬å‘
+
+**è·¯ç”±æ³¨å†Œæ¨¡å‹** (å®šä¹‰åœ¨ `capeos-common`):
 
 ```rust
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Route {
-    pub path: String,    // Â·ÓÉÇ°×º£¬Èç "/v1/capeos"
-    pub target: String,  // ºó¶ËµØÖ·£¬Èç "http://127.0.0.1:43821"
+    pub path: String,    // è·¯ç”±å‰ç¼€, å¦‚ "/v1/capeos"
+    pub target: String,  // åç«¯åœ°å€, å¦‚ "http://127.0.0.1:43821"
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -388,7 +386,7 @@ pub struct ChangePortRequest {
 }
 ```
 
-**Gateway ¿Í»§¶Ë½Ó¿Ú** (¶¨ÒåÔÚ `capeos-common`):
+**Gateway å®¢æˆ·ç«¯æ¥å£** (å®šä¹‰åœ¨ `capeos-common`):
 
 ```rust
 #[async_trait]
@@ -399,62 +397,62 @@ pub trait GatewayClient: Send + Sync {
 }
 ```
 
-### 4.2 CapeOS Ö÷·şÎñ ¡ª ÏµÍ³¹ÜÀíÄ£¿é
+### 4.2 CapeOS ä¸»æœåŠ¡ -- ç³»ç»Ÿç®¡ç†æ¨¡å—
 
-**Ô´ÎÄ¼ş**: `crates/capeos-main/src/server/services/system.rs`
+**æºæ–‡ä»¶**: `crates/capeos-main/src/server/services/system.rs`
 
-Ìá¹©ÏµÍ³¼¶ĞÅÏ¢²É¼¯ºÍ¹ÜÀí¿ØÖÆ¹¦ÄÜ¡£
+æä¾›ç³»ç»Ÿçº§ä¿¡æ¯é‡‡é›†å’Œç®¡ç†æ§åˆ¶åŠŸèƒ½ã€‚
 
-| ¹¦ÄÜ | Rust ·½·¨ | ÊµÏÖ·½Ê½ |
+| åŠŸèƒ½ | Rust æ–¹æ³• | å®ç°æ–¹å¼ |
 |------|-----------|----------|
-| CPU Ê¹ÓÃÂÊ | `get_cpu_percent()` | `sysinfo::System::global_cpu_usage()` |
-| CPU ĞÅÏ¢ | `get_cpu_info()` | `sysinfo::System::cpus()` |
-| CPU ºËĞÄÊı | `get_cpu_core_num()` | `sysinfo::System::physical_core_count()` |
-| CPU ÎÂ¶È | `get_cpu_temperature()` | `sysinfo::Components` »ò¶ÁÈ¡ `/sys/devices/virtual/thermal/thermal_zone*/temp` |
-| CPU ¹¦ºÄ | `get_cpu_power()` | `tokio::fs::read_to_string("/sys/class/powercap/intel-rapl/*/energy_uj")` |
-| ÄÚ´æĞÅÏ¢ | `get_mem_info()` | `sysinfo::System::total_memory()` / `used_memory()` |
-| ´ÅÅÌĞÅÏ¢ | `get_disk_info()` | `sysinfo::Disks::new_with_refreshed_list()` |
-| ÍøÂçÍ³¼Æ | `get_net_info()` | `sysinfo::Networks::new_with_refreshed_list()` |
-| ÎïÀíÍø¿¨ | `get_net_cards()` | ¶ÁÈ¡ `/sys/class/net/` »ò `tokio::process::Command` |
-| Ö÷»úĞÅÏ¢ | `get_sys_info()` | `sysinfo::System::host_name()` / `os_version()` µÈ |
-| Éè±¸ĞÅÏ¢ | `get_device_info()` | ¾ÛºÏ IP/¶Ë¿Ú/Ö÷»úÃû/Éè±¸ĞÍºÅ/Hash |
-| ÏµÍ³¸üĞÂ | `update_system_version()` | `tokio::process::Command::new("curl")` |
-| ÖØÆô | `system_reboot()` | `zbus_systemd` µ÷ÓÃ logind Reboot |
-| ¹Ø»ú | `system_shutdown()` | `zbus_systemd` µ÷ÓÃ logind PowerOff |
-| ÈÕÖ¾ | `get_capeos_logs()` | `tokio::fs::read_to_string()` |
-| ÏµÍ³Èë¿Ú | `get_system_entry()` | ¶ÁÈ¡¸÷Ä£¿é `entry.json` ¾ÛºÏ |
-| Ä¿Â¼²Ù×÷ | `get_dir_path()` / `mkdir_all()` / `rename_file()` | `tokio::fs` ±ê×¼Òì²½ÎÄ¼ş²Ù×÷ |
+| CPU ä½¿ç”¨ç‡ | `get_cpu_percent()` | `sysinfo::System::global_cpu_usage()` |
+| CPU ä¿¡æ¯ | `get_cpu_info()` | `sysinfo::System::cpus()` |
+| CPU æ ¸å¿ƒæ•° | `get_cpu_core_num()` | `sysinfo::System::physical_core_count()` |
+| CPU æ¸©åº¦ | `get_cpu_temperature()` | `sysinfo::Components` æˆ–è¯»å– sysfs thermal_zone |
+| CPU åŠŸè€— | `get_cpu_power()` | `tokio::fs::read_to_string` è¯»å– intel-rapl |
+| å†…å­˜ä¿¡æ¯ | `get_mem_info()` | `sysinfo::System::total_memory()` / `used_memory()` |
+| ç£ç›˜ä¿¡æ¯ | `get_disk_info()` | `sysinfo::Disks::new_with_refreshed_list()` |
+| ç½‘ç»œç»Ÿè®¡ | `get_net_info()` | `sysinfo::Networks::new_with_refreshed_list()` |
+| ç‰©ç†ç½‘å¡ | `get_net_cards()` | è¯»å– `/sys/class/net/` æˆ– `tokio::process::Command` |
+| ä¸»æœºä¿¡æ¯ | `get_sys_info()` | `sysinfo::System::host_name()` / `os_version()` |
+| è®¾å¤‡ä¿¡æ¯ | `get_device_info()` | èšåˆ IP/ç«¯å£/ä¸»æœºå/è®¾å¤‡å‹å·/Hash |
+| ç³»ç»Ÿæ›´æ–° | `update_system_version()` | `tokio::process::Command::new("curl")` |
+| é‡å¯ | `system_reboot()` | `zbus_systemd` è°ƒç”¨ logind Reboot |
+| å…³æœº | `system_shutdown()` | `zbus_systemd` è°ƒç”¨ logind PowerOff |
+| æ—¥å¿— | `get_capeos_logs()` | `tokio::fs::read_to_string()` |
+| ç³»ç»Ÿå…¥å£ | `get_system_entry()` | è¯»å–å„æ¨¡å— `entry.json` èšåˆ |
+| ç›®å½•æ“ä½œ | `get_dir_path()` / `mkdir_all()` / `rename_file()` | `tokio::fs` å¼‚æ­¥æ–‡ä»¶æ“ä½œ |
 
-**¶¨Ê±ÈÎÎñ**: Í¨¹ı `tokio-cron-scheduler` Ã¿ 5 ÃëÖ´ĞĞÏµÍ³ĞÅÏ¢²É¼¯£¬¾­ÓÉ MessageBus µÄ Unix Socket (`tokio::net::UnixStream`) ·¢²¼ `capeos:system:utilization` ÊÂ¼ş£¬Ç°¶Ë Leptos ×é¼şÍ¨¹ı WebSocket ¶©ÔÄÊµÏÖÊµÊ±ÒÇ±íÅÌ¡£
+**å®šæ—¶ä»»åŠ¡**: é€šè¿‡ `tokio-cron-scheduler` æ¯ 5 ç§’æ‰§è¡Œç³»ç»Ÿä¿¡æ¯é‡‡é›†ï¼Œç»ç”± MessageBus çš„ Unix Socket (`tokio::net::UnixStream`) å‘å¸ƒ `capeos:system:utilization` äº‹ä»¶ï¼Œå‰ç«¯ Leptos ç»„ä»¶é€šè¿‡ WebSocket è®¢é˜…å®ç°å®æ—¶ä»ªè¡¨ç›˜ã€‚
 
-### 4.3 CapeOS Ö÷·şÎñ ¡ª ÎÄ¼ş¹ÜÀíÄ£¿é
+### 4.3 CapeOS ä¸»æœåŠ¡ -- æ–‡ä»¶ç®¡ç†æ¨¡å—
 
-**Ô´ÎÄ¼ş**: `crates/capeos-main/src/server/services/file_ops.rs`, `upload.rs`
+**æºæ–‡ä»¶**: `crates/capeos-main/src/server/services/file_ops.rs`, `upload.rs`
 
-| ¹¦ÄÜ | ËµÃ÷ | Rust ÊµÏÖ |
+| åŠŸèƒ½ | è¯´æ˜ | Rust å®ç° |
 |------|------|-----------|
-| Ä¿Â¼ä¯ÀÀ | ÁĞ³öÎÄ¼ş/Ä¿Â¼£¬·µ»ØÃû³Æ¡¢´óĞ¡¡¢ÀàĞÍ¡¢ĞŞ¸ÄÊ±¼ä | `tokio::fs::read_dir()` + `metadata()` |
-| ·Ö¿éÉÏ´« | ×·×ÙÉÏ´«×´Ì¬£¬Ğ´Èë `.tmp` ÎÄ¼ş£¬Íê³ÉºóÖØÃüÃû | `axum::extract::Multipart` + `DashMap` ×·×Ù×´Ì¬ |
-| ÎÄ¼şÏÂÔØ | µ¥ÎÄ¼şÁ÷Ê½ÏìÓ¦£»ÅúÁ¿´ò°üÏÂÔØ | `axum::body::Body::from_stream()` + `zip`/`tar` crate |
-| ÎÄ¼ş´´½¨ | ´´½¨¿ÕÎÄ¼ş£¬¼ì²âÂ·¾¶³åÍ» | `tokio::fs::File::create()` |
-| ÎÄ¼ş±à¼­ | ¶ÁÈ¡/Ğ´ÈëÎÄ¼şÄÚÈİ | `tokio::fs::read_to_string()` / `write()` |
-| ÖØÃüÃû | ÎÄ¼şºÍÄ¿Â¼µÄÖØÃüÃû | `tokio::fs::rename()` |
-| É¾³ı | Ö§³ÖÅúÁ¿É¾³ı | `tokio::fs::remove_file()` / `remove_dir_all()` |
-| ¸´ÖÆ/ÒÆ¶¯ | Òì²½Ö´ĞĞ£¬½ø¶È×·×Ù£¬Ö§³ÖÈ¡Ïû | `tokio::spawn` + `CancellationToken` + ½ø¶ÈÍ¨Öª |
-| Ä¿Â¼´óĞ¡ | µİ¹é¼ÆËãÄ¿Â¼´óĞ¡ | `tokio::fs` µİ¹é±éÀú |
-| Í¼Æ¬ËõÂÔÍ¼ | ËõÂÔÍ¼Éú³É + EXIF ·½ÏòĞ£Õı | `image` crate + `kamadak-exif` |
-| WebSocket | ¶ÔµÈÉè±¸ÊµÊ±Í¨ĞÅ | `axum::extract::ws::WebSocket` |
+| ç›®å½•æµè§ˆ | åˆ—å‡ºæ–‡ä»¶/ç›®å½•, è¿”å›åç§°/å¤§å°/ç±»å‹/ä¿®æ”¹æ—¶é—´ | `tokio::fs::read_dir()` + `metadata()` |
+| åˆ†å—ä¸Šä¼  | è¿½è¸ªä¸Šä¼ çŠ¶æ€, å†™å…¥ `.tmp` æ–‡ä»¶, å®Œæˆåé‡å‘½å | `axum::extract::Multipart` + `DashMap` |
+| æ–‡ä»¶ä¸‹è½½ | å•æ–‡ä»¶æµå¼å“åº”; æ‰¹é‡æ‰“åŒ…ä¸‹è½½ | `axum::body::Body::from_stream()` + `zip`/`tar` |
+| æ–‡ä»¶åˆ›å»º | åˆ›å»ºç©ºæ–‡ä»¶, æ£€æµ‹è·¯å¾„å†²çª | `tokio::fs::File::create()` |
+| æ–‡ä»¶ç¼–è¾‘ | è¯»å–/å†™å…¥æ–‡ä»¶å†…å®¹ | `tokio::fs::read_to_string()` / `write()` |
+| é‡å‘½å | æ–‡ä»¶å’Œç›®å½•çš„é‡å‘½å | `tokio::fs::rename()` |
+| åˆ é™¤ | æ”¯æŒæ‰¹é‡åˆ é™¤ | `tokio::fs::remove_file()` / `remove_dir_all()` |
+| å¤åˆ¶/ç§»åŠ¨ | å¼‚æ­¥æ‰§è¡Œ, è¿›åº¦è¿½è¸ª, æ”¯æŒå–æ¶ˆ | `tokio::spawn` + `CancellationToken` |
+| ç›®å½•å¤§å° | é€’å½’è®¡ç®—ç›®å½•å¤§å° | `tokio::fs` é€’å½’éå† |
+| å›¾ç‰‡ç¼©ç•¥å›¾ | ç¼©ç•¥å›¾ç”Ÿæˆ + EXIF æ–¹å‘æ ¡æ­£ | `image` crate + `kamadak-exif` |
+| WebSocket | å¯¹ç­‰è®¾å¤‡å®æ—¶é€šä¿¡ | `axum::extract::ws::WebSocket` |
 
-**ÎÄ¼ş²Ù×÷½ø¶ÈÄ£ĞÍ**:
+**æ–‡ä»¶æ“ä½œè¿›åº¦æ¨¡å‹**:
 
 ```rust
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FileOperate {
-    pub op_type: FileOpType,       // Copy / Move
-    pub items: Vec<FileItem>,      // Ô´ÎÄ¼şÁĞ±í
+    pub op_type: FileOpType,              // Copy / Move
+    pub items: Vec<FileItem>,             // æºæ–‡ä»¶åˆ—è¡¨
     pub total_size: u64,
     pub processed_size: u64,
-    pub destination: String,       // Ä¿±êÂ·¾¶
+    pub destination: String,              // ç›®æ ‡è·¯å¾„
     pub conflict_policy: ConflictPolicy,  // Skip / Overwrite / Rename
     pub finished: bool,
 }
@@ -466,35 +464,37 @@ pub enum FileOpType { Copy, Move }
 pub enum ConflictPolicy { Skip, Overwrite, Rename }
 ```
 
-### 4.4 CapeOS Ö÷·şÎñ ¡ª ÍøÂç´æ´¢Ä£¿é (Samba/CIFS)
+### 4.4 CapeOS ä¸»æœåŠ¡ -- ç½‘ç»œå­˜å‚¨æ¨¡å— (Samba/CIFS)
 
-**Ô´ÎÄ¼ş**: `crates/capeos-main/src/server/services/shares.rs`, `connections.rs`
+**æºæ–‡ä»¶**: `crates/capeos-main/src/server/services/shares.rs`, `connections.rs`
 
-**Samba ¹²Ïí¹ÜÀí (SharesService)**:
-- CRUD ²Ù×÷¹ÜÀí±¾»ú Samba ¹²ÏíÄ¿Â¼£¬Í¨¹ı `tokio-rusqlite` ´æ´¢ÔÚ SQLite `o_shares` ±í
-- Éú³É `/etc/samba/smb.cape.conf` ÅäÖÃÎÄ¼ş£¬Í¨¹ı `include` ÒıÈëÖ÷ `smb.conf`
-- ÅäÖÃ±ä¸üºóÍ¨¹ı `tokio::process::Command` Ö´ĞĞ `systemctl restart smbd`
-- Ö§³ÖÄäÃû·ÃÎÊÉèÖÃ
+**Samba å…±äº«ç®¡ç† (SharesService)**:
 
-**ÍøÂçÁ¬½Ó¹ÜÀí (ConnectionsService)**:
-- CRUD ²Ù×÷¹ÜÀíÔ¶³Ì CIFS/SMB Á¬½Ó£¬Í¨¹ı `tokio-rusqlite` ´æ´¢ÔÚ SQLite `o_connections` ±í
-- Ê¹ÓÃ `pavao` crate (libsmbclient °ó¶¨) ÑéÖ¤Á¬½ÓÆ¾¾İ
-- Ê¹ÓÃ `nix::mount::mount()` ¹ÒÔØÔ¶³Ì¹²Ïíµ½±¾µØÄ¿Â¼
-- Æô¶¯Ê±Í¨¹ı `tokio::spawn` Òì²½»Ö¸´Ö®Ç°µÄÍøÂç¹ÒÔØ
+- CRUD æ“ä½œç®¡ç†æœ¬æœº Samba å…±äº«ç›®å½•, é€šè¿‡ `tokio-rusqlite` å­˜å‚¨åœ¨ SQLite `o_shares` è¡¨
+- ç”Ÿæˆ `/etc/samba/smb.cape.conf` é…ç½®æ–‡ä»¶, é€šè¿‡ `include` å¼•å…¥ä¸» `smb.conf`
+- é…ç½®å˜æ›´åé€šè¿‡ `tokio::process::Command` æ‰§è¡Œ `systemctl restart smbd`
+- æ”¯æŒåŒ¿åè®¿é—®è®¾ç½®
 
-### 4.5 CapeOS Ö÷·şÎñ ¡ª ÔÆ´æ´¢Ä£¿é
+**ç½‘ç»œè¿æ¥ç®¡ç† (ConnectionsService)**:
 
-**Ô´ÎÄ¼ş**: `crates/capeos-main/src/server/drivers/`
+- CRUD æ“ä½œç®¡ç†è¿œç¨‹ CIFS/SMB è¿æ¥, é€šè¿‡ `tokio-rusqlite` å­˜å‚¨åœ¨ SQLite `o_connections` è¡¨
+- ä½¿ç”¨ `pavao` crate (libsmbclient ç»‘å®š) éªŒè¯è¿æ¥å‡­æ®
+- ä½¿ç”¨ `nix::mount::mount()` æŒ‚è½½è¿œç¨‹å…±äº«åˆ°æœ¬åœ°ç›®å½•
+- å¯åŠ¨æ—¶é€šè¿‡ `tokio::spawn` å¼‚æ­¥æ¢å¤ä¹‹å‰çš„ç½‘ç»œæŒ‚è½½
 
-Í¨¹ı `rclone` (Íâ²¿½ø³Ì) ÊµÏÖÔÆ´æ´¢µ½±¾µØÎÄ¼şÏµÍ³µÄ¹ÒÔØ¡£
+### 4.5 CapeOS ä¸»æœåŠ¡ -- äº‘å­˜å‚¨æ¨¡å—
 
-| ÔÆ·şÎñ | ÈÏÖ¤ | Rust ÊµÏÖ |
+**æºæ–‡ä»¶**: `crates/capeos-main/src/server/drivers/`
+
+é€šè¿‡ `rclone` (å¤–éƒ¨è¿›ç¨‹) å®ç°äº‘å­˜å‚¨åˆ°æœ¬åœ°æ–‡ä»¶ç³»ç»Ÿçš„æŒ‚è½½ã€‚
+
+| äº‘æœåŠ¡ | è®¤è¯ | Rust å®ç° |
 |--------|------|-----------|
 | Google Drive | OAuth 2.0 | `oauth2` crate + `reqwest` |
 | OneDrive | OAuth 2.0 | `oauth2` crate + `reqwest` |
 | Dropbox | OAuth 2.0 | `oauth2` crate + `reqwest` |
 
-**Çı¶¯ trait** (¶¨ÒåÔÚ `crates/capeos-main/src/server/drivers/mod.rs`):
+**é©±åŠ¨ trait**:
 
 ```rust
 #[async_trait]
@@ -507,12 +507,6 @@ pub trait CloudDriver: Send + Sync {
 }
 ```
 
-**OAuth »Øµ÷Á÷³Ì**:
-1. Ç°¶ËÒıµ¼ÓÃ»§µ½ÔÆ·şÎñ OAuth Ò³Ãæ
-2. »Øµ÷µ½ `GET /v1/recover/:type`
-3. Handler ´´½¨ rclone ÅäÖÃ (`tokio::process::Command`)£¬¹ÒÔØÔÆ´æ´¢
-4. Í¨¹ı `tokio::net::UnixStream` ·¢²¼ `capeos:file:recover` ÊÂ¼şÍ¨ÖªÇ°¶Ë
-
 **StorageService trait**:
 
 ```rust
@@ -521,524 +515,536 @@ pub trait StorageService: Send + Sync {
     async fn mount_storage(&self, mount_point: &str, fs: &str) -> Result<()>;
     async fn unmount_storage(&self, mount_point: &str) -> Result<()>;
     async fn list_storages(&self) -> Result<Vec<StorageInfo>>;
-    async fn create_config(&self, data: HashMap<String, String>, name: &str, storage_type: &str) -> Result<()>;
+    async fn create_config(&self, data: HashMap<String, String>, name: &str, t: &str) -> Result<()>;
     async fn check_and_mount_all(&self) -> Result<()>;
     async fn delete_config_by_name(&self, name: &str) -> Result<()>;
 }
 ```
 
-### 4.6 CapeOS Ö÷·şÎñ ¡ª ÆäËûÄ£¿é
+**OAuth å›è°ƒæµç¨‹**:
 
-**Í¨ÖªÄ£¿é (NotifyService)**: CRUD ¹ÜÀíÍ¨Öª¼ÇÂ¼£¨`o_notify` ±í£¬rusqlite£©£¬Í¨¹ı MessageBus Unix Socket ·¢²¼ `capeos:file:operate` ÊÂ¼şÍ¨ÖªÎÄ¼ş²Ù×÷½ø¶È¡£
+1. å‰ç«¯å¼•å¯¼ç”¨æˆ·åˆ°äº‘æœåŠ¡ OAuth é¡µé¢
+2. å›è°ƒåˆ° `GET /v1/recover/:type`
+3. Handler åˆ›å»º rclone é…ç½® (`tokio::process::Command`), æŒ‚è½½äº‘å­˜å‚¨
+4. é€šè¿‡ `tokio::net::UnixStream` å‘å¸ƒ `capeos:file:recover` äº‹ä»¶é€šçŸ¥å‰ç«¯
 
-**½¡¿µ¼ì²éÄ£¿é (HealthService)**: Í¨¹ı `zbus_systemd` ÁĞ³öËùÓĞ `capeos-*` ·şÎñÔËĞĞ×´Ì¬£»Í¨¹ı¶ÁÈ¡ `/proc/net/tcp` ºÍ `/proc/net/udp` »ñÈ¡ TCP/UDP ¶Ë¿ÚÕ¼ÓÃ£»´ò°üÈÕÖ¾ÏÂÔØ£¨`zip` crate£©¡£
+### 4.6 CapeOS ä¸»æœåŠ¡ -- å…¶ä»–æ¨¡å—
 
-**ZeroTier Ä£¿é**: Í¨¹ı `reqwest` ½«ÇëÇó´úÀí×ª·¢µ½±¾µØ ZeroTier ·şÎñ API£»²éÑ¯½ÚµãĞÅÏ¢ºÍÍøÂç×´Ì¬¡£
+**é€šçŸ¥æ¨¡å— (NotifyService)**: CRUD ç®¡ç†é€šçŸ¥è®°å½• (`o_notify` è¡¨, rusqlite), é€šè¿‡ MessageBus Unix Socket å‘å¸ƒ `capeos:file:operate` äº‹ä»¶é€šçŸ¥æ–‡ä»¶æ“ä½œè¿›åº¦ã€‚
 
-**Éè±¸·¢ÏÖÄ£¿é (PeerService)**: ´Ó Axum ÇëÇóÍ·ÖĞÌáÈ¡ User-Agent ºÍ IP£¬¹ÜÀí¶ÔµÈÉè±¸¼ÇÂ¼£¨`peer_drives` ±í£¬rusqlite£©¡£
+**å¥åº·æ£€æŸ¥æ¨¡å— (HealthService)**: é€šè¿‡ `zbus_systemd` åˆ—å‡ºæ‰€æœ‰ `capeos-*` æœåŠ¡è¿è¡ŒçŠ¶æ€; é€šè¿‡è¯»å– `/proc/net/tcp` å’Œ `/proc/net/udp` è·å–ç«¯å£å ç”¨; æ‰“åŒ…æ—¥å¿—ä¸‹è½½ (`zip` crate)ã€‚
 
-**CapeService**: Í¨¹ı `reqwest` ´ÓÔ¶³Ì API »ñÈ¡×îĞÂ°æ±¾ĞÅÏ¢£¬Ê¹ÓÃ `moka` »º´æ 20 ·ÖÖÓ¡£
+**ZeroTier æ¨¡å—**: é€šè¿‡ `reqwest` å°†è¯·æ±‚ä»£ç†è½¬å‘åˆ°æœ¬åœ° ZeroTier æœåŠ¡ API; æŸ¥è¯¢èŠ‚ç‚¹ä¿¡æ¯å’Œç½‘ç»œçŠ¶æ€ã€‚
 
-**OtherService**: ËÑË÷ÒıÇæ´úÀí£¬Í¨¹ı `reqwest` + `tokio::join!` ²¢ĞĞ²éÑ¯¶à¸öËÑË÷ÒıÇæ¡£
+**è®¾å¤‡å‘ç°æ¨¡å— (PeerService)**: ä» Axum è¯·æ±‚å¤´ä¸­æå– User-Agent å’Œ IP, ç®¡ç†å¯¹ç­‰è®¾å¤‡è®°å½• (`peer_drives` è¡¨, rusqlite)ã€‚
 
-### 4.7 CapeOS-UserService ¡ª ÓÃ»§¹ÜÀíÓëÈÏÖ¤
+**CapeService**: é€šè¿‡ `reqwest` ä»è¿œç¨‹ API è·å–æœ€æ–°ç‰ˆæœ¬ä¿¡æ¯, ä½¿ç”¨ `moka` ç¼“å­˜ 20 åˆ†é’Ÿã€‚
 
-**ÊµÏÖ**: Axum + rusqlite + `jsonwebtoken` + `p256` + `argon2`
+**OtherService**: æœç´¢å¼•æ“ä»£ç†, é€šè¿‡ `reqwest` + `tokio::join!` å¹¶è¡ŒæŸ¥è¯¢å¤šä¸ªæœç´¢å¼•æ“ã€‚
 
-**API »ùÂ·¾¶**: `/v1/user_service`
+### 4.7 CapeOS-UserService -- ç”¨æˆ·ç®¡ç†ä¸è®¤è¯
 
-| ¹¦ÄÜ | ËµÃ÷ | Rust ÊµÏÖ |
+**å®ç°**: Axum + rusqlite + `jsonwebtoken` + `p256` + `argon2`
+
+**API åŸºè·¯å¾„**: `/v1/user_service`
+
+| åŠŸèƒ½ | è¯´æ˜ | Rust å®ç° |
 |------|------|-----------|
-| ÓÃ»§×¢²á | ´´½¨ĞÂÓÃ»§ÕËºÅ | `argon2` ¹şÏ£ÃÜÂë£¬`rusqlite` ´æ´¢ |
-| ÓÃ»§µÇÂ¼ | ÑéÖ¤Æ¾¾İ£¬Ç©·¢ JWT | `argon2::verify`£¬`p256` ECDSA Ç©Ãû |
-| µ±Ç°ÓÃ»§ | »ñÈ¡µ±Ç°µÇÂ¼ÓÃ»§ĞÅÏ¢ | JWT ÖĞ¼ä¼şÌáÈ¡ claims |
-| ÃÜÂëĞŞ¸Ä | ĞŞ¸Äµ±Ç°ÓÃ»§ÃÜÂë | `argon2` ĞÂ¹şÏ£ |
-| ³õÊ¼»¯×´Ì¬ | ¼ì²éÏµÍ³ÊÇ·ñÒÑ³õÊ¼»¯ | `rusqlite` ²éÑ¯ÓÃ»§±í |
-| JWKS ¶Ëµã | ·¢²¼¹«Ô¿¹©ÆäËû·şÎñÑéÖ¤ | `p256::PublicKey` ¡ú JWK ¸ñÊ½ JSON |
+| ç”¨æˆ·æ³¨å†Œ | åˆ›å»ºæ–°ç”¨æˆ·è´¦å· | `argon2` å“ˆå¸Œå¯†ç , `rusqlite` å­˜å‚¨ |
+| ç”¨æˆ·ç™»å½• | éªŒè¯å‡­æ®, ç­¾å‘ JWT | `argon2::verify`, `p256` ECDSA ç­¾å |
+| å½“å‰ç”¨æˆ· | è·å–å½“å‰ç™»å½•ç”¨æˆ·ä¿¡æ¯ | JWT ä¸­é—´ä»¶æå– claims |
+| å¯†ç ä¿®æ”¹ | ä¿®æ”¹å½“å‰ç”¨æˆ·å¯†ç  | `argon2` æ–°å“ˆå¸Œ |
+| åˆå§‹åŒ–çŠ¶æ€ | æ£€æŸ¥ç³»ç»Ÿæ˜¯å¦å·²åˆå§‹åŒ– | `rusqlite` æŸ¥è¯¢ç”¨æˆ·è¡¨ |
+| JWKS ç«¯ç‚¹ | å‘å¸ƒå…¬é’¥ä¾›å…¶ä»–æœåŠ¡éªŒè¯ | `p256::PublicKey` -> JWK æ ¼å¼ JSON |
 
-### 4.8 CapeOS-LocalStorage ¡ª ±¾µØ´æ´¢¹ÜÀí
+### 4.8 CapeOS-LocalStorage -- æœ¬åœ°å­˜å‚¨ç®¡ç†
 
-**ÊµÏÖ**: Axum + `sysinfo` + `tokio::process`
+**å®ç°**: Axum + `sysinfo` + `tokio::process`
 
-**API »ùÂ·¾¶**: `/v1/local_storage`
+**API åŸºè·¯å¾„**: `/v1/local_storage`
 
-| ¹¦ÄÜ | ËµÃ÷ | Rust ÊµÏÖ |
+| åŠŸèƒ½ | è¯´æ˜ | Rust å®ç° |
 |------|------|-----------|
-| ´ÅÅÌÁĞ±í | ÁĞ³öËùÓĞ´ÅÅÌ¼°·ÖÇøĞÅÏ¢ | `sysinfo::Disks` |
-| USB ¹ÜÀí | ÁĞ³ö USB ´æ´¢Éè±¸£¬×Ô¶¯¹ÒÔØ | ¶ÁÈ¡ `/sys/block/` + `udev` »ò `tokio::process` |
-| ´æ´¢¹ÜÀí | Ìí¼Ó/É¾³ı´æ´¢Éè±¸ | `nix::mount` / `tokio::process` |
-| MergerFS | ºÏ²¢¶à´ÅÅÌÎª `/DATA` | `tokio::process::Command::new("mergerfs")` |
-| ºÏ²¢³õÊ¼»¯ | ÅäÖÃ MergerFS ºÏ²¢²ßÂÔ | ¶ÁĞ´ MergerFS ÅäÖÃÎÄ¼ş |
+| ç£ç›˜åˆ—è¡¨ | åˆ—å‡ºæ‰€æœ‰ç£ç›˜åŠåˆ†åŒºä¿¡æ¯ | `sysinfo::Disks` |
+| USB ç®¡ç† | åˆ—å‡º USB å­˜å‚¨è®¾å¤‡, è‡ªåŠ¨æŒ‚è½½ | è¯»å– `/sys/block/` + `tokio::process` |
+| å­˜å‚¨ç®¡ç† | æ·»åŠ /åˆ é™¤å­˜å‚¨è®¾å¤‡ | `nix::mount` / `tokio::process` |
+| MergerFS | åˆå¹¶å¤šç£ç›˜ä¸º `/DATA` | `tokio::process::Command::new("mergerfs")` |
+| åˆå¹¶åˆå§‹åŒ– | é…ç½® MergerFS åˆå¹¶ç­–ç•¥ | è¯»å†™ MergerFS é…ç½®æ–‡ä»¶ |
 
-### 4.9 CapeOS-AppManagement ¡ª Ó¦ÓÃ¹ÜÀí
+### 4.9 CapeOS-AppManagement -- åº”ç”¨ç®¡ç†
 
-**ÊµÏÖ**: Axum + `bollard` (Rust Docker ¿Í»§¶Ë) + rusqlite
+**å®ç°**: Axum + `bollard` (Rust Docker å®¢æˆ·ç«¯) + rusqlite
 
-**API »ùÂ·¾¶**: `/v1/app_management`
+**API åŸºè·¯å¾„**: `/v1/app_management`
 
-| ¹¦ÄÜ | ËµÃ÷ | Rust ÊµÏÖ |
+| åŠŸèƒ½ | è¯´æ˜ | Rust å®ç° |
 |------|------|-----------|
-| Ó¦ÓÃÉÌµê | ä¯ÀÀºÍËÑË÷¿É°²×°Ó¦ÓÃ | `reqwest` À­È¡Ô¶³ÌÉÌµêÄ¿Â¼ |
-| Compose °²×° | °²×° Docker Compose Ó¦ÓÃ | `bollard` + compose YAML ½âÎö |
-| Compose ¹ÜÀí | ÆôÍ£/¸üĞÂ/Ğ¶ÔØ Compose Ó¦ÓÃ | `bollard` API |
-| ÈİÆ÷¹ÜÀí | ÁĞ³ö/´´½¨/É¾³ı/ÆôÍ£ÈİÆ÷ | `bollard::Docker::connect_with_local_defaults()` |
-| ¾µÏñ¹ÜÀí | ÁĞ³ö±¾µØ Docker ¾µÏñ | `bollard` images API |
-| È«¾ÖÉèÖÃ | ¹ÜÀíÓ¦ÓÃ¹ÜÀíµÄÈ«¾ÖÅäÖÃ | rusqlite ´æ´¢ |
+| åº”ç”¨å•†åº— | æµè§ˆå’Œæœç´¢å¯å®‰è£…åº”ç”¨ | `reqwest` æ‹‰å–è¿œç¨‹å•†åº—ç›®å½• |
+| Compose å®‰è£… | å®‰è£… Docker Compose åº”ç”¨ | `bollard` + compose YAML è§£æ |
+| Compose ç®¡ç† | å¯åœ/æ›´æ–°/å¸è½½ Compose åº”ç”¨ | `bollard` API |
+| å®¹å™¨ç®¡ç† | åˆ—å‡º/åˆ›å»º/åˆ é™¤/å¯åœå®¹å™¨ | `bollard::Docker::connect_with_local_defaults()` |
+| é•œåƒç®¡ç† | åˆ—å‡ºæœ¬åœ° Docker é•œåƒ | `bollard` images API |
+| å…¨å±€è®¾ç½® | ç®¡ç†åº”ç”¨ç®¡ç†çš„å…¨å±€é…ç½® | rusqlite å­˜å‚¨ |
 
-### 4.10 CapeOS-MessageBus ¡ª ÏûÏ¢×ÜÏß
+### 4.10 CapeOS-MessageBus -- æ¶ˆæ¯æ€»çº¿
 
-**ÊµÏÖ**: Axum + `tokio::sync::broadcast` + `tokio::net::UnixListener`
+**å®ç°**: Axum + `tokio::sync::broadcast` + `tokio::net::UnixListener`
 
-**API »ùÂ·¾¶**: `/v1/message_bus`
+**API åŸºè·¯å¾„**: `/v1/message_bus`
 
-| ¹¦ÄÜ | ËµÃ÷ | Rust ÊµÏÖ |
+| åŠŸèƒ½ | è¯´æ˜ | Rust å®ç° |
 |------|------|-----------|
-| ÊÂ¼şÀàĞÍ×¢²á | ·şÎñÆô¶¯Ê±×¢²áÊÂ¼şÀàĞÍ | `RwLock<HashMap<String, EventType>>` |
-| ÊÂ¼ş·¢²¼ | REST »ò Unix Socket ·¢²¼ | `broadcast::Sender::send()` |
-| ¶¯×÷ÀàĞÍ×¢²á | ×¢²á¿É´¥·¢µÄ¶¯×÷ÀàĞÍ | `RwLock<HashMap<String, ActionType>>` |
-| ¶¯×÷´¥·¢ | REST ´¥·¢¶¯×÷ | `broadcast::Sender::send()` |
-| WebSocket ¶©ÔÄ | ÊµÊ±¶©ÔÄÊÂ¼şÁ÷ | `axum::extract::ws` + `broadcast::Receiver` |
+| äº‹ä»¶ç±»å‹æ³¨å†Œ | æœåŠ¡å¯åŠ¨æ—¶æ³¨å†Œäº‹ä»¶ç±»å‹ | `RwLock<HashMap<String, EventType>>` |
+| äº‹ä»¶å‘å¸ƒ | REST æˆ– Unix Socket å‘å¸ƒ | `broadcast::Sender::send()` |
+| åŠ¨ä½œç±»å‹æ³¨å†Œ | æ³¨å†Œå¯è§¦å‘çš„åŠ¨ä½œç±»å‹ | `RwLock<HashMap<String, ActionType>>` |
+| åŠ¨ä½œè§¦å‘ | REST è§¦å‘åŠ¨ä½œ | `broadcast::Sender::send()` |
+| WebSocket è®¢é˜… | å®æ—¶è®¢é˜…äº‹ä»¶æµ | `axum::extract::ws` + `broadcast::Receiver` |
 
 ---
 
-## 5. API ½Ó¿ÚÊáÀí
+## 5. API æ¥å£æ¢³ç†
 
-### 5.1 CapeOS-Gateway ¹ÜÀí API
+### 5.1 CapeOS-Gateway ç®¡ç† API
 
-| ·½·¨ | Â·¾¶ | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | è¯´æ˜ |
 |------|------|------|
-| POST | `/v1/gateway/routes` | ×¢²áĞÂÂ·ÓÉ£¨¸÷·şÎñÆô¶¯Ê±µ÷ÓÃ£© |
-| GET | `/v1/gateway/port` | ²éÑ¯µ±Ç°Íø¹Ø¶Ë¿Ú |
-| PUT | `/v1/gateway/port` | ĞŞ¸ÄÍø¹Ø¶Ë¿Ú |
-| GET | `/ping` | ½¡¿µ¼ì²é |
+| POST | `/v1/gateway/routes` | æ³¨å†Œæ–°è·¯ç”± (å„æœåŠ¡å¯åŠ¨æ—¶è°ƒç”¨) |
+| GET | `/v1/gateway/port` | æŸ¥è¯¢å½“å‰ç½‘å…³ç«¯å£ |
+| PUT | `/v1/gateway/port` | ä¿®æ”¹ç½‘å…³ç«¯å£ |
+| GET | `/ping` | å¥åº·æ£€æŸ¥ |
 
 ### 5.2 CapeOS-UserService API (`/v1/user_service`)
 
-| ·½·¨ | Â·¾¶ | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | è¯´æ˜ |
 |------|------|------|
-| POST | `/v1/user_service/users/login` | ÓÃ»§µÇÂ¼£¬·µ»Ø JWT |
-| POST | `/v1/user_service/users/register` | ÓÃ»§×¢²á |
-| GET | `/v1/user_service/users/current` | »ñÈ¡µ±Ç°ÓÃ»§ĞÅÏ¢ |
-| PUT | `/v1/user_service/users/current/password` | ĞŞ¸ÄÃÜÂë |
-| GET | `/v1/user_service/users/name` | ¼ì²éÓÃ»§ÃûÊÇ·ñ´æÔÚ |
-| GET | `/v1/user_service/users/status` | »ñÈ¡ÏµÍ³³õÊ¼»¯×´Ì¬ |
-| DELETE | `/v1/user_service/users/current` | É¾³ıÓÃ»§ÕËºÅ |
-| GET | `/.well-known/jwks.json` | JWKS ¹«Ô¿¶Ëµã |
+| POST | `/v1/user_service/users/login` | ç”¨æˆ·ç™»å½•, è¿”å› JWT |
+| POST | `/v1/user_service/users/register` | ç”¨æˆ·æ³¨å†Œ |
+| GET | `/v1/user_service/users/current` | è·å–å½“å‰ç”¨æˆ·ä¿¡æ¯ |
+| PUT | `/v1/user_service/users/current/password` | ä¿®æ”¹å¯†ç  |
+| GET | `/v1/user_service/users/name` | æ£€æŸ¥ç”¨æˆ·åæ˜¯å¦å­˜åœ¨ |
+| GET | `/v1/user_service/users/status` | è·å–ç³»ç»Ÿåˆå§‹åŒ–çŠ¶æ€ |
+| DELETE | `/v1/user_service/users/current` | åˆ é™¤ç”¨æˆ·è´¦å· |
+| GET | `/.well-known/jwks.json` | JWKS å…¬é’¥ç«¯ç‚¹ |
 
 ### 5.3 CapeOS-LocalStorage API (`/v1/local_storage`)
 
-| ·½·¨ | Â·¾¶ | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | è¯´æ˜ |
 |------|------|------|
-| GET | `/v1/local_storage/disks` | ÁĞ³öËùÓĞ´ÅÅÌ |
-| GET | `/v1/local_storage/disks/usb` | ÁĞ³ö USB ´æ´¢Éè±¸ |
-| GET | `/v1/local_storage/storage` | »ñÈ¡´æ´¢¸ÅÀÀ |
-| POST | `/v1/local_storage/storage` | Ìí¼Ó´æ´¢ |
-| DELETE | `/v1/local_storage/storage` | É¾³ı´æ´¢ |
-| GET | `/v1/local_storage/merge/init` | »ñÈ¡ MergerFS ºÏ²¢×´Ì¬ |
-| POST | `/v1/local_storage/merge/init` | ³õÊ¼»¯ MergerFS ºÏ²¢ |
-| PUT | `/v1/local_storage/merge` | ¸üĞÂºÏ²¢ÅäÖÃ |
+| GET | `/v1/local_storage/disks` | åˆ—å‡ºæ‰€æœ‰ç£ç›˜ |
+| GET | `/v1/local_storage/disks/usb` | åˆ—å‡º USB å­˜å‚¨è®¾å¤‡ |
+| GET | `/v1/local_storage/storage` | è·å–å­˜å‚¨æ¦‚è§ˆ |
+| POST | `/v1/local_storage/storage` | æ·»åŠ å­˜å‚¨ |
+| DELETE | `/v1/local_storage/storage` | åˆ é™¤å­˜å‚¨ |
+| GET | `/v1/local_storage/merge/init` | è·å– MergerFS åˆå¹¶çŠ¶æ€ |
+| POST | `/v1/local_storage/merge/init` | åˆå§‹åŒ– MergerFS åˆå¹¶ |
+| PUT | `/v1/local_storage/merge` | æ›´æ–°åˆå¹¶é…ç½® |
 
 ### 5.4 CapeOS-AppManagement API (`/v1/app_management`)
 
-| ·½·¨ | Â·¾¶ | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | è¯´æ˜ |
 |------|------|------|
-| GET | `/v1/app_management/info` | »ñÈ¡Í¨ÓÃĞÅÏ¢ |
-| POST | `/v1/app_management/convert` | ×ª»» appfile Îª compose ¸ñÊ½ |
-| GET | `/v1/app_management/global` | »ñÈ¡È«¾ÖÉèÖÃ |
-| PUT | `/v1/app_management/global` | ¸üĞÂÈ«¾ÖÉèÖÃ |
-| GET | `/v1/app_management/appstore` | ä¯ÀÀÓ¦ÓÃÉÌµê |
-| GET | `/v1/app_management/compose` | ÁĞ³öÒÑ°²×°µÄ Compose Ó¦ÓÃ |
-| POST | `/v1/app_management/compose` | °²×° Compose Ó¦ÓÃ |
-| GET | `/v1/app_management/compose/:id` | »ñÈ¡Ó¦ÓÃÏêÇé |
-| PUT | `/v1/app_management/compose/:id` | ¸üĞÂÓ¦ÓÃ |
-| DELETE | `/v1/app_management/compose/:id` | Ğ¶ÔØÓ¦ÓÃ |
-| PUT | `/v1/app_management/compose/:id/status` | Æô¶¯/Í£Ö¹Ó¦ÓÃ |
-| GET | `/v1/app_management/container` | ÁĞ³öÈİÆ÷ |
-| POST | `/v1/app_management/container` | ´´½¨ÈİÆ÷ |
-| DELETE | `/v1/app_management/container/:id` | É¾³ıÈİÆ÷ |
-| PUT | `/v1/app_management/container/:id/status` | ÆôÍ£ÈİÆ÷ |
-| GET | `/v1/app_management/image` | ÁĞ³ö¾µÏñ |
+| GET | `/v1/app_management/info` | è·å–é€šç”¨ä¿¡æ¯ |
+| POST | `/v1/app_management/convert` | è½¬æ¢ appfile ä¸º compose æ ¼å¼ |
+| GET | `/v1/app_management/global` | è·å–å…¨å±€è®¾ç½® |
+| PUT | `/v1/app_management/global` | æ›´æ–°å…¨å±€è®¾ç½® |
+| GET | `/v1/app_management/appstore` | æµè§ˆåº”ç”¨å•†åº— |
+| GET | `/v1/app_management/compose` | åˆ—å‡ºå·²å®‰è£…çš„ Compose åº”ç”¨ |
+| POST | `/v1/app_management/compose` | å®‰è£… Compose åº”ç”¨ |
+| GET | `/v1/app_management/compose/:id` | è·å–åº”ç”¨è¯¦æƒ… |
+| PUT | `/v1/app_management/compose/:id` | æ›´æ–°åº”ç”¨ |
+| DELETE | `/v1/app_management/compose/:id` | å¸è½½åº”ç”¨ |
+| PUT | `/v1/app_management/compose/:id/status` | å¯åŠ¨/åœæ­¢åº”ç”¨ |
+| GET | `/v1/app_management/container` | åˆ—å‡ºå®¹å™¨ |
+| POST | `/v1/app_management/container` | åˆ›å»ºå®¹å™¨ |
+| DELETE | `/v1/app_management/container/:id` | åˆ é™¤å®¹å™¨ |
+| PUT | `/v1/app_management/container/:id/status` | å¯åœå®¹å™¨ |
+| GET | `/v1/app_management/image` | åˆ—å‡ºé•œåƒ |
 
 ### 5.5 CapeOS-MessageBus API (`/v1/message_bus`)
 
-| ·½·¨ | Â·¾¶ | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | è¯´æ˜ |
 |------|------|------|
-| GET | `/v1/message_bus/event_types` | ÁĞ³öÒÑ×¢²áµÄÊÂ¼şÀàĞÍ |
-| POST | `/v1/message_bus/event_types` | ×¢²áÊÂ¼şÀàĞÍ |
-| GET | `/v1/message_bus/action_types` | ÁĞ³öÒÑ×¢²áµÄ¶¯×÷ÀàĞÍ |
-| POST | `/v1/message_bus/action_types` | ×¢²á¶¯×÷ÀàĞÍ |
-| POST | `/v1/message_bus/event/:source_id/:name` | ·¢²¼ÊÂ¼ş |
-| POST | `/v1/message_bus/action/:source_id/:name` | ´¥·¢¶¯×÷ |
-| GET | `/v1/message_bus/subscribe` | WebSocket ¶©ÔÄÊÂ¼ş/¶¯×÷Á÷ |
+| GET | `/v1/message_bus/event_types` | åˆ—å‡ºå·²æ³¨å†Œçš„äº‹ä»¶ç±»å‹ |
+| POST | `/v1/message_bus/event_types` | æ³¨å†Œäº‹ä»¶ç±»å‹ |
+| GET | `/v1/message_bus/action_types` | åˆ—å‡ºå·²æ³¨å†Œçš„åŠ¨ä½œç±»å‹ |
+| POST | `/v1/message_bus/action_types` | æ³¨å†ŒåŠ¨ä½œç±»å‹ |
+| POST | `/v1/message_bus/event/:source_id/:name` | å‘å¸ƒäº‹ä»¶ |
+| POST | `/v1/message_bus/action/:source_id/:name` | è§¦å‘åŠ¨ä½œ |
+| GET | `/v1/message_bus/subscribe` | WebSocket è®¢é˜…äº‹ä»¶/åŠ¨ä½œæµ |
 
-### 5.6 CapeOS Ö÷·şÎñ API
+### 5.6 CapeOS ä¸»æœåŠ¡ API
 
-#### ¹«¿ª½Ó¿Ú£¨ÎŞĞèÈÏÖ¤£©
+#### å…¬å¼€æ¥å£ (æ— éœ€è®¤è¯)
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/ping` | ¡ª | ½¡¿µ¼ì²é |
-| GET | `/v1/sys/version/current` | ¡ª | ·µ»Øµ±Ç°°æ±¾ºÅ |
-| GET | `/v1/sys/debug` | `get_system_config_debug` | ÏµÍ³µ÷ÊÔĞÅÏ¢ |
-| GET | `/v1/sys/version/check` | `get_system_check_version` | °æ±¾¸üĞÂ¼ì²é |
-| GET | `/v1/recover/:type` | `get_recover_storage` | ÔÆ´æ´¢ OAuth »Øµ÷ |
+| GET | `/ping` | -- | å¥åº·æ£€æŸ¥ |
+| GET | `/v1/sys/version/current` | -- | è¿”å›å½“å‰ç‰ˆæœ¬å· |
+| GET | `/v1/sys/debug` | `get_system_config_debug` | ç³»ç»Ÿè°ƒè¯•ä¿¡æ¯ |
+| GET | `/v1/sys/version/check` | `get_system_check_version` | ç‰ˆæœ¬æ›´æ–°æ£€æŸ¥ |
+| GET | `/v1/recover/:type` | `get_recover_storage` | äº‘å­˜å‚¨ OAuth å›è°ƒ |
 
-#### ÏµÍ³¹ÜÀí (`/v1/sys`)
+#### ç³»ç»Ÿç®¡ç† (`/v1/sys`)
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/v1/sys/version` | `get_system_check_version` | °æ±¾¼ì²é |
-| POST | `/v1/sys/update` | `system_update` | ´¥·¢ÏµÍ³¸üĞÂ |
-| GET | `/v1/sys/hardware` | `get_system_hardware_info` | Ó²¼şĞÅÏ¢ |
-| GET | `/v1/sys/wsssh` | `ws_ssh` | WebSocket SSH ÖÕ¶Ë |
-| POST | `/v1/sys/ssh-login` | `post_ssh_login` | SSH µÇÂ¼ÑéÖ¤ |
-| GET | `/v1/sys/logs` | `get_capeos_error_logs` | ´íÎóÈÕÖ¾ |
-| POST | `/v1/sys/stop` | `post_kill_capeos` | Í£Ö¹ CapeOS |
-| GET | `/v1/sys/utilization` | `get_system_utilization` | ÏµÍ³×ÊÔ´ÀûÓÃÂÊ |
-| GET | `/v1/sys/proxy` | `get_system_proxy` | ´úÀí URL |
-| PUT | `/v1/sys/state/:state` | `put_system_state` | ¹Ø»ú/ÖØÆô |
-| GET | `/v1/sys/entry` | `get_system_entry` | Ä£¿éÈë¿ÚÅäÖÃ |
+| GET | `/v1/sys/version` | `get_system_check_version` | ç‰ˆæœ¬æ£€æŸ¥ |
+| POST | `/v1/sys/update` | `system_update` | è§¦å‘ç³»ç»Ÿæ›´æ–° |
+| GET | `/v1/sys/hardware` | `get_system_hardware_info` | ç¡¬ä»¶ä¿¡æ¯ |
+| GET | `/v1/sys/wsssh` | `ws_ssh` | WebSocket SSH ç»ˆç«¯ |
+| POST | `/v1/sys/ssh-login` | `post_ssh_login` | SSH ç™»å½•éªŒè¯ |
+| GET | `/v1/sys/logs` | `get_capeos_error_logs` | é”™è¯¯æ—¥å¿— |
+| POST | `/v1/sys/stop` | `post_kill_capeos` | åœæ­¢ CapeOS |
+| GET | `/v1/sys/utilization` | `get_system_utilization` | ç³»ç»Ÿèµ„æºåˆ©ç”¨ç‡ |
+| GET | `/v1/sys/proxy` | `get_system_proxy` | ä»£ç† URL |
+| PUT | `/v1/sys/state/:state` | `put_system_state` | å…³æœº/é‡å¯ |
+| GET | `/v1/sys/entry` | `get_system_entry` | æ¨¡å—å…¥å£é…ç½® |
 
-#### ¶Ë¿Ú¹ÜÀí (`/v1/port`)
+#### ç«¯å£ç®¡ç† (`/v1/port`)
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/v1/port/` | `get_port` | »ñÈ¡¿ÉÓÃ¶Ë¿Ú |
-| GET | `/v1/port/state/:port` | `port_check` | ¼ì²é¶Ë¿Ú¿ÉÓÃĞÔ |
+| GET | `/v1/port/` | `get_port` | è·å–å¯ç”¨ç«¯å£ |
+| GET | `/v1/port/state/:port` | `port_check` | æ£€æŸ¥ç«¯å£å¯ç”¨æ€§ |
 
-#### ÎÄ¼ş¹ÜÀí (`/v1/file`)
+#### æ–‡ä»¶ç®¡ç† (`/v1/file`)
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/v1/file` | `get_download_single_file` | ÏÂÔØµ¥¸öÎÄ¼ş |
-| POST | `/v1/file` | `post_create_file` | ´´½¨ÎÄ¼ş |
-| PUT | `/v1/file` | `put_file_content` | ¸üĞÂÎÄ¼şÄÚÈİ |
-| PUT | `/v1/file/name` | `rename_path` | ÖØÃüÃû |
-| GET | `/v1/file/content` | `get_file_content` | ¶ÁÈ¡ÎÄ¼şÄÚÈİ |
-| POST | `/v1/file/upload` | `post_file_upload` | ÉÏ´«ÎÄ¼ş |
-| GET | `/v1/file/upload` | `get_file_upload` | ¼ì²é·Ö¿éÉÏ´«×´Ì¬ |
-| GET | `/v1/file/ws` | `connect_websocket` | WebSocket Á¬½Ó |
-| GET | `/v1/file/peers` | `get_peers` | ÒÑÁ¬½Ó¶ÔµÈÉè±¸ |
+| GET | `/v1/file` | `get_download_single_file` | ä¸‹è½½å•ä¸ªæ–‡ä»¶ |
+| POST | `/v1/file` | `post_create_file` | åˆ›å»ºæ–‡ä»¶ |
+| PUT | `/v1/file` | `put_file_content` | æ›´æ–°æ–‡ä»¶å†…å®¹ |
+| PUT | `/v1/file/name` | `rename_path` | é‡å‘½å |
+| GET | `/v1/file/content` | `get_file_content` | è¯»å–æ–‡ä»¶å†…å®¹ |
+| POST | `/v1/file/upload` | `post_file_upload` | ä¸Šä¼ æ–‡ä»¶ |
+| GET | `/v1/file/upload` | `get_file_upload` | æ£€æŸ¥åˆ†å—ä¸Šä¼ çŠ¶æ€ |
+| GET | `/v1/file/ws` | `connect_websocket` | WebSocket è¿æ¥ |
+| GET | `/v1/file/peers` | `get_peers` | å·²è¿æ¥å¯¹ç­‰è®¾å¤‡ |
 
-#### Ä¿Â¼¹ÜÀí (`/v1/folder`)
+#### ç›®å½•ç®¡ç† (`/v1/folder`)
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/v1/folder` | `dir_path` | ÁĞ³öÄ¿Â¼ÄÚÈİ |
-| POST | `/v1/folder` | `mkdir_all` | ´´½¨Ä¿Â¼ |
-| PUT | `/v1/folder/name` | `rename_path` | ÖØÃüÃûÄ¿Â¼ |
-| GET | `/v1/folder/size` | `get_size` | Ä¿Â¼´óĞ¡ |
-| GET | `/v1/folder/count` | `get_file_count` | ÎÄ¼şÊıÁ¿ |
+| GET | `/v1/folder` | `dir_path` | åˆ—å‡ºç›®å½•å†…å®¹ |
+| POST | `/v1/folder` | `mkdir_all` | åˆ›å»ºç›®å½• |
+| PUT | `/v1/folder/name` | `rename_path` | é‡å‘½åç›®å½• |
+| GET | `/v1/folder/size` | `get_size` | ç›®å½•å¤§å° |
+| GET | `/v1/folder/count` | `get_file_count` | æ–‡ä»¶æ•°é‡ |
 
-#### ÅúÁ¿²Ù×÷ (`/v1/batch`)
+#### æ‰¹é‡æ“ä½œ (`/v1/batch`)
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/v1/batch` | `get_download_file` | ÅúÁ¿ÏÂÔØ (zip/tar) |
-| DELETE | `/v1/batch` | `delete_file` | ÅúÁ¿É¾³ı |
-| POST | `/v1/batch/task` | `post_operate_file_or_dir` | ´´½¨¸´ÖÆ/ÒÆ¶¯ÈÎÎñ |
-| DELETE | `/v1/batch/:id/task` | `delete_operate_file_or_dir` | È¡Ïû²Ù×÷ÈÎÎñ |
+| GET | `/v1/batch` | `get_download_file` | æ‰¹é‡ä¸‹è½½ (zip/tar) |
+| DELETE | `/v1/batch` | `delete_file` | æ‰¹é‡åˆ é™¤ |
+| POST | `/v1/batch/task` | `post_operate_file_or_dir` | åˆ›å»ºå¤åˆ¶/ç§»åŠ¨ä»»åŠ¡ |
+| DELETE | `/v1/batch/:id/task` | `delete_operate_file_or_dir` | å–æ¶ˆæ“ä½œä»»åŠ¡ |
 
-#### Í¼Æ¬ (`/v1/image`)
+#### å›¾ç‰‡ (`/v1/image`)
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/v1/image` | `get_file_image` | ËõÂÔÍ¼/Ô­Í¼ |
+| GET | `/v1/image` | `get_file_image` | ç¼©ç•¥å›¾/åŸå›¾ |
 
 #### Samba (`/v1/samba`)
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/v1/samba/connections` | `get_samba_connections_list` | ÁĞ³öÍøÂçÁ¬½Ó |
-| POST | `/v1/samba/connections` | `post_samba_connections_create` | ´´½¨ÍøÂçÁ¬½Ó |
-| DELETE | `/v1/samba/connections/:id` | `delete_samba_connections` | É¾³ıÍøÂçÁ¬½Ó |
-| GET | `/v1/samba/shares` | `get_samba_shares_list` | ÁĞ³ö¹²Ïí |
-| POST | `/v1/samba/shares` | `post_samba_shares_create` | ´´½¨¹²Ïí |
-| DELETE | `/v1/samba/shares/:id` | `delete_samba_shares` | É¾³ı¹²Ïí |
-| GET | `/v1/samba/shares/status` | `get_samba_status` | Samba ·şÎñ×´Ì¬ |
+| GET | `/v1/samba/connections` | `get_samba_connections_list` | åˆ—å‡ºç½‘ç»œè¿æ¥ |
+| POST | `/v1/samba/connections` | `post_samba_connections_create` | åˆ›å»ºç½‘ç»œè¿æ¥ |
+| DELETE | `/v1/samba/connections/:id` | `delete_samba_connections` | åˆ é™¤ç½‘ç»œè¿æ¥ |
+| GET | `/v1/samba/shares` | `get_samba_shares_list` | åˆ—å‡ºå…±äº« |
+| POST | `/v1/samba/shares` | `post_samba_shares_create` | åˆ›å»ºå…±äº« |
+| DELETE | `/v1/samba/shares/:id` | `delete_samba_shares` | åˆ é™¤å…±äº« |
+| GET | `/v1/samba/shares/status` | `get_samba_status` | Samba æœåŠ¡çŠ¶æ€ |
 
-#### Í¨Öª (`/v1/notify`)
+#### é€šçŸ¥ (`/v1/notify`)
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| POST | `/v1/notify/:path` | `post_notify_message` | ·¢ËÍÍ¨Öª |
-| POST | `/v1/notify/system_status` | `post_system_status_notify` | ÏµÍ³×´Ì¬Í¨Öª |
+| POST | `/v1/notify/:path` | `post_notify_message` | å‘é€é€šçŸ¥ |
+| POST | `/v1/notify/system_status` | `post_system_status_notify` | ç³»ç»ŸçŠ¶æ€é€šçŸ¥ |
 
-#### ÔÆ´æ´¢ (`/v1/cloud`, `/v1/driver`)
+#### äº‘å­˜å‚¨ (`/v1/cloud`, `/v1/driver`)
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/v1/cloud` | `list_storages` | ÁĞ³öÒÑ¹ÒÔØÔÆ´æ´¢ |
-| DELETE | `/v1/cloud` | `umount_storage` | Ğ¶ÔØÔÆ´æ´¢ |
-| GET | `/v1/driver` | `list_driver_info` | ¿ÉÓÃÇı¶¯ÁĞ±í |
+| GET | `/v1/cloud` | `list_storages` | åˆ—å‡ºå·²æŒ‚è½½äº‘å­˜å‚¨ |
+| DELETE | `/v1/cloud` | `umount_storage` | å¸è½½äº‘å­˜å‚¨ |
+| GET | `/v1/driver` | `list_driver_info` | å¯ç”¨é©±åŠ¨åˆ—è¡¨ |
 
-#### ÆäËû
+#### å…¶ä»–
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/v1/other/search` | `get_search_result` | ËÑË÷ÒıÇæ´úÀí |
-| ANY | `/v1/zt/*url` | `zerotier_proxy` | ZeroTier API ´úÀí |
+| GET | `/v1/other/search` | `get_search_result` | æœç´¢å¼•æ“ä»£ç† |
+| ANY | `/v1/zt/*url` | `zerotier_proxy` | ZeroTier API ä»£ç† |
 
-#### ½¡¿µ¼ì²éÓëÎÄ¼ş·şÎñ
+#### å¥åº·æ£€æŸ¥ä¸æ–‡ä»¶æœåŠ¡
 
-| ·½·¨ | Â·¾¶ | Handler | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | Handler | è¯´æ˜ |
 |------|------|---------|------|
-| GET | `/v1/capeos/health/services` | `get_health_services` | ¸÷ capeos-* ·şÎñÔËĞĞ×´Ì¬ |
-| GET | `/v1/capeos/health/ports` | `get_health_ports` | TCP/UDP ¶Ë¿ÚÕ¼ÓÃ |
-| GET | `/v1/capeos/health/logs` | `get_health_logs` | ÈÕÖ¾Ñ¹Ëõ°üÏÂÔØ |
-| GET | `/v1/capeos/file/upload` | `check_upload_chunk` | ¼ì²é·Ö¿éÉÏ´«×´Ì¬ |
-| POST | `/v1/capeos/file/upload` | `post_upload_file` | ·Ö¿éÉÏ´«ÎÄ¼ş |
-| GET | `/v1/capeos/zt/info` | `get_zerotier_info` | ZeroTier ½ÚµãĞÅÏ¢ |
-| PUT | `/v1/capeos/zt/:network_id/status` | `set_zerotier_network_status` | ÉèÖÃ ZeroTier ÍøÂç×´Ì¬ |
+| GET | `/v1/capeos/health/services` | `get_health_services` | å„ capeos-* æœåŠ¡è¿è¡ŒçŠ¶æ€ |
+| GET | `/v1/capeos/health/ports` | `get_health_ports` | TCP/UDP ç«¯å£å ç”¨ |
+| GET | `/v1/capeos/health/logs` | `get_health_logs` | æ—¥å¿—å‹ç¼©åŒ…ä¸‹è½½ |
+| GET | `/v1/capeos/file/upload` | `check_upload_chunk` | æ£€æŸ¥åˆ†å—ä¸Šä¼ çŠ¶æ€ |
+| POST | `/v1/capeos/file/upload` | `post_upload_file` | åˆ†å—ä¸Šä¼ æ–‡ä»¶ |
+| GET | `/v1/capeos/zt/info` | `get_zerotier_info` | ZeroTier èŠ‚ç‚¹ä¿¡æ¯ |
+| PUT | `/v1/capeos/zt/:network_id/status` | `set_zerotier_network_status` | è®¾ç½® ZeroTier ç½‘ç»œçŠ¶æ€ |
 
-### 5.7 ÎÄ¼ş·şÎñÓëÎÄµµ½Ó¿Ú
+### 5.7 æ–‡ä»¶æœåŠ¡ä¸æ–‡æ¡£æ¥å£
 
-| ·½·¨ | Â·¾¶ | ËµÃ÷ |
+| æ–¹æ³• | è·¯å¾„ | è¯´æ˜ |
 |------|------|------|
-| GET | `/v1/file?token=xxx&path=xxx` | Token ¼øÈ¨µÄÎÄ¼şÖ±½Ó·ÃÎÊ |
-| GET | `/doc/v1/capeos` | utoipa Swagger UI ÎÄµµÒ³Ãæ |
-| GET | `/doc/v1/capeos/openapi.json` | utoipa ×Ô¶¯Éú³ÉµÄ OpenAPI ¹æ·¶ |
+| GET | `/v1/file?token=xxx&path=xxx` | Token é‰´æƒçš„æ–‡ä»¶ç›´æ¥è®¿é—® |
+| GET | `/doc/v1/capeos` | utoipa Swagger UI æ–‡æ¡£é¡µé¢ |
+| GET | `/doc/v1/capeos/openapi.json` | utoipa è‡ªåŠ¨ç”Ÿæˆçš„ OpenAPI è§„èŒƒ |
 
-### 5.8 Í¨ÓÃÏìÓ¦¸ñÊ½
+### 5.8 é€šç”¨å“åº”æ ¼å¼
 
 ```rust
-#[derive(Debug, Serialize, Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ApiResponse<T: Serialize> {
-    pub success: i32,     // HTTP ×´Ì¬Âë
-    pub message: String,  // ÏûÏ¢
-    pub data: Option<T>,  // ÏìÓ¦Êı¾İ
+    pub success: i32,     // HTTP çŠ¶æ€ç 
+    pub message: String,  // æ¶ˆæ¯
+    pub data: Option<T>,  // å“åº”æ•°æ®
 }
 ```
+
+JSON ç¤ºä¾‹:
 
 ```json
 {
     "success": 200,
     "message": "ok",
-    "data": { ... }
+    "data": {}
 }
 ```
 
 ---
 
-## 6. ´úÂë¿ò¼Ü½á¹¹
+## 6. ä»£ç æ¡†æ¶ç»“æ„
 
-### 6.1 Cargo Workspace ÏîÄ¿½á¹¹
+### 6.1 Cargo Workspace é¡¹ç›®ç»“æ„
 
-```
+```text
 capeos/
-©À©¤©¤ Cargo.toml                          # Workspace ¸ùÅäÖÃ
-©À©¤©¤ Cargo.lock
-©À©¤©¤ rust-toolchain.toml                 # Rust ¹¤¾ßÁ´°æ±¾Ëø¶¨
-©¦
-©À©¤©¤ crates/
-©¦   ©¦
-©¦   ©À©¤©¤ capeos-common/                  # ¹²Ïí¿â (lib crate)
-©¦   ©¦   ©À©¤©¤ Cargo.toml
-©¦   ©¦   ©¸©¤©¤ src/
-©¦   ©¦       ©À©¤©¤ lib.rs
-©¦   ©¦       ©À©¤©¤ gateway_client.rs       # reqwest ¡ú POST /v1/gateway/routes
-©¦   ©¦       ©À©¤©¤ jwt.rs                  # jsonwebtoken + p256 ECDSA ÑéÖ¤
-©¦   ©¦       ©À©¤©¤ message_bus_client.rs   # tokio::net::UnixStream ¡ú MessageBus
-©¦   ©¦       ©À©¤©¤ service_discovery.rs    # ¶ÁÈ¡ /var/run/capeos/*.url + ÖØÊÔ
-©¦   ©¦       ©À©¤©¤ middleware/
-©¦   ©¦       ©¦   ©À©¤©¤ mod.rs
-©¦   ©¦       ©¦   ©À©¤©¤ jwt_auth.rs         # Axum JWT ÖĞ¼ä¼ş²ã
-©¦   ©¦       ©¦   ©À©¤©¤ cors.rs             # tower-http CorsLayer ·â×°
-©¦   ©¦       ©¦   ©¸©¤©¤ compression.rs      # tower-http CompressionLayer ·â×°
-©¦   ©¦       ©À©¤©¤ models/
-©¦   ©¦       ©¦   ©À©¤©¤ mod.rs
-©¦   ©¦       ©¦   ©À©¤©¤ route.rs            # Route { path, target }
-©¦   ©¦       ©¦   ©À©¤©¤ device.rs           # DeviceInfo
-©¦   ©¦       ©¦   ©À©¤©¤ event.rs            # EventType, PropertyType
-©¦   ©¦       ©¦   ©¸©¤©¤ response.rs         # ApiResponse<T> Í³Ò»ÏìÓ¦
-©¦   ©¦       ©À©¤©¤ error.rs                # Í³Ò»´íÎóÀàĞÍ + ´íÎóÂë
-©¦   ©¦       ©¸©¤©¤ utils/
-©¦   ©¦           ©À©¤©¤ mod.rs
-©¦   ©¦           ©À©¤©¤ sysctl.rs           # zbus_systemd ·â×°
-©¦   ©¦           ©À©¤©¤ file_ops.rs         # ÎÄ¼ş²Ù×÷¹¤¾ß
-©¦   ©¦           ©À©¤©¤ net.rs              # IP/MAC µØÖ·¹¤¾ß
-©¦   ©¦           ©¸©¤©¤ port.rs             # ¶Ë¿Ú¿ÉÓÃĞÔ¼ì²â
-©¦   ©¦
-©¦   ©À©¤©¤ capeos-gateway/                 # API Íø¹Ø (bin crate)
-©¦   ©¦   ©À©¤©¤ Cargo.toml                  # deps: axum, axum-reverse-proxy, capeos-common
-©¦   ©¦   ©¸©¤©¤ src/
-©¦   ©¦       ©À©¤©¤ main.rs                 # Æô¶¯£º°ó¶¨¶Ë¿Ú¡¢Ğ´Èë URL ÎÄ¼ş
-©¦   ©¦       ©À©¤©¤ route_table.rs          # Arc<RwLock<HashMap<String, String>>>
-©¦   ©¦       ©À©¤©¤ proxy.rs                # axum-reverse-proxy ÇëÇó×ª·¢
-©¦   ©¦       ©¸©¤©¤ management.rs           # /v1/gateway/{routes,port} handlers
-©¦   ©¦
-©¦   ©À©¤©¤ capeos-message-bus/             # ÏûÏ¢×ÜÏß (bin crate)
-©¦   ©¦   ©À©¤©¤ Cargo.toml                  # deps: axum, tokio, capeos-common
-©¦   ©¦   ©¸©¤©¤ src/
-©¦   ©¦       ©À©¤©¤ main.rs
-©¦   ©¦       ©À©¤©¤ event_store.rs          # RwLock<HashMap> ÊÂ¼ş/¶¯×÷ÀàĞÍ×¢²á
-©¦   ©¦       ©À©¤©¤ publisher.rs            # REST + Unix Socket ½ÓÊÕ·¢²¼
-©¦   ©¦       ©¸©¤©¤ subscriber.rs           # axum::extract::ws ¡ú broadcast::Receiver
-©¦   ©¦
-©¦   ©À©¤©¤ capeos-user-service/            # ÓÃ»§ÈÏÖ¤ (bin crate)
-©¦   ©¦   ©À©¤©¤ Cargo.toml                  # deps: axum, rusqlite, jsonwebtoken, p256, argon2
-©¦   ©¦   ©¸©¤©¤ src/
-©¦   ©¦       ©À©¤©¤ main.rs
-©¦   ©¦       ©À©¤©¤ routes.rs               # /v1/user_service/users/*
-©¦   ©¦       ©À©¤©¤ jwt_issuer.rs           # p256 ÃÜÔ¿¶ÔÉú³É + JWT Ç©·¢
-©¦   ©¦       ©À©¤©¤ jwks.rs                 # /.well-known/jwks.json ¶Ëµã
-©¦   ©¦       ©¸©¤©¤ repo.rs                 # rusqlite ÓÃ»§±í CRUD
-©¦   ©¦
-©¦   ©À©¤©¤ capeos-local-storage/           # ±¾µØ´æ´¢¹ÜÀí (bin crate)
-©¦   ©¦   ©À©¤©¤ Cargo.toml                  # deps: axum, sysinfo, tokio, capeos-common
-©¦   ©¦   ©¸©¤©¤ src/
-©¦   ©¦       ©À©¤©¤ main.rs
-©¦   ©¦       ©À©¤©¤ routes.rs               # /v1/local_storage/*
-©¦   ©¦       ©À©¤©¤ disk.rs                 # sysinfo::Disks
-©¦   ©¦       ©À©¤©¤ usb.rs                  # USB Éè±¸¼ì²â
-©¦   ©¦       ©¸©¤©¤ mergerfs.rs             # tokio::process MergerFS ¹ÜÀí
-©¦   ©¦
-©¦   ©À©¤©¤ capeos-app-management/          # Ó¦ÓÃ¹ÜÀí (bin crate)
-©¦   ©¦   ©À©¤©¤ Cargo.toml                  # deps: axum, bollard, rusqlite, capeos-common
-©¦   ©¦   ©¸©¤©¤ src/
-©¦   ©¦       ©À©¤©¤ main.rs
-©¦   ©¦       ©À©¤©¤ routes.rs               # /v1/app_management/*
-©¦   ©¦       ©À©¤©¤ compose.rs              # Docker Compose ²Ù×÷
-©¦   ©¦       ©À©¤©¤ container.rs            # bollard ÈİÆ÷ CRUD
-©¦   ©¦       ©À©¤©¤ image.rs                # bollard ¾µÏñ¹ÜÀí
-©¦   ©¦       ©¸©¤©¤ app_store.rs            # Ô¶³ÌÓ¦ÓÃÉÌµê
-©¦   ©¦
-©¦   ©À©¤©¤ capeos-main/                    # Ö÷·şÎñ - Leptos È«Õ» (bin crate)
-©¦   ©¦   ©À©¤©¤ Cargo.toml                  # deps: leptos, leptos_axum, axum, rusqlite, sysinfo...
-©¦   ©¦   ©À©¤©¤ src/
-©¦   ©¦   ©¦   ©À©¤©¤ main.rs                 # Leptos + Axum Æô¶¯Èë¿Ú
-©¦   ©¦   ©¦   ©À©¤©¤ app.rs                  # Leptos ¸ù×é¼ş + Ç°¶ËÂ·ÓÉ
-©¦   ©¦   ©¦   ©¦
-©¦   ©¦   ©¦   ©À©¤©¤ server/                 # === ºó¶Ë (½ö·şÎñ¶Ë±àÒë, #[cfg(feature="ssr")]) ===
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ mod.rs
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ state.rs            # AppState { db, cache, ... }
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ db.rs               # rusqlite ³õÊ¼»¯ + rusqlite_migration
-©¦   ©¦   ©¦   ©¦   ©¦
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ services/           # Service ²ã (ÒµÎñÂß¼­)
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ mod.rs
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ system.rs       # sysinfo ÏµÍ³¹ÜÀí
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ file_ops.rs     # tokio::fs ÎÄ¼ş²Ù×÷
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ upload.rs       # ·Ö¿éÉÏ´« (DashMap ×·×Ù)
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ shares.rs       # Samba ¹²Ïí (rusqlite)
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ connections.rs  # ÍøÂçÁ¬½Ó (rusqlite + pavao)
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ storage.rs      # ÔÆ´æ´¢ (rclone via tokio::process)
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ notify.rs       # Í¨Öª (rusqlite + MessageBus)
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ health.rs       # ½¡¿µ¼ì²é (zbus_systemd)
-©¦   ©¦   ©¦   ©¦   ©¦   ©¸©¤©¤ peer.rs         # Éè±¸·¢ÏÖ (rusqlite)
-©¦   ©¦   ©¦   ©¦   ©¦
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ repo/               # Repository ²ã (rusqlite Êı¾İ·ÃÎÊ)
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ mod.rs
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ shares_repo.rs
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ connections_repo.rs
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ notify_repo.rs
-©¦   ©¦   ©¦   ©¦   ©¦   ©¸©¤©¤ peer_repo.rs
-©¦   ©¦   ©¦   ©¦   ©¦
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ api/                # REST API (¸øµÚÈı·½ / ·Ç Leptos ¿Í»§¶Ë)
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ mod.rs
-©¦   ©¦   ©¦   ©¦   ©¦   ©¸©¤©¤ v1.rs           # Axum handlers + utoipa ±ê×¢
-©¦   ©¦   ©¦   ©¦   ©¦
-©¦   ©¦   ©¦   ©¦   ©¸©¤©¤ drivers/            # ÔÆ´æ´¢Çı¶¯
-©¦   ©¦   ©¦   ©¦       ©À©¤©¤ mod.rs          # CloudDriver trait
-©¦   ©¦   ©¦   ©¦       ©À©¤©¤ google_drive.rs
-©¦   ©¦   ©¦   ©¦       ©À©¤©¤ onedrive.rs
-©¦   ©¦   ©¦   ©¦       ©¸©¤©¤ dropbox.rs
-©¦   ©¦   ©¦   ©¦
-©¦   ©¦   ©¦   ©À©¤©¤ pages/                  # === Ç°¶ËÒ³Ãæ (Leptos WASM ×é¼ş) ===
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ mod.rs
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ dashboard.rs        # ÒÇ±íÅÌ (CPU/ÄÚ´æ/´ÅÅÌ/ÍøÂç)
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ files.rs            # ÎÄ¼ş¹ÜÀíÆ÷
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ apps.rs             # Ó¦ÓÃÉÌµê
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ storage.rs          # ´æ´¢¹ÜÀí
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ shares.rs           # ÍøÂç¹²Ïí
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ settings.rs         # ÏµÍ³ÉèÖÃ
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ terminal.rs         # SSH WebSocket ÖÕ¶Ë
-©¦   ©¦   ©¦   ©¦   ©¸©¤©¤ login.rs            # µÇÂ¼Ò³
-©¦   ©¦   ©¦   ©¦
-©¦   ©¦   ©¦   ©¸©¤©¤ components/             # === ¿É¸´ÓÃ UI ×é¼ş ===
-©¦   ©¦   ©¦       ©À©¤©¤ mod.rs
-©¦   ©¦   ©¦       ©À©¤©¤ layout.rs           # Ò³Ãæ²¼¾Ö (²à±ßÀ¸ + ¶¥À¸)
-©¦   ©¦   ©¦       ©À©¤©¤ file_list.rs        # ÎÄ¼şÁĞ±í/Íø¸ñÊÓÍ¼
-©¦   ©¦   ©¦       ©À©¤©¤ file_uploader.rs    # ÍÏ×§ÉÏ´«×é¼ş
-©¦   ©¦   ©¦       ©À©¤©¤ cpu_gauge.rs        # CPU ÒÇ±íÅÌ
-©¦   ©¦   ©¦       ©À©¤©¤ memory_bar.rs       # ÄÚ´æÌõ
-©¦   ©¦   ©¦       ©À©¤©¤ network_chart.rs    # ÍøÂçÁ÷Á¿Í¼
-©¦   ©¦   ©¦       ©¸©¤©¤ notification.rs     # Í¨Öªµ¯´°
-©¦   ©¦   ©¦
-©¦   ©¦   ©À©¤©¤ style/
-©¦   ©¦   ©¦   ©¸©¤©¤ main.css                # TailwindCSS
-©¦   ©¦   ©¦
-©¦   ©¦   ©¸©¤©¤ public/
-©¦   ©¦       ©¸©¤©¤ favicon.ico
-©¦   ©¦
-©¦   ©¸©¤©¤ capeos-cli/                     # CLI ¹¤¾ß (bin crate)
-©¦       ©À©¤©¤ Cargo.toml                  # deps: clap, reqwest, capeos-common
-©¦       ©¸©¤©¤ src/
-©¦           ©¸©¤©¤ main.rs
-©¦
-©À©¤©¤ config/
-©¦   ©¸©¤©¤ capeos.toml.sample              # TOML ÅäÖÃÎÄ¼şÄ£°å
-©¦
-©¸©¤©¤ deploy/
-    ©À©¤©¤ systemd/                        # systemd ·şÎñµ¥ÔªÎÄ¼ş
-    ©¦   ©À©¤©¤ capeos-gateway.service
-    ©¦   ©À©¤©¤ capeos-message-bus.service
-    ©¦   ©À©¤©¤ capeos-user-service.service
-    ©¦   ©À©¤©¤ capeos-local-storage.service
-    ©¦   ©À©¤©¤ capeos-app-management.service
-    ©¦   ©¸©¤©¤ capeos.service
-    ©¸©¤©¤ scripts/
-        ©¸©¤©¤ install.sh                  # °²×°½Å±¾
++-- Cargo.toml                          # Workspace æ ¹é…ç½®
++-- Cargo.lock
++-- rust-toolchain.toml                 # Rust å·¥å…·é“¾ç‰ˆæœ¬é”å®š
+|
++-- crates/
+|   |
+|   +-- capeos-common/                  # å…±äº«åº“ (lib crate)
+|   |   +-- Cargo.toml
+|   |   +-- src/
+|   |       +-- lib.rs
+|   |       +-- gateway_client.rs       # reqwest -> POST /v1/gateway/routes
+|   |       +-- jwt.rs                  # jsonwebtoken + p256 ECDSA éªŒè¯
+|   |       +-- message_bus_client.rs   # tokio::net::UnixStream -> MessageBus
+|   |       +-- service_discovery.rs    # è¯»å– /var/run/capeos/*.url + é‡è¯•
+|   |       +-- middleware/
+|   |       |   +-- mod.rs
+|   |       |   +-- jwt_auth.rs         # Axum JWT ä¸­é—´ä»¶å±‚
+|   |       |   +-- cors.rs             # tower-http CorsLayer å°è£…
+|   |       |   +-- compression.rs      # tower-http CompressionLayer å°è£…
+|   |       +-- models/
+|   |       |   +-- mod.rs
+|   |       |   +-- route.rs            # Route { path, target }
+|   |       |   +-- device.rs           # DeviceInfo
+|   |       |   +-- event.rs            # EventType, PropertyType
+|   |       |   +-- response.rs         # ApiResponse<T> ç»Ÿä¸€å“åº”
+|   |       +-- error.rs                # ç»Ÿä¸€é”™è¯¯ç±»å‹ + é”™è¯¯ç 
+|   |       +-- utils/
+|   |           +-- mod.rs
+|   |           +-- sysctl.rs           # zbus_systemd å°è£…
+|   |           +-- file_ops.rs         # æ–‡ä»¶æ“ä½œå·¥å…·
+|   |           +-- net.rs              # IP/MAC åœ°å€å·¥å…·
+|   |           +-- port.rs             # ç«¯å£å¯ç”¨æ€§æ£€æµ‹
+|   |
+|   +-- capeos-gateway/                 # API ç½‘å…³ (bin crate)
+|   |   +-- Cargo.toml
+|   |   +-- src/
+|   |       +-- main.rs                 # å¯åŠ¨: ç»‘å®šç«¯å£, å†™å…¥ URL æ–‡ä»¶
+|   |       +-- route_table.rs          # Arc<RwLock<HashMap<String, String>>>
+|   |       +-- proxy.rs                # axum-reverse-proxy è¯·æ±‚è½¬å‘
+|   |       +-- management.rs           # /v1/gateway/{routes,port} handlers
+|   |
+|   +-- capeos-message-bus/             # æ¶ˆæ¯æ€»çº¿ (bin crate)
+|   |   +-- Cargo.toml
+|   |   +-- src/
+|   |       +-- main.rs
+|   |       +-- event_store.rs          # RwLock<HashMap> äº‹ä»¶/åŠ¨ä½œç±»å‹æ³¨å†Œ
+|   |       +-- publisher.rs            # REST + Unix Socket æ¥æ”¶å‘å¸ƒ
+|   |       +-- subscriber.rs           # axum::extract::ws -> broadcast::Receiver
+|   |
+|   +-- capeos-user-service/            # ç”¨æˆ·è®¤è¯ (bin crate)
+|   |   +-- Cargo.toml
+|   |   +-- src/
+|   |       +-- main.rs
+|   |       +-- routes.rs               # /v1/user_service/users/*
+|   |       +-- jwt_issuer.rs           # p256 å¯†é’¥å¯¹ç”Ÿæˆ + JWT ç­¾å‘
+|   |       +-- jwks.rs                 # /.well-known/jwks.json ç«¯ç‚¹
+|   |       +-- repo.rs                 # rusqlite ç”¨æˆ·è¡¨ CRUD
+|   |
+|   +-- capeos-local-storage/           # æœ¬åœ°å­˜å‚¨ç®¡ç† (bin crate)
+|   |   +-- Cargo.toml
+|   |   +-- src/
+|   |       +-- main.rs
+|   |       +-- routes.rs               # /v1/local_storage/*
+|   |       +-- disk.rs                 # sysinfo::Disks
+|   |       +-- usb.rs                  # USB è®¾å¤‡æ£€æµ‹
+|   |       +-- mergerfs.rs             # tokio::process MergerFS ç®¡ç†
+|   |
+|   +-- capeos-app-management/          # åº”ç”¨ç®¡ç† (bin crate)
+|   |   +-- Cargo.toml
+|   |   +-- src/
+|   |       +-- main.rs
+|   |       +-- routes.rs               # /v1/app_management/*
+|   |       +-- compose.rs              # Docker Compose æ“ä½œ
+|   |       +-- container.rs            # bollard å®¹å™¨ CRUD
+|   |       +-- image.rs                # bollard é•œåƒç®¡ç†
+|   |       +-- app_store.rs            # è¿œç¨‹åº”ç”¨å•†åº—
+|   |
+|   +-- capeos-main/                    # ä¸»æœåŠ¡ - Leptos å…¨æ ˆ (bin crate)
+|   |   +-- Cargo.toml
+|   |   +-- src/
+|   |   |   +-- main.rs                 # Leptos + Axum å¯åŠ¨å…¥å£
+|   |   |   +-- app.rs                  # Leptos æ ¹ç»„ä»¶ + å‰ç«¯è·¯ç”±
+|   |   |   |
+|   |   |   +-- server/                 # === åç«¯ (#[cfg(feature="ssr")]) ===
+|   |   |   |   +-- mod.rs
+|   |   |   |   +-- state.rs            # AppState { db, cache, ... }
+|   |   |   |   +-- db.rs               # rusqlite åˆå§‹åŒ– + rusqlite_migration
+|   |   |   |   |
+|   |   |   |   +-- services/           # Service å±‚
+|   |   |   |   |   +-- mod.rs
+|   |   |   |   |   +-- system.rs       # sysinfo ç³»ç»Ÿç®¡ç†
+|   |   |   |   |   +-- file_ops.rs     # tokio::fs æ–‡ä»¶æ“ä½œ
+|   |   |   |   |   +-- upload.rs       # åˆ†å—ä¸Šä¼  (DashMap)
+|   |   |   |   |   +-- shares.rs       # Samba å…±äº«
+|   |   |   |   |   +-- connections.rs  # ç½‘ç»œè¿æ¥ (pavao)
+|   |   |   |   |   +-- storage.rs      # äº‘å­˜å‚¨ (rclone)
+|   |   |   |   |   +-- notify.rs       # é€šçŸ¥ (MessageBus)
+|   |   |   |   |   +-- health.rs       # å¥åº·æ£€æŸ¥
+|   |   |   |   |   +-- peer.rs         # è®¾å¤‡å‘ç°
+|   |   |   |   |
+|   |   |   |   +-- repo/               # Repository å±‚ (rusqlite)
+|   |   |   |   |   +-- mod.rs
+|   |   |   |   |   +-- shares_repo.rs
+|   |   |   |   |   +-- connections_repo.rs
+|   |   |   |   |   +-- notify_repo.rs
+|   |   |   |   |   +-- peer_repo.rs
+|   |   |   |   |
+|   |   |   |   +-- api/                # REST API
+|   |   |   |   |   +-- mod.rs
+|   |   |   |   |   +-- v1.rs           # Axum handlers + utoipa
+|   |   |   |   |
+|   |   |   |   +-- drivers/            # äº‘å­˜å‚¨é©±åŠ¨
+|   |   |   |       +-- mod.rs          # CloudDriver trait
+|   |   |   |       +-- google_drive.rs
+|   |   |   |       +-- onedrive.rs
+|   |   |   |       +-- dropbox.rs
+|   |   |   |
+|   |   |   +-- pages/                  # === å‰ç«¯é¡µé¢ (Leptos WASM) ===
+|   |   |   |   +-- mod.rs
+|   |   |   |   +-- dashboard.rs        # ä»ªè¡¨ç›˜
+|   |   |   |   +-- files.rs            # æ–‡ä»¶ç®¡ç†å™¨
+|   |   |   |   +-- apps.rs             # åº”ç”¨å•†åº—
+|   |   |   |   +-- storage.rs          # å­˜å‚¨ç®¡ç†
+|   |   |   |   +-- shares.rs           # ç½‘ç»œå…±äº«
+|   |   |   |   +-- settings.rs         # ç³»ç»Ÿè®¾ç½®
+|   |   |   |   +-- terminal.rs         # SSH ç»ˆç«¯
+|   |   |   |   +-- login.rs            # ç™»å½•é¡µ
+|   |   |   |
+|   |   |   +-- components/             # === å¯å¤ç”¨ UI ç»„ä»¶ ===
+|   |   |       +-- mod.rs
+|   |   |       +-- layout.rs           # é¡µé¢å¸ƒå±€
+|   |   |       +-- file_list.rs        # æ–‡ä»¶åˆ—è¡¨
+|   |   |       +-- file_uploader.rs    # æ‹–æ‹½ä¸Šä¼ 
+|   |   |       +-- cpu_gauge.rs        # CPU ä»ªè¡¨ç›˜
+|   |   |       +-- memory_bar.rs       # å†…å­˜æ¡
+|   |   |       +-- network_chart.rs    # ç½‘ç»œæµé‡å›¾
+|   |   |       +-- notification.rs     # é€šçŸ¥å¼¹çª—
+|   |   |
+|   |   +-- style/
+|   |   |   +-- main.css                # TailwindCSS
+|   |   +-- public/
+|   |       +-- favicon.ico
+|   |
+|   +-- capeos-cli/                     # CLI å·¥å…· (bin crate)
+|       +-- Cargo.toml
+|       +-- src/
+|           +-- main.rs
+|
++-- config/
+|   +-- capeos.toml.sample              # TOML é…ç½®æ–‡ä»¶æ¨¡æ¿
+|
++-- migrations/
+|   +-- 001_initial.sql                 # åˆå§‹æ•°æ®åº“è¿ç§»
+|
++-- deploy/
+    +-- systemd/                        # systemd æœåŠ¡å•å…ƒæ–‡ä»¶
+    |   +-- capeos-gateway.service
+    |   +-- capeos-message-bus.service
+    |   +-- capeos-user-service.service
+    |   +-- capeos-local-storage.service
+    |   +-- capeos-app-management.service
+    |   +-- capeos.service
+    +-- scripts/
+        +-- install.sh                  # å®‰è£…è„šæœ¬
 ```
 
-### 6.2 Èı²ã¼Ü¹¹
+### 6.2 ä¸‰å±‚æ¶æ„
 
+```text
++----------------------------------------------------------------+
+|                   Route å±‚ (è·¯ç”± / HTTP Handler)                |
+|                                                                |
+|  Leptos Server Functions (#[server])                           |
+|  + Axum handlers (api/v1.rs) + utoipa OpenAPI æ ‡æ³¨             |
+|                                                                |
+|  èŒè´£: è¯·æ±‚è§£æ, å‚æ•°æ ¡éªŒ, è°ƒç”¨ Service, æ„é€ å“åº”               |
++-------------------------------+--------------------------------+
+                                | è°ƒç”¨
+                                v
++----------------------------------------------------------------+
+|                   Service å±‚ (ä¸šåŠ¡é€»è¾‘)                        |
+|                                                                |
+|  server/services/*.rs                                          |
+|                                                                |
+|  èŒè´£: ä¸šåŠ¡é€»è¾‘, è°ƒç”¨ Repo, è°ƒç”¨å¤–éƒ¨æœåŠ¡ (Gateway/MessageBus)  |
++-------------------------------+--------------------------------+
+                                | è°ƒç”¨
+                                v
++----------------------------------------------------------------+
+|                   Repository å±‚ (æ•°æ®è®¿é—®)                     |
+|                                                                |
+|  server/repo/*.rs         --> rusqlite SQL æ“ä½œ                |
+|  capeos-common/           --> å¤–éƒ¨æœåŠ¡å®¢æˆ·ç«¯ (reqwest)          |
+|  tokio::fs / tokio::process --> æ–‡ä»¶ç³»ç»Ÿ / å­è¿›ç¨‹              |
+|                                                                |
+|  èŒè´£: æ•°æ®æŒä¹…åŒ–, å¤–éƒ¨ API è°ƒç”¨, æ–‡ä»¶ç³»ç»Ÿæ“ä½œ                 |
++----------------------------------------------------------------+
 ```
-©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦                   Route ²ã (Â·ÓÉ / HTTP Handler)                ©¦
-©¦                                                                ©¦
-©¦  Leptos Server Functions (#[server])                           ©¦
-©¦  + Axum handlers (api/v1.rs) + utoipa OpenAPI ±ê×¢             ©¦
-©¦                                                                ©¦
-©¦  Ö°Ôğ: ÇëÇó½âÎö¡¢²ÎÊıĞ£Ñé¡¢µ÷ÓÃ Service¡¢¹¹ÔìÏìÓ¦                 ©¦
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-                            ©¦ µ÷ÓÃ
-                            ¨‹
-©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦                   Service ²ã (ÒµÎñÂß¼­)                         ©¦
-©¦                                                                ©¦
-©¦  server/services/*.rs                                          ©¦
-©¦                                                                ©¦
-©¦  Ö°Ôğ: ÒµÎñÂß¼­¡¢µ÷ÓÃ Repo¡¢µ÷ÓÃÍâ²¿·şÎñ (Gateway/MessageBus)    ©¦
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-                            ©¦ µ÷ÓÃ
-                            ¨‹
-©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦                   Repository ²ã (Êı¾İ·ÃÎÊ)                      ©¦
-©¦                                                                ©¦
-©¦  server/repo/*.rs         ©¤¡ú rusqlite SQL ²Ù×÷                 ©¦
-©¦  capeos-common/           ©¤¡ú Íâ²¿·şÎñ¿Í»§¶Ë (reqwest)           ©¦
-©¦  tokio::fs / tokio::process ©¤¡ú ÎÄ¼şÏµÍ³ / ×Ó½ø³Ì               ©¦
-©¦                                                                ©¦
-©¦  Ö°Ôğ: Êı¾İ³Ö¾Ã»¯¡¢Íâ²¿ API µ÷ÓÃ¡¢ÎÄ¼şÏµÍ³²Ù×÷                    ©¦
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
-```
 
-### 6.3 Ç°ºó¶ËÁ¬½Ó£ºLeptos Server Functions
+### 6.3 å‰åç«¯è¿æ¥: Leptos Server Functions
 
-Leptos Server Functions ÊÇÈ«Õ» Rust µÄºËĞÄÇÅÁº¡ª¡ªÍ¬Ò»¸ö Rust º¯ÊıÔÚ·şÎñ¶ËÖ±½ÓÖ´ĞĞ£¬ÔÚ WASM ¶Ë×Ô¶¯Éú³É HTTP µ÷ÓÃ£º
+Leptos Server Functions æ˜¯å…¨æ ˆ Rust çš„æ ¸å¿ƒæ¡¥æ¢ -- åŒä¸€ä¸ª Rust å‡½æ•°åœ¨æœåŠ¡ç«¯ç›´æ¥æ‰§è¡Œ, åœ¨ WASM ç«¯è‡ªåŠ¨ç”Ÿæˆ HTTP è°ƒç”¨:
 
 ```rust
 #[server(ListShares, "/api")]
 pub async fn list_shares() -> Result<Vec<Share>, ServerFnError> {
     let state = expect_context::<AppState>();
-    state.shares_service.list().await.map_err(|e| ServerFnError::new(e.to_string()))
+    state.shares_service.list().await
+        .map_err(|e| ServerFnError::new(e.to_string()))
 }
 
 #[component]
 pub fn SharesPage() -> impl IntoView {
     let shares = create_resource(|| (), |_| list_shares());
     view! {
-        <Suspense fallback=|| view! { <p>"¼ÓÔØÖĞ..."</p> }>
+        <Suspense fallback=|| view! { <p>"Loading..."</p> }>
             {move || shares.get().map(|result| match result {
                 Ok(list) => view! { <ShareTable shares=list /> }.into_view(),
                 Err(e) => view! { <p class="error">{e.to_string()}</p> }.into_view(),
@@ -1048,26 +1054,24 @@ pub fn SharesPage() -> impl IntoView {
 }
 ```
 
-Í¬Ê±±£Áô `api/v1.rs` ÖĞµÄ´«Í³ REST ¶Ëµã¹©µÚÈı·½ºÍ CLI µ÷ÓÃ¡£
+åŒæ—¶ä¿ç•™ `api/v1.rs` ä¸­çš„ä¼ ç»Ÿ REST ç«¯ç‚¹ä¾›ç¬¬ä¸‰æ–¹å’Œ CLI è°ƒç”¨ã€‚
 
 ---
 
-## 7. ºó¶ËÊı¾İ¿âÊµÏÖ
+## 7. åç«¯æ•°æ®åº“å®ç°
 
-### 7.1 ¼¼ÊõÑ¡ĞÍ
+### 7.1 æŠ€æœ¯é€‰å‹
 
-| ÏîÄ¿ | Ñ¡ĞÍ | ËµÃ÷ |
+| é¡¹ç›® | é€‰å‹ | è¯´æ˜ |
 |------|------|------|
-| Êı¾İ¿âÒıÇæ | SQLite | ÇáÁ¿Ç¶ÈëÊ½£¬ÎŞ¶ÀÁ¢½ø³Ì£¬ÊÊºÏ±ßÔµÉè±¸ |
-| Rust °ó¶¨ | `rusqlite` 0.38+ (MIT) | »ùÓÚ C sqlite3 µÄ°²È«°ó¶¨ |
-| Òì²½·â×° | `tokio-rusqlite` 0.7+ (MIT) | ºóÌ¨Ïß³Ì + mpsc channel£¬ÊÊÅä Tokio |
-| Ç¨ÒÆ | `rusqlite_migration` (Apache-2.0) | ÀûÓÃ SQLite `user_version` pragma£¬ÎŞ¶îÍâ±í |
+| æ•°æ®åº“å¼•æ“ | SQLite | è½»é‡åµŒå…¥å¼, æ— ç‹¬ç«‹è¿›ç¨‹, é€‚åˆè¾¹ç¼˜è®¾å¤‡ |
+| Rust ç»‘å®š | `rusqlite` 0.38+ (MIT) | åŸºäº C sqlite3 çš„å®‰å…¨ç»‘å®š |
+| å¼‚æ­¥å°è£… | `tokio-rusqlite` 0.7+ (MIT) | åå°çº¿ç¨‹ + mpsc channel, é€‚é… Tokio |
+| è¿ç§» | `rusqlite_migration` (Apache-2.0) | åˆ©ç”¨ SQLite `user_version` pragma |
 
-Éè¼ÆÔ­Ôò£º½á¹¹»¯Êı¾İÉè¼Æ£¬ÉÙÈßÓà£¬ÉÙ´ÅÅÌ IO£¬ËùÓĞ½á¹¹»¯Êı¾İÓÃ±í´æ´¢£¬²»Ê¹ÓÃÎÄ¼ş´æ´¢¡£
+è®¾è®¡åŸåˆ™: ç»“æ„åŒ–æ•°æ®è®¾è®¡, å°‘å†—ä½™, å°‘ç£ç›˜ IO, æ‰€æœ‰ç»“æ„åŒ–æ•°æ®ç”¨è¡¨å­˜å‚¨, ä¸ä½¿ç”¨æ–‡ä»¶å­˜å‚¨ã€‚
 
-### 7.2 Êı¾İ¿â³õÊ¼»¯
-
-Êı¾İ¿â³õÊ¼»¯ÔÚ `crates/capeos-main/src/server/db.rs` ÖĞÊµÏÖ£º
+### 7.2 æ•°æ®åº“åˆå§‹åŒ–
 
 ```rust
 use tokio_rusqlite::Connection;
@@ -1079,16 +1083,15 @@ pub async fn init_db(db_path: &str) -> Result<Connection> {
     let conn = Connection::open(&db_file).await?;
 
     conn.call(|conn| {
-        // ĞÔÄÜÓÅ»¯
+        // æ€§èƒ½ä¼˜åŒ–
         conn.pragma_update(None, "journal_mode", "WAL")?;
         conn.pragma_update(None, "synchronous", "NORMAL")?;
         conn.pragma_update(None, "foreign_keys", "ON")?;
         conn.pragma_update(None, "busy_timeout", 5000)?;
 
-        // Ö´ĞĞÇ¨ÒÆ
+        // æ‰§è¡Œè¿ç§»
         let migrations = Migrations::new(vec![
-            M::up(include_str!("../migrations/001_initial.sql")),
-            // ºóĞø°æ±¾Ç¨ÒÆÔÚ´Ë×·¼Ó
+            M::up(include_str!("../../migrations/001_initial.sql")),
         ]);
         migrations.to_latest(conn)?;
         Ok(())
@@ -1098,27 +1101,22 @@ pub async fn init_db(db_path: &str) -> Result<Connection> {
 }
 ```
 
-**Êı¾İ¿âÎÄ¼şÎ»ÖÃ**: `/var/lib/capeos/db/capeos.db`
+**æ•°æ®åº“æ–‡ä»¶ä½ç½®**: `/var/lib/capeos/db/capeos.db`
 
-**¹Ø¼üÉè¼Æµã**:
-- **WAL Ä£Ê½**: ÌáÉı²¢·¢¶ÁĞ´ĞÔÄÜ
-- **»ùÓÚ user_version µÄÇ¨ÒÆ**: `rusqlite_migration` ÀûÓÃ SQLite ÄÚÖÃ `PRAGMA user_version`£¬ÎŞĞè¶îÍâÇ¨ÒÆ×·×Ù±í
-- **Òì²½·â×°**: `tokio-rusqlite` ÔÚºóÌ¨Ïß³ÌÖ´ĞĞËùÓĞ SQL£¬Í¨¹ı channel Óë Tokio ÔËĞĞÊ±½»»¥£¬±ÜÃâ×èÈûÒì²½ÈÎÎñ
+### 7.3 æ•°æ®åº“è¡¨ç»“æ„
 
-### 7.3 Êı¾İ¿â±í½á¹¹
-
-³õÊ¼Ç¨ÒÆ SQL (`migrations/001_initial.sql`):
+åˆå§‹è¿ç§» SQL (`migrations/001_initial.sql`):
 
 ```sql
 CREATE TABLE IF NOT EXISTS o_notify (
-    custom_id TEXT PRIMARY KEY,
-    id        TEXT,
-    name      TEXT,
-    icon      TEXT,
-    state     INTEGER DEFAULT 0,  -- 0=±ä¶¯ÖĞÎ´¶Á, 1=Î´¶Á, 2=ÒÑ¶Á
-    type      INTEGER DEFAULT 0,
-    class     INTEGER DEFAULT 0,
-    message   TEXT,
+    custom_id  TEXT PRIMARY KEY,
+    id         TEXT,
+    name       TEXT,
+    icon       TEXT,
+    state      INTEGER DEFAULT 0,
+    type       INTEGER DEFAULT 0,
+    class      INTEGER DEFAULT 0,
+    message    TEXT,
     created_at TEXT DEFAULT (datetime('now')),
     updated_at TEXT DEFAULT (datetime('now'))
 );
@@ -1127,7 +1125,7 @@ CREATE TABLE IF NOT EXISTS o_shares (
     id        INTEGER PRIMARY KEY AUTOINCREMENT,
     name      TEXT NOT NULL,
     path      TEXT NOT NULL,
-    anonymous INTEGER DEFAULT 0,  -- 0=false, 1=true
+    anonymous INTEGER DEFAULT 0,
     created   INTEGER DEFAULT (unixepoch()),
     updated   INTEGER DEFAULT (unixepoch())
 );
@@ -1139,7 +1137,7 @@ CREATE TABLE IF NOT EXISTS o_connections (
     host        TEXT NOT NULL,
     port        TEXT DEFAULT '445',
     status      TEXT DEFAULT 'disconnected',
-    directories TEXT,       -- JSON ×Ö·û´®Êı×é
+    directories TEXT,
     mount_point TEXT,
     created     INTEGER DEFAULT (unixepoch()),
     updated     INTEGER DEFAULT (unixepoch())
@@ -1169,79 +1167,79 @@ CREATE TABLE IF NOT EXISTS o_rely (
 );
 ```
 
-#### ±í½á¹¹ËµÃ÷
+#### è¡¨ç»“æ„è¯´æ˜
 
-**Í¨Öª±í `o_notify`**
+**é€šçŸ¥è¡¨ `o_notify`**
 
-| ×Ö¶Î | ÀàĞÍ | ÊôĞÔ | ËµÃ÷ |
+| å­—æ®µ | ç±»å‹ | å±æ€§ | è¯´æ˜ |
 |------|------|------|------|
-| custom_id | TEXT | **PK** | ×Ô¶¨ÒåÎ¨Ò»±êÊ¶ |
-| id | TEXT | | Í¨Öª ID |
-| name | TEXT | | Í¨ÖªÃû³Æ |
-| icon | TEXT | | Í¼±ê URL |
-| state | INTEGER | Ä¬ÈÏ 0 | 0=±ä¶¯ÖĞÎ´¶Á, 1=Î´¶Á, 2=ÒÑ¶Á |
-| type | INTEGER | Ä¬ÈÏ 0 | Í¨ÖªÀàĞÍ |
-| class | INTEGER | Ä¬ÈÏ 0 | Í¨Öª·ÖÀà |
-| message | TEXT | | Í¨ÖªÄÚÈİ |
-| created_at | TEXT | ×Ô¶¯Ìî³ä | ´´½¨Ê±¼ä |
-| updated_at | TEXT | ×Ô¶¯Ìî³ä | ¸üĞÂÊ±¼ä |
+| custom_id | TEXT | **PK** | è‡ªå®šä¹‰å”¯ä¸€æ ‡è¯† |
+| id | TEXT | | é€šçŸ¥ ID |
+| name | TEXT | | é€šçŸ¥åç§° |
+| icon | TEXT | | å›¾æ ‡ URL |
+| state | INTEGER | é»˜è®¤ 0 | 0=å˜åŠ¨ä¸­æœªè¯», 1=æœªè¯», 2=å·²è¯» |
+| type | INTEGER | é»˜è®¤ 0 | é€šçŸ¥ç±»å‹ |
+| class | INTEGER | é»˜è®¤ 0 | é€šçŸ¥åˆ†ç±» |
+| message | TEXT | | é€šçŸ¥å†…å®¹ |
+| created_at | TEXT | è‡ªåŠ¨å¡«å…… | åˆ›å»ºæ—¶é—´ |
+| updated_at | TEXT | è‡ªåŠ¨å¡«å…… | æ›´æ–°æ—¶é—´ |
 
-**Samba ¹²Ïí±í `o_shares`**
+**Samba å…±äº«è¡¨ `o_shares`**
 
-| ×Ö¶Î | ÀàĞÍ | ÊôĞÔ | ËµÃ÷ |
+| å­—æ®µ | ç±»å‹ | å±æ€§ | è¯´æ˜ |
 |------|------|------|------|
-| id | INTEGER | **PK**, ×ÔÔö | ¹²Ïí ID |
-| name | TEXT | NOT NULL | ¹²ÏíÃû³Æ |
-| path | TEXT | NOT NULL | ¹²ÏíÄ¿Â¼Â·¾¶ |
-| anonymous | INTEGER | Ä¬ÈÏ 0 | 0=²»ÔÊĞí, 1=ÔÊĞíÄäÃû |
-| created | INTEGER | unixepoch() | ´´½¨Ê±¼ä´Á |
-| updated | INTEGER | unixepoch() | ¸üĞÂÊ±¼ä´Á |
+| id | INTEGER | **PK**, è‡ªå¢ | å…±äº« ID |
+| name | TEXT | NOT NULL | å…±äº«åç§° |
+| path | TEXT | NOT NULL | å…±äº«ç›®å½•è·¯å¾„ |
+| anonymous | INTEGER | é»˜è®¤ 0 | 0=ä¸å…è®¸, 1=å…è®¸åŒ¿å |
+| created | INTEGER | unixepoch() | åˆ›å»ºæ—¶é—´æˆ³ |
+| updated | INTEGER | unixepoch() | æ›´æ–°æ—¶é—´æˆ³ |
 
-**ÍøÂçÁ¬½Ó±í `o_connections`**
+**ç½‘ç»œè¿æ¥è¡¨ `o_connections`**
 
-| ×Ö¶Î | ÀàĞÍ | ÊôĞÔ | ËµÃ÷ |
+| å­—æ®µ | ç±»å‹ | å±æ€§ | è¯´æ˜ |
 |------|------|------|------|
-| id | INTEGER | **PK**, ×ÔÔö | Á¬½Ó ID |
-| username | TEXT | | Ô¶³ÌÓÃ»§Ãû |
-| password | TEXT | | Ô¶³ÌÃÜÂë |
-| host | TEXT | NOT NULL | Ô¶³ÌÖ÷»úµØÖ· |
-| port | TEXT | Ä¬ÈÏ 445 | Ô¶³Ì¶Ë¿Ú |
-| status | TEXT | Ä¬ÈÏ disconnected | Á¬½Ó×´Ì¬ |
-| directories | TEXT | | Ä¿Â¼ÁĞ±í (JSON ×Ö·û´®Êı×é) |
-| mount_point | TEXT | | ±¾µØ¹ÒÔØµã¸¸Ä¿Â¼ |
-| created | INTEGER | unixepoch() | ´´½¨Ê±¼ä´Á |
-| updated | INTEGER | unixepoch() | ¸üĞÂÊ±¼ä´Á |
+| id | INTEGER | **PK**, è‡ªå¢ | è¿æ¥ ID |
+| username | TEXT | | è¿œç¨‹ç”¨æˆ·å |
+| password | TEXT | | è¿œç¨‹å¯†ç  |
+| host | TEXT | NOT NULL | è¿œç¨‹ä¸»æœºåœ°å€ |
+| port | TEXT | é»˜è®¤ 445 | è¿œç¨‹ç«¯å£ |
+| status | TEXT | é»˜è®¤ disconnected | è¿æ¥çŠ¶æ€ |
+| directories | TEXT | | ç›®å½•åˆ—è¡¨ (JSON å­—ç¬¦ä¸²æ•°ç»„) |
+| mount_point | TEXT | | æœ¬åœ°æŒ‚è½½ç‚¹çˆ¶ç›®å½• |
+| created | INTEGER | unixepoch() | åˆ›å»ºæ—¶é—´æˆ³ |
+| updated | INTEGER | unixepoch() | æ›´æ–°æ—¶é—´æˆ³ |
 
-**¶ÔµÈÉè±¸±í `peer_drives`**
+**å¯¹ç­‰è®¾å¤‡è¡¨ `peer_drives`**
 
-| ×Ö¶Î | ÀàĞÍ | ÊôĞÔ | ËµÃ÷ |
+| å­—æ®µ | ç±»å‹ | å±æ€§ | è¯´æ˜ |
 |------|------|------|------|
-| id | TEXT | **PK** | Éè±¸Î¨Ò»±êÊ¶ |
+| id | TEXT | **PK** | è®¾å¤‡å”¯ä¸€æ ‡è¯† |
 | user_agent | TEXT | | User-Agent |
-| display_name | TEXT | | ÏÔÊ¾Ãû³Æ |
-| device_name | TEXT | | Éè±¸Ãû³Æ |
-| model | TEXT | | Éè±¸ĞÍºÅ |
-| ip | TEXT | | IP µØÖ· |
-| os | TEXT | | ²Ù×÷ÏµÍ³ |
-| browser | TEXT | | ä¯ÀÀÆ÷ |
-| created | INTEGER | unixepoch() | ´´½¨Ê±¼ä´Á |
-| updated | INTEGER | unixepoch() | ¸üĞÂÊ±¼ä´Á |
+| display_name | TEXT | | æ˜¾ç¤ºåç§° |
+| device_name | TEXT | | è®¾å¤‡åç§° |
+| model | TEXT | | è®¾å¤‡å‹å· |
+| ip | TEXT | | IP åœ°å€ |
+| os | TEXT | | æ“ä½œç³»ç»Ÿ |
+| browser | TEXT | | æµè§ˆå™¨ |
+| created | INTEGER | unixepoch() | åˆ›å»ºæ—¶é—´æˆ³ |
+| updated | INTEGER | unixepoch() | æ›´æ–°æ—¶é—´æˆ³ |
 
-**ÒÀÀµ¹ØÏµ±í `o_rely`**
+**ä¾èµ–å…³ç³»è¡¨ `o_rely`**
 
-| ×Ö¶Î | ÀàĞÍ | ÊôĞÔ | ËµÃ÷ |
+| å­—æ®µ | ç±»å‹ | å±æ€§ | è¯´æ˜ |
 |------|------|------|------|
-| id | INTEGER | **PK**, ×ÔÔö | ¼ÇÂ¼ ID |
-| custom_id | TEXT | | ×Ô¶¨Òå ID |
-| container_custom_id | TEXT | | ÈİÆ÷×Ô¶¨Òå ID |
-| container_id | TEXT | | ÈİÆ÷ ID |
-| type | INTEGER | Ä¬ÈÏ 0 | ÀàĞÍ |
-| created_at | TEXT | ×Ô¶¯Ìî³ä | ´´½¨Ê±¼ä |
-| updated_at | TEXT | ×Ô¶¯Ìî³ä | ¸üĞÂÊ±¼ä |
+| id | INTEGER | **PK**, è‡ªå¢ | è®°å½• ID |
+| custom_id | TEXT | | è‡ªå®šä¹‰ ID |
+| container_custom_id | TEXT | | å®¹å™¨è‡ªå®šä¹‰ ID |
+| container_id | TEXT | | å®¹å™¨ ID |
+| type | INTEGER | é»˜è®¤ 0 | ç±»å‹ |
+| created_at | TEXT | è‡ªåŠ¨å¡«å…… | åˆ›å»ºæ—¶é—´ |
+| updated_at | TEXT | è‡ªåŠ¨å¡«å…… | æ›´æ–°æ—¶é—´ |
 
-### 7.4 Êı¾İ·ÃÎÊÄ£Ê½ (Repository ²ã)
+### 7.4 æ•°æ®è®¿é—®æ¨¡å¼ (Repository å±‚)
 
-ËùÓĞ SQL ²Ù×÷¼¯ÖĞÔÚ `server/repo/` Ä¿Â¼£¬Í¨¹ı `tokio-rusqlite` µÄ `conn.call()` ·½·¨Òì²½Ö´ĞĞ£º
+æ‰€æœ‰ SQL æ“ä½œé›†ä¸­åœ¨ `server/repo/` ç›®å½•, é€šè¿‡ `tokio-rusqlite` çš„ `conn.call()` æ–¹æ³•å¼‚æ­¥æ‰§è¡Œ:
 
 ```rust
 use tokio_rusqlite::Connection;
@@ -1270,7 +1268,8 @@ impl SharesRepo {
     pub async fn find_all(&self) -> Result<Vec<Share>> {
         self.db.call(|conn| {
             let mut stmt = conn.prepare(
-                "SELECT id, name, path, anonymous, created, updated FROM o_shares ORDER BY id"
+                "SELECT id, name, path, anonymous, created, updated
+                 FROM o_shares ORDER BY id"
             )?;
             let rows = stmt.query_map([], |row| {
                 Ok(Share {
@@ -1289,7 +1288,8 @@ impl SharesRepo {
     pub async fn find_by_id(&self, id: i64) -> Result<Option<Share>> {
         self.db.call(move |conn| {
             conn.query_row(
-                "SELECT id, name, path, anonymous, created, updated FROM o_shares WHERE id = ?1",
+                "SELECT id, name, path, anonymous, created, updated
+                 FROM o_shares WHERE id = ?1",
                 [id],
                 |row| Ok(Share {
                     id: row.get(0)?,
@@ -1306,7 +1306,8 @@ impl SharesRepo {
     pub async fn insert(&self, name: String, path: String, anonymous: bool) -> Result<i64> {
         self.db.call(move |conn| {
             conn.execute(
-                "INSERT INTO o_shares (name, path, anonymous) VALUES (?1, ?2, ?3)",
+                "INSERT INTO o_shares (name, path, anonymous)
+                 VALUES (?1, ?2, ?3)",
                 params![name, path, anonymous as i32],
             )?;
             Ok(conn.last_insert_rowid())
@@ -1315,16 +1316,18 @@ impl SharesRepo {
 
     pub async fn delete(&self, id: i64) -> Result<bool> {
         self.db.call(move |conn| {
-            let affected = conn.execute("DELETE FROM o_shares WHERE id = ?1", [id])?;
+            let affected = conn.execute(
+                "DELETE FROM o_shares WHERE id = ?1", [id]
+            )?;
             Ok(affected > 0)
         }).await
     }
 }
 ```
 
-### 7.5 ÏµÍ³Â·¾¶³£Á¿
+### 7.5 ç³»ç»Ÿè·¯å¾„å¸¸é‡
 
-¶¨ÒåÔÚ `capeos-common/src/lib.rs`£º
+å®šä¹‰åœ¨ `capeos-common/src/lib.rs`:
 
 ```rust
 pub mod paths {
@@ -1338,12 +1341,12 @@ pub mod paths {
 }
 ```
 
-### 7.6 Êı¾İ´æ´¢²ßÂÔ
+### 7.6 æ•°æ®å­˜å‚¨ç­–ç•¥
 
-| ´æ´¢·½Ê½ | ÓÃÍ¾ | Î»ÖÃ |
+| å­˜å‚¨æ–¹å¼ | ç”¨é€” | ä½ç½® |
 |----------|------|------|
-| **SQLite (rusqlite)** | ËùÓĞ½á¹¹»¯Êı¾İ£ºÍ¨Öª¡¢¹²Ïí¡¢Á¬½Ó¡¢Éè±¸¡¢ÅäÖÃ | `/var/lib/capeos/db/capeos.db` |
-| **TOML ÅäÖÃÎÄ¼ş** | Ó¦ÓÃÆô¶¯ÅäÖÃ | `/etc/capeos/capeos.toml` |
-| **ÄÚ´æ»º´æ (moka)** | ÔËĞĞÊ±¸ßÆµ¶ÁÈ¡£ºCPU ÎÂ¶ÈÂ·¾¶¡¢°æ±¾ĞÅÏ¢ | ½ø³ÌÄÚ´æ |
-| **ÎÄ¼şÏµÍ³** | ÓÃ»§Êı¾İ¡¢ÈÕÖ¾ | `/var/lib/capeos/files/`¡¢`/var/log/capeos/` |
-| **ÔËĞĞÊ± URL ÎÄ¼ş** | ·şÎñ·¢ÏÖ | `/var/run/capeos/*.url` |
+| **SQLite (rusqlite)** | æ‰€æœ‰ç»“æ„åŒ–æ•°æ® | `/var/lib/capeos/db/capeos.db` |
+| **TOML é…ç½®æ–‡ä»¶** | åº”ç”¨å¯åŠ¨é…ç½® | `/etc/capeos/capeos.toml` |
+| **å†…å­˜ç¼“å­˜ (moka)** | é«˜é¢‘è¯»å–æ•°æ® | è¿›ç¨‹å†…å­˜ |
+| **æ–‡ä»¶ç³»ç»Ÿ** | ç”¨æˆ·æ•°æ®, æ—¥å¿— | `/var/lib/capeos/files/`, `/var/log/capeos/` |
+| **è¿è¡Œæ—¶ URL æ–‡ä»¶** | æœåŠ¡å‘ç° | `/var/run/capeos/*.url` |
