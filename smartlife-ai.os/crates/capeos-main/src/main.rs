@@ -5,13 +5,13 @@
 
 mod server;
 
-use std::net::SocketAddr;
-use axum::Router;
 use axum::routing::get;
-use capeos_common::paths::DEFAULT_RUNTIME_PATH;
-use capeos_common::utils::{write_url_file, port::get_available_port};
-use capeos_common::utils::service_discovery::register_routes;
+use axum::Router;
 use capeos_common::middleware;
+use capeos_common::paths::DEFAULT_RUNTIME_PATH;
+use capeos_common::utils::service_discovery::register_routes;
+use capeos_common::utils::{port::get_available_port, write_url_file};
+use std::net::SocketAddr;
 use tracing_subscriber::EnvFilter;
 
 #[tokio::main]
@@ -39,19 +39,57 @@ async fn main() -> anyhow::Result<()> {
         let listen_url = listen_url.clone();
         async move {
             tokio::time::sleep(std::time::Duration::from_secs(3)).await;
-            if let Ok(mgmt) = capeos_common::utils::service_discovery::get_service_address(DEFAULT_RUNTIME_PATH, "management.url").await {
+            if let Ok(mgmt) = capeos_common::utils::service_discovery::get_service_address(
+                DEFAULT_RUNTIME_PATH,
+                "management.url",
+            )
+            .await
+            {
                 let routes = vec![
-                    capeos_common::models::Route { path: "/v1/sys".to_string(), target: listen_url.clone() },
-                    capeos_common::models::Route { path: "/v1/file".to_string(), target: listen_url.clone() },
-                    capeos_common::models::Route { path: "/v1/folder".to_string(), target: listen_url.clone() },
-                    capeos_common::models::Route { path: "/v1/capeos".to_string(), target: listen_url.clone() },
-                    capeos_common::models::Route { path: "/v1/port".to_string(), target: listen_url.clone() },
-                    capeos_common::models::Route { path: "/v1/image".to_string(), target: listen_url.clone() },
-                    capeos_common::models::Route { path: "/v1/batch".to_string(), target: listen_url.clone() },
-                    capeos_common::models::Route { path: "/v1/samba".to_string(), target: listen_url.clone() },
-                    capeos_common::models::Route { path: "/v1/notify".to_string(), target: listen_url.clone() },
-                    capeos_common::models::Route { path: "/v1/cloud".to_string(), target: listen_url.clone() },
-                    capeos_common::models::Route { path: "/v1/driver".to_string(), target: listen_url },
+                    capeos_common::models::Route {
+                        path: "/v1/sys".to_string(),
+                        target: listen_url.clone(),
+                    },
+                    capeos_common::models::Route {
+                        path: "/v1/file".to_string(),
+                        target: listen_url.clone(),
+                    },
+                    capeos_common::models::Route {
+                        path: "/v1/folder".to_string(),
+                        target: listen_url.clone(),
+                    },
+                    capeos_common::models::Route {
+                        path: "/v1/capeos".to_string(),
+                        target: listen_url.clone(),
+                    },
+                    capeos_common::models::Route {
+                        path: "/v1/port".to_string(),
+                        target: listen_url.clone(),
+                    },
+                    capeos_common::models::Route {
+                        path: "/v1/image".to_string(),
+                        target: listen_url.clone(),
+                    },
+                    capeos_common::models::Route {
+                        path: "/v1/batch".to_string(),
+                        target: listen_url.clone(),
+                    },
+                    capeos_common::models::Route {
+                        path: "/v1/samba".to_string(),
+                        target: listen_url.clone(),
+                    },
+                    capeos_common::models::Route {
+                        path: "/v1/notify".to_string(),
+                        target: listen_url.clone(),
+                    },
+                    capeos_common::models::Route {
+                        path: "/v1/cloud".to_string(),
+                        target: listen_url.clone(),
+                    },
+                    capeos_common::models::Route {
+                        path: "/v1/driver".to_string(),
+                        target: listen_url,
+                    },
                 ];
                 let _ = register_routes(&mgmt, &routes).await;
             }

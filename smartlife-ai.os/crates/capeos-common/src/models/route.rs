@@ -2,7 +2,19 @@
 
 use serde::{Deserialize, Serialize};
 
-/// A route mapping from a path prefix to a target service URL.
+/// A gateway route mapping a path prefix to a backend service URL.
+///
+/// # Examples
+///
+/// ```
+/// use capeos_common::models::Route;
+///
+/// let route = Route {
+///     path: "/v1/sys".to_string(),
+///     target: "http://127.0.0.1:3000".to_string(),
+/// };
+/// assert_eq!(route.path, "/v1/sys");
+/// ```
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Route {
     /// The path prefix to match (e.g., `/api/v1`).

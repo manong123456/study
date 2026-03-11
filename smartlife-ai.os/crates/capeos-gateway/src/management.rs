@@ -3,9 +3,13 @@
 //! Provides HTTP endpoints for route registration, listing routes, health checks,
 //! and gateway port configuration. Intended for internal use (localhost only).
 
-use axum::{extract::State, routing::{get, post}, Json, Router};
-use capeos_common::models::{ApiResponse, Route, route::ChangePortRequest};
 use crate::route_table::RouteTable;
+use axum::{
+    extract::State,
+    routing::{get, post},
+    Json, Router,
+};
+use capeos_common::models::{route::ChangePortRequest, ApiResponse, Route};
 
 /// Builds the management API router with route registration and port endpoints.
 ///
@@ -37,9 +41,7 @@ async fn create_route(
 }
 
 /// Returns all registered routes as JSON.
-async fn list_routes(
-    State(table): State<RouteTable>,
-) -> Json<ApiResponse<Vec<Route>>> {
+async fn list_routes(State(table): State<RouteTable>) -> Json<ApiResponse<Vec<Route>>> {
     let routes = table.list_routes().await;
     Json(ApiResponse::ok(routes))
 }
@@ -72,7 +74,9 @@ mod tests {
         let req = Request::builder().uri("/ping").body(Body::empty()).unwrap();
         let resp = app.oneshot(req).await.unwrap();
         assert_eq!(resp.status(), StatusCode::OK);
-        let body = axum::body::to_bytes(resp.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(resp.into_body(), usize::MAX)
+            .await
+            .unwrap();
         assert_eq!(body.as_ref(), b"pong");
     }
 
@@ -90,10 +94,15 @@ mod tests {
         let resp = app.clone().oneshot(req).await.unwrap();
         assert!(resp.status().is_success());
 
-        let req = Request::builder().uri("/v1/gateway/routes").body(Body::empty()).unwrap();
+        let req = Request::builder()
+            .uri("/v1/gateway/routes")
+            .body(Body::empty())
+            .unwrap();
         let resp = app.oneshot(req).await.unwrap();
         assert_eq!(resp.status(), StatusCode::OK);
-        let body_bytes = axum::body::to_bytes(resp.into_body(), usize::MAX).await.unwrap();
+        let body_bytes = axum::body::to_bytes(resp.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let json: serde_json::Value = serde_json::from_slice(&body_bytes).unwrap();
         let routes = json["data"].as_array().unwrap();
         assert_eq!(routes.len(), 1);
@@ -104,10 +113,15 @@ mod tests {
     #[tokio::test]
     async fn test_get_port() {
         let app = management_router(RouteTable::new());
-        let req = Request::builder().uri("/v1/gateway/port").body(Body::empty()).unwrap();
+        let req = Request::builder()
+            .uri("/v1/gateway/port")
+            .body(Body::empty())
+            .unwrap();
         let resp = app.oneshot(req).await.unwrap();
         assert_eq!(resp.status(), StatusCode::OK);
-        let body_bytes = axum::body::to_bytes(resp.into_body(), usize::MAX).await.unwrap();
+        let body_bytes = axum::body::to_bytes(resp.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let json: serde_json::Value = serde_json::from_slice(&body_bytes).unwrap();
         assert!(json["data"].is_number());
     }

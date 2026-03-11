@@ -2,10 +2,10 @@
 //!
 //! Holds the event type registry and broadcast channel for pub/sub.
 
+use capeos_common::models::event::{Event, EventType};
+use dashmap::DashMap;
 use std::sync::Arc;
 use tokio::sync::broadcast;
-use dashmap::DashMap;
-use capeos_common::models::event::{EventType, Event};
 
 /// Shared state for the message bus service.
 ///

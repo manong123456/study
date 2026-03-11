@@ -2,12 +2,7 @@
 //!
 //! Extracts and validates JWT tokens from the `Authorization` header or `token` query parameter.
 
-use axum::{
-    extract::Request,
-    http::StatusCode,
-    middleware::Next,
-    response::Response,
-};
+use axum::{extract::Request, http::StatusCode, middleware::Next, response::Response};
 use serde::{Deserialize, Serialize};
 
 /// JWT claims payload decoded from the token.
@@ -76,10 +71,7 @@ mod tests {
     }
 
     fn request_with_uri(uri: &str) -> Request<Body> {
-        Request::builder()
-            .uri(uri)
-            .body(Body::empty())
-            .unwrap()
+        Request::builder().uri(uri).body(Body::empty()).unwrap()
     }
 
     #[test]

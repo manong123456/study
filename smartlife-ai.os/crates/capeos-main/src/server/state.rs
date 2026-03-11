@@ -1,7 +1,7 @@
 //! Application state shared across request handlers.
 
-use std::sync::Arc;
 use anyhow::Result;
+use std::sync::Arc;
 
 /// Shared application state for the CapeOS main service.
 #[derive(Clone)]

@@ -20,7 +20,17 @@ pub struct ApiResponse<T: Serialize> {
 }
 
 impl<T: Serialize> ApiResponse<T> {
-    /// Creates a successful response with HTTP 200 and the given data.
+    /// Creates a success response with HTTP 200 and the given data.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use capeos_common::models::ApiResponse;
+    ///
+    /// let resp = ApiResponse::ok("hello");
+    /// assert_eq!(resp.success, 200);
+    /// assert_eq!(resp.data, Some("hello"));
+    /// ```
     pub fn ok(data: T) -> Self {
         Self {
             success: 200,

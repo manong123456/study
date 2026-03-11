@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
+    ".",
     "crates/capeos-common",
     "crates/capeos-gateway",
     "crates/capeos-message-bus",
@@ -16,6 +17,7 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/smartlife-ai/smartlife-ai.os"
+rust-version = "1.75"
 
 [workspace.dependencies]
 capeos-common = { path = "crates/capeos-common" }
@@ -48,3 +50,14 @@ tokio-cron-scheduler = "0.13"
 hyper = { version = "1", features = ["full"] }
 hyper-util = { version = "0.1", features = ["tokio"] }
 http = "1"
+
+[package]
+name = "smartlife-ai-os"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+capeos-common = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }

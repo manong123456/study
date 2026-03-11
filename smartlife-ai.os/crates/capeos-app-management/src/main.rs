@@ -3,12 +3,12 @@
 //! Manages Docker container and compose lifecycle for the CapeOS platform.
 //! Exposes HTTP endpoints for listing, starting, stopping, and managing containers.
 
-use std::net::SocketAddr;
-use axum::{Router, routing::get, Json};
-use serde::Serialize;
+use axum::{routing::get, Json, Router};
 use capeos_common::models::ApiResponse;
 use capeos_common::paths::DEFAULT_RUNTIME_PATH;
-use capeos_common::utils::{write_url_file, port::get_available_port};
+use capeos_common::utils::{port::get_available_port, write_url_file};
+use serde::Serialize;
+use std::net::SocketAddr;
 use tracing_subscriber::EnvFilter;
 
 /// Information about a Docker container.
@@ -55,12 +55,20 @@ async fn list_containers() -> Json<ApiResponse<Vec<ContainerInfo>>> {
             };
             match docker.list_containers(Some(opts)).await {
                 Ok(containers) => {
-                    let list: Vec<ContainerInfo> = containers.iter().map(|c| ContainerInfo {
-                        id: c.id.clone().unwrap_or_default(),
-                        name: c.names.as_ref().and_then(|n| n.first()).cloned().unwrap_or_default(),
-                        image: c.image.clone().unwrap_or_default(),
-                        state: c.state.clone().unwrap_or_default(),
-                    }).collect();
+                    let list: Vec<ContainerInfo> = containers
+                        .iter()
+                        .map(|c| ContainerInfo {
+                            id: c.id.clone().unwrap_or_default(),
+                            name: c
+                                .names
+                                .as_ref()
+                                .and_then(|n| n.first())
+                                .cloned()
+                                .unwrap_or_default(),
+                            image: c.image.clone().unwrap_or_default(),
+                            state: c.state.clone().unwrap_or_default(),
+                        })
+                        .collect();
                     Json(ApiResponse::ok(list))
                 }
                 Err(_) => Json(ApiResponse::ok(vec![])),

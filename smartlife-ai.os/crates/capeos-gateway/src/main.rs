@@ -7,15 +7,15 @@
 //! - Writes URL files for service discovery (`management.url`, `gateway.url`)
 //! - Runs both servers concurrently via `tokio::select!`
 
-mod route_table;
 mod management;
 mod proxy;
+mod route_table;
 
+use capeos_common::paths::DEFAULT_RUNTIME_PATH;
+use capeos_common::utils::{port::get_available_port, write_url_file};
 use std::net::SocketAddr;
 use tower_http::trace::TraceLayer;
 use tracing_subscriber::EnvFilter;
-use capeos_common::paths::DEFAULT_RUNTIME_PATH;
-use capeos_common::utils::{write_url_file, port::get_available_port};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -35,8 +35,7 @@ async fn main() -> anyhow::Result<()> {
         .unwrap_or_else(|_| "80".to_string())
         .parse()
         .unwrap_or(80);
-    let gateway_app = proxy::proxy_router(table.clone())
-        .layer(TraceLayer::new_for_http());
+    let gateway_app = proxy::proxy_router(table.clone()).layer(TraceLayer::new_for_http());
     let gateway_addr = SocketAddr::from(([0, 0, 0, 0], gateway_port));
 
     // Write URL files for service discovery

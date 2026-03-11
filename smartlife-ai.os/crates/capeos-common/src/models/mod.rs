@@ -2,9 +2,9 @@
 //!
 //! Includes API response wrappers, route definitions, and event types.
 
+pub mod event;
 pub mod response;
 pub mod route;
-pub mod event;
 
 /// Re-export of the standard API response wrapper.
 pub use response::ApiResponse;

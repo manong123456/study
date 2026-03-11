@@ -8,7 +8,18 @@ use axum::response::{IntoResponse, Response};
 use axum::Json;
 use serde_json::json;
 
-/// Application-level errors that map to HTTP status codes.
+/// Application-wide error type that maps to HTTP status codes.
+///
+/// Implements [`IntoResponse`] so it can be returned directly from Axum handlers.
+///
+/// # Examples
+///
+/// ```
+/// use capeos_common::error::AppError;
+///
+/// let err = AppError::NotFound("user not found".to_string());
+/// assert!(format!("{}", err).contains("not found"));
+/// ```
 #[derive(Debug, thiserror::Error)]
 pub enum AppError {
     /// Returned when a requested resource does not exist (HTTP 404).

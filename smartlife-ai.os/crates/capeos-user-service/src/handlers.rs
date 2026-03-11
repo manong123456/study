@@ -2,15 +2,15 @@
 //!
 //! Handles registration, login, JWT issuance, and user status queries.
 
-use std::sync::Arc;
-use axum::{extract::State, Json};
-use argon2::{Argon2, PasswordHash, PasswordHasher, PasswordVerifier};
+use crate::AppState;
 use argon2::password_hash::SaltString;
+use argon2::{Argon2, PasswordHash, PasswordHasher, PasswordVerifier};
+use axum::{extract::State, Json};
+use capeos_common::error::{AppError, AppResult};
+use capeos_common::models::ApiResponse;
 use rand::rngs::OsRng;
 use serde::{Deserialize, Serialize};
-use capeos_common::models::ApiResponse;
-use capeos_common::error::{AppError, AppResult};
-use crate::AppState;
+use std::sync::Arc;
 
 /// Request body for user registration.
 #[derive(Deserialize)]
@@ -69,14 +69,22 @@ pub async fn register(
         .to_string();
 
     let username = req.username.clone();
-    let user = state.db.call(move |conn| -> Result<UserInfo, rusqlite::Error> {
-        conn.execute(
-            "INSERT INTO users (username, password_hash) VALUES (?1, ?2)",
-            rusqlite::params![username.clone(), hash],
-        )?;
-        let id = conn.last_insert_rowid();
-        Ok(UserInfo { id, username, role: "user".to_string() })
-    }).await.map_err(|e| AppError::Internal(e.to_string()))?;
+    let user = state
+        .db
+        .call(move |conn| -> Result<UserInfo, rusqlite::Error> {
+            conn.execute(
+                "INSERT INTO users (username, password_hash) VALUES (?1, ?2)",
+                rusqlite::params![username.clone(), hash],
+            )?;
+            let id = conn.last_insert_rowid();
+            Ok(UserInfo {
+                id,
+                username,
+                role: "user".to_string(),
+            })
+        })
+        .await
+        .map_err(|e| AppError::Internal(e.to_string()))?;
 
     Ok(Json(ApiResponse::created(user)))
 }
@@ -91,13 +99,17 @@ pub async fn login(
     let username = req.username.clone();
     let password = req.password.clone();
 
-    let (id, stored_hash): (i64, String) = state.db.call(move |conn| -> Result<(i64, String), rusqlite::Error> {
-        conn.query_row(
-            "SELECT id, password_hash FROM users WHERE username = ?1",
-            [&username],
-            |row| Ok((row.get(0)?, row.get(1)?)),
-        )
-    }).await.map_err(|_| AppError::Unauthorized("invalid credentials".to_string()))?;
+    let (id, stored_hash): (i64, String) = state
+        .db
+        .call(move |conn| -> Result<(i64, String), rusqlite::Error> {
+            conn.query_row(
+                "SELECT id, password_hash FROM users WHERE username = ?1",
+                [&username],
+                |row| Ok((row.get(0)?, row.get(1)?)),
+            )
+        })
+        .await
+        .map_err(|_| AppError::Unauthorized("invalid credentials".to_string()))?;
 
     let parsed_hash = PasswordHash::new(&stored_hash)
         .map_err(|_| AppError::Internal("hash parse error".to_string()))?;
@@ -105,7 +117,9 @@ pub async fn login(
         .verify_password(password.as_bytes(), &parsed_hash)
         .map_err(|_| AppError::Unauthorized("invalid credentials".to_string()))?;
 
-    let token = state.jwt.issue_token(&req.username, id)
+    let token = state
+        .jwt
+        .issue_token(&req.username, id)
         .map_err(|e| AppError::Internal(e.to_string()))?;
 
     Ok(Json(ApiResponse::ok(LoginResponse { token })))
@@ -138,13 +152,17 @@ pub async fn delete_user() -> Json<ApiResponse<()>> {
 /// GET `/v1/user_service/users/status` -Returns whether the system has been initialized.
 ///
 /// Response: `UserStatus` with `initialized` true if at least one user exists.
-pub async fn user_status(
-    State(state): State<Arc<AppState>>,
-) -> Json<ApiResponse<UserStatus>> {
-    let count: i64 = state.db.call(|conn| -> Result<i64, rusqlite::Error> {
-        conn.query_row("SELECT COUNT(*) FROM users", [], |row| row.get(0))
-    }).await.unwrap_or(0);
-    Json(ApiResponse::ok(UserStatus { initialized: count > 0 }))
+pub async fn user_status(State(state): State<Arc<AppState>>) -> Json<ApiResponse<UserStatus>> {
+    let count: i64 = state
+        .db
+        .call(|conn| -> Result<i64, rusqlite::Error> {
+            conn.query_row("SELECT COUNT(*) FROM users", [], |row| row.get(0))
+        })
+        .await
+        .unwrap_or(0);
+    Json(ApiResponse::ok(UserStatus {
+        initialized: count > 0,
+    }))
 }
 
 /// GET `/.well-known/jwks.json` -Returns the JSON Web Key Set for JWT verification.
@@ -162,14 +180,27 @@ mod tests {
     use tower::ServiceExt;
 
     async fn test_app() -> axum::Router {
-        let dir = format!("/tmp/capeos_test_{}_{}", std::process::id(), std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos());
+        let dir = format!(
+            "/tmp/capeos_test_{}_{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        );
         let conn = crate::db::init_db(&dir).await.unwrap();
         let jwt = crate::jwt_issuer::JwtIssuer::new().unwrap();
         let state = std::sync::Arc::new(crate::AppState { db: conn, jwt });
         axum::Router::new()
-            .route("/v1/user_service/users/register", axum::routing::post(register))
+            .route(
+                "/v1/user_service/users/register",
+                axum::routing::post(register),
+            )
             .route("/v1/user_service/users/login", axum::routing::post(login))
-            .route("/v1/user_service/users/status", axum::routing::get(user_status))
+            .route(
+                "/v1/user_service/users/status",
+                axum::routing::get(user_status),
+            )
             .route("/.well-known/jwks.json", axum::routing::get(jwks))
             .with_state(state)
     }
@@ -185,10 +216,18 @@ mod tests {
             .body(Body::from(serde_json::to_string(&register_body).unwrap()))
             .unwrap();
         let response = app.clone().oneshot(req).await.unwrap();
-        assert!(response.status().is_success(), "register should succeed (2xx)");
-        let reg_body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        assert!(
+            response.status().is_success(),
+            "register should succeed (2xx)"
+        );
+        let reg_body = axum::body::to_bytes(response.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let reg_json: serde_json::Value = serde_json::from_slice(&reg_body).unwrap();
-        assert_eq!(reg_json["success"], 201, "register response should indicate 201 Created");
+        assert_eq!(
+            reg_json["success"], 201,
+            "register response should indicate 201 Created"
+        );
 
         let login_body = serde_json::json!({"username": "test", "password": "pass123"});
         let req = Request::builder()
@@ -199,7 +238,9 @@ mod tests {
             .unwrap();
         let response = app.oneshot(req).await.unwrap();
         assert_eq!(response.status(), 200);
-        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
         assert!(json["data"]["token"].as_str().unwrap().len() > 0);
     }
@@ -236,7 +277,9 @@ mod tests {
             .unwrap();
         let response = app.clone().oneshot(req).await.unwrap();
         assert_eq!(response.status(), 200);
-        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
         assert_eq!(json["data"]["initialized"], false);
 
@@ -255,7 +298,9 @@ mod tests {
             .unwrap();
         let response = app.oneshot(req).await.unwrap();
         assert_eq!(response.status(), 200);
-        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
         assert_eq!(json["data"]["initialized"], true);
     }

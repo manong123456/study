@@ -4,11 +4,11 @@
 
 use anyhow::Result;
 use base64::Engine;
-use jsonwebtoken::{encode, EncodingKey, Header, Algorithm};
+use jsonwebtoken::{encode, Algorithm, EncodingKey, Header};
 use p256::ecdsa::SigningKey;
 use p256::elliptic_curve::rand_core::OsRng;
 use p256::pkcs8::EncodePrivateKey;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use serde_json::json;
 
 /// JWT claims embedded in issued tokens.
@@ -38,8 +38,16 @@ impl JwtIssuer {
         let point = verifying_key.to_encoded_point(false);
 
         let b64 = base64::engine::general_purpose::URL_SAFE_NO_PAD;
-        let x = b64.encode(point.x().unwrap());
-        let y = b64.encode(point.y().unwrap());
+        let x = b64.encode(
+            point
+                .x()
+                .ok_or_else(|| anyhow::anyhow!("EC point missing x coordinate"))?,
+        );
+        let y = b64.encode(
+            point
+                .y()
+                .ok_or_else(|| anyhow::anyhow!("EC point missing y coordinate"))?,
+        );
 
         let jwks_json = serde_json::to_string(&json!({
             "keys": [{
@@ -52,11 +60,15 @@ impl JwtIssuer {
             }]
         }))?;
 
-        let pkcs8_der = signing_key.to_pkcs8_der()
+        let pkcs8_der = signing_key
+            .to_pkcs8_der()
             .map_err(|e| anyhow::anyhow!("pkcs8 error: {}", e))?;
         let encoding_key = EncodingKey::from_ec_der(pkcs8_der.as_bytes());
 
-        Ok(Self { encoding_key, jwks_json })
+        Ok(Self {
+            encoding_key,
+            jwks_json,
+        })
     }
 
     /// Issues a signed JWT for the given user.

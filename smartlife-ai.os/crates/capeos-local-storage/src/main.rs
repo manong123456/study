@@ -3,12 +3,12 @@
 //! Provides disk management, USB detection, and MergerFS integration for the CapeOS platform.
 //! Exposes HTTP endpoints for querying disk information and storage status.
 
-use std::net::SocketAddr;
-use axum::{Router, routing::get, Json};
-use serde::Serialize;
+use axum::{routing::get, Json, Router};
 use capeos_common::models::ApiResponse;
 use capeos_common::paths::DEFAULT_RUNTIME_PATH;
-use capeos_common::utils::{write_url_file, port::get_available_port};
+use capeos_common::utils::{port::get_available_port, write_url_file};
+use serde::Serialize;
+use std::net::SocketAddr;
 use tracing_subscriber::EnvFilter;
 
 /// Information about a disk or storage device.
@@ -47,12 +47,16 @@ async fn main() -> anyhow::Result<()> {
 /// Lists all disks and storage devices detected by the system.
 async fn list_disks() -> Json<ApiResponse<Vec<DiskInfo>>> {
     let disks = sysinfo::Disks::new_with_refreshed_list();
-    let list: Vec<DiskInfo> = disks.list().iter().map(|d| DiskInfo {
-        name: d.name().to_string_lossy().to_string(),
-        mount_point: d.mount_point().to_string_lossy().to_string(),
-        total_space: d.total_space(),
-        available_space: d.available_space(),
-    }).collect();
+    let list: Vec<DiskInfo> = disks
+        .list()
+        .iter()
+        .map(|d| DiskInfo {
+            name: d.name().to_string_lossy().to_string(),
+            mount_point: d.mount_point().to_string_lossy().to_string(),
+            total_space: d.total_space(),
+            available_space: d.available_space(),
+        })
+        .collect();
     Json(ApiResponse::ok(list))
 }
 

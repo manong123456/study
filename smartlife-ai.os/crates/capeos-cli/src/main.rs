@@ -36,15 +36,24 @@ async fn main() -> anyhow::Result<()> {
 
     match cli.command {
         Commands::Health => {
-            let resp = client.get(format!("{}/v1/capeos/health/services", cli.url)).send().await?;
+            let resp = client
+                .get(format!("{}/v1/capeos/health/services", cli.url))
+                .send()
+                .await?;
             println!("{}", resp.text().await?);
         }
         Commands::Version => {
-            let resp = client.get(format!("{}/v1/sys/version/current", cli.url)).send().await?;
+            let resp = client
+                .get(format!("{}/v1/sys/version/current", cli.url))
+                .send()
+                .await?;
             println!("{}", resp.text().await?);
         }
         Commands::Status => {
-            let resp = client.get(format!("{}/v1/sys/utilization", cli.url)).send().await?;
+            let resp = client
+                .get(format!("{}/v1/sys/utilization", cli.url))
+                .send()
+                .await?;
             println!("{}", resp.text().await?);
         }
     }
@@ -75,7 +84,8 @@ mod tests {
 
     #[test]
     fn test_cli_parse_custom_url() {
-        let cli = Cli::try_parse_from(["capeos-cli", "--url", "http://localhost:8080", "health"]).unwrap();
+        let cli = Cli::try_parse_from(["capeos-cli", "--url", "http://localhost:8080", "health"])
+            .unwrap();
         assert_eq!(cli.url, "http://localhost:8080");
         assert!(matches!(cli.command, Commands::Health));
     }

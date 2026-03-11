@@ -2,11 +2,11 @@
 //!
 //! System, file, folder, and CapeOS health endpoints.
 
-use axum::{Router, routing::get, Json, extract::State, extract::Query};
-use serde::Deserialize;
-use capeos_common::models::ApiResponse;
-use crate::server::state::AppState;
 use crate::server::services::system;
+use crate::server::state::AppState;
+use axum::{extract::Query, extract::State, routing::get, Json, Router};
+use capeos_common::models::ApiResponse;
+use serde::Deserialize;
 
 /// Builds the `/v1/sys` router: version, hardware, utilization.
 pub fn sys_routes(state: AppState) -> Router {
@@ -26,9 +26,7 @@ pub fn file_routes(state: AppState) -> Router {
 
 /// Builds the `/v1/folder` router: directory listing.
 pub fn folder_routes(state: AppState) -> Router {
-    Router::new()
-        .route("/", get(list_dir))
-        .with_state(state)
+    Router::new().route("/", get(list_dir)).with_state(state)
 }
 
 /// Builds the `/v1/capeos` router: health and service status.
@@ -49,7 +47,9 @@ async fn get_hardware() -> Json<ApiResponse<system::HardwareInfo>> {
 }
 
 /// GET `/v1/sys/utilization` - Returns CPU and memory utilization.
-async fn get_utilization(State(state): State<AppState>) -> Json<ApiResponse<system::SystemUtilization>> {
+async fn get_utilization(
+    State(state): State<AppState>,
+) -> Json<ApiResponse<system::SystemUtilization>> {
     Json(ApiResponse::ok(system::get_utilization(&state.sys)))
 }
 
@@ -63,9 +63,12 @@ pub struct PathQuery {
 /// GET `/v1/file/content` - Returns the contents of a file at the given path.
 ///
 /// Query: `path` (optional, default `/`). Returns raw file content as string.
-async fn get_file_content(Query(q): Query<PathQuery>) -> Result<String, capeos_common::error::AppError> {
+async fn get_file_content(
+    Query(q): Query<PathQuery>,
+) -> Result<String, capeos_common::error::AppError> {
     let path = q.path.unwrap_or_else(|| "/".to_string());
-    tokio::fs::read_to_string(&path).await
+    tokio::fs::read_to_string(&path)
+        .await
         .map_err(|e| capeos_common::error::AppError::NotFound(e.to_string()))
 }
 
@@ -83,10 +86,13 @@ pub struct DirEntry {
 /// GET `/v1/folder/` - Lists directory contents at the given path.
 ///
 /// Query: `path` (optional, default `/`). Returns `Vec<DirEntry>`.
-async fn list_dir(Query(q): Query<PathQuery>) -> Result<Json<ApiResponse<Vec<DirEntry>>>, capeos_common::error::AppError> {
+async fn list_dir(
+    Query(q): Query<PathQuery>,
+) -> Result<Json<ApiResponse<Vec<DirEntry>>>, capeos_common::error::AppError> {
     let path = q.path.unwrap_or_else(|| "/".to_string());
     let mut entries = Vec::new();
-    let mut dir = tokio::fs::read_dir(&path).await
+    let mut dir = tokio::fs::read_dir(&path)
+        .await
         .map_err(|e| capeos_common::error::AppError::NotFound(e.to_string()))?;
     while let Ok(Some(entry)) = dir.next_entry().await {
         let meta = entry.metadata().await.ok();
@@ -125,7 +131,10 @@ async fn health_services() -> Json<ApiResponse<system::HealthServices>> {
             _ => not_running.push(name),
         }
     }
-    Json(ApiResponse::ok(system::HealthServices { running, not_running }))
+    Json(ApiResponse::ok(system::HealthServices {
+        running,
+        not_running,
+    }))
 }
 
 #[cfg(test)]
@@ -152,7 +161,9 @@ mod tests {
             .unwrap();
         let resp = app.oneshot(req).await.unwrap();
         assert_eq!(resp.status(), StatusCode::OK);
-        let body = axum::body::to_bytes(resp.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(resp.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let body_str = String::from_utf8_lossy(&body);
         assert!(body_str.contains("version") || body_str.contains("data"));
     }
@@ -166,7 +177,9 @@ mod tests {
             .unwrap();
         let resp = app.oneshot(req).await.unwrap();
         assert_eq!(resp.status(), StatusCode::OK);
-        let body = axum::body::to_bytes(resp.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(resp.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let body_str = String::from_utf8_lossy(&body);
         assert!(body_str.contains("cpu_count"));
     }
@@ -191,7 +204,9 @@ mod tests {
             .unwrap();
         let resp = app.oneshot(req).await.unwrap();
         assert_eq!(resp.status(), StatusCode::OK);
-        let body = axum::body::to_bytes(resp.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(resp.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let body_str = String::from_utf8_lossy(&body);
         assert!(body_str.contains("data") || body_str.contains("["));
     }

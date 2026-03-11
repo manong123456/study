@@ -4,13 +4,13 @@
 //! Uses longest-prefix matching to select the target, then proxies the request
 //! (method, headers, body) and returns the backend response.
 
+use crate::route_table::RouteTable;
 use axum::{
     body::Body,
     extract::State,
     http::{Request, Response, StatusCode},
     Router,
 };
-use crate::route_table::RouteTable;
 
 /// Builds the proxy router. All requests fall through to [`proxy_handler`].
 ///
@@ -20,9 +20,7 @@ use crate::route_table::RouteTable;
 /// # Returns
 /// An Axum [`Router`] that proxies unmatched requests to backends.
 pub fn proxy_router(table: RouteTable) -> Router {
-    Router::new()
-        .fallback(proxy_handler)
-        .with_state(table)
+    Router::new().fallback(proxy_handler).with_state(table)
 }
 
 /// Reverse-proxies the request to the backend target.
@@ -36,16 +34,26 @@ async fn proxy_handler(
 ) -> Result<Response<Body>, StatusCode> {
     let path = req.uri().path().to_string();
 
-    let target = table.find_target(&path).await
+    let target = table
+        .find_target(&path)
+        .await
         .ok_or(StatusCode::NOT_FOUND)?;
 
-    let target_uri = format!("{}{}", target.trim_end_matches('/'), req.uri().path_and_query().map(|pq| pq.as_str()).unwrap_or(&path));
+    let target_uri = format!(
+        "{}{}",
+        target.trim_end_matches('/'),
+        req.uri()
+            .path_and_query()
+            .map(|pq| pq.as_str())
+            .unwrap_or(&path)
+    );
 
     let client = reqwest::Client::new();
     let method = req.method().clone();
     let headers = req.headers().clone();
 
-    let body_bytes = axum::body::to_bytes(req.into_body(), usize::MAX).await
+    let body_bytes = axum::body::to_bytes(req.into_body(), usize::MAX)
+        .await
         .map_err(|_| StatusCode::BAD_REQUEST)?;
 
     let mut builder = client.request(method, &target_uri);
@@ -55,10 +63,14 @@ async fn proxy_handler(
         }
     }
 
-    let resp = builder.body(body_bytes).send().await
+    let resp = builder
+        .body(body_bytes)
+        .send()
+        .await
         .map_err(|_| StatusCode::BAD_GATEWAY)?;
 
-    let status = StatusCode::from_u16(resp.status().as_u16()).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR);
+    let status =
+        StatusCode::from_u16(resp.status().as_u16()).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR);
     let resp_headers = resp.headers().clone();
     let resp_body = resp.bytes().await.map_err(|_| StatusCode::BAD_GATEWAY)?;
 
@@ -66,7 +78,9 @@ async fn proxy_handler(
     for (key, value) in resp_headers.iter() {
         response = response.header(key, value);
     }
-    response.body(Body::from(resp_body)).map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)
+    response
+        .body(Body::from(resp_body))
+        .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)
 }
 
 #[cfg(test)]

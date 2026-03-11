@@ -39,19 +39,20 @@ pub async fn get_service_address(runtime_path: &str, filename: &str) -> Result<S
 /// The service URL when it becomes available, or an error after all retries.
 pub async fn wait_for_service(runtime_path: &str, filename: &str, retries: u32) -> Result<String> {
     for i in 0..retries {
-        match get_service_address(runtime_path, filename).await {
-            Ok(addr) => {
-                let ping_url = format!("{}/ping", addr.trim_end_matches('/'));
-                if reqwest::get(&ping_url).await.is_ok() {
-                    return Ok(addr);
-                }
+        if let Ok(addr) = get_service_address(runtime_path, filename).await {
+            let ping_url = format!("{}/ping", addr.trim_end_matches('/'));
+            if reqwest::get(&ping_url).await.is_ok() {
+                return Ok(addr);
             }
-            Err(_) => {}
         }
         info!("Waiting for {} ({}/{})", filename, i + 1, retries);
         tokio::time::sleep(Duration::from_secs(1)).await;
     }
-    Err(anyhow!("{} not available after {} retries", filename, retries))
+    Err(anyhow!(
+        "{} not available after {} retries",
+        filename,
+        retries
+    ))
 }
 
 /// Registers routes with the gateway management API.

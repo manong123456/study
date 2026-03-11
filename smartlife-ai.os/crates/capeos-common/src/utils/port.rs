@@ -8,8 +8,11 @@ use std::net::TcpListener;
 ///
 /// Uses `127.0.0.1:0` to let the OS assign an available port.
 pub fn get_available_port() -> u16 {
-    let listener = TcpListener::bind("127.0.0.1:0").expect("failed to bind");
-    listener.local_addr().unwrap().port()
+    let listener = TcpListener::bind("127.0.0.1:0").expect("failed to bind ephemeral port");
+    listener
+        .local_addr()
+        .expect("ephemeral listener has no local address")
+        .port()
 }
 
 /// Returns `true` if the given port is available for binding on localhost.
@@ -17,6 +20,17 @@ pub fn get_available_port() -> u16 {
 /// # Arguments
 ///
 /// * `port` - The port number to check.
+///
+/// # Examples
+///
+/// ```
+/// use capeos_common::utils::port::is_port_available;
+///
+/// // Port 0 is never directly bindable in the usual sense,
+/// // but high ports are typically available:
+/// let available = is_port_available(49999);
+/// // Result depends on the system state
+/// ```
 pub fn is_port_available(port: u16) -> bool {
     TcpListener::bind(("127.0.0.1", port)).is_ok()
 }

@@ -30,7 +30,11 @@ pub struct SystemUtilization {
 pub fn get_utilization(sys: &System) -> SystemUtilization {
     let mem_total = sys.total_memory();
     let mem_used = sys.used_memory();
-    let mem_pct = if mem_total > 0 { (mem_used as f64 / mem_total as f64) * 100.0 } else { 0.0 };
+    let mem_pct = if mem_total > 0 {
+        (mem_used as f64 / mem_total as f64) * 100.0
+    } else {
+        0.0
+    };
 
     SystemUtilization {
         cpu_percent: sys.global_cpu_usage(),
@@ -64,7 +68,11 @@ pub fn get_hardware_info() -> HardwareInfo {
     let sys = System::new_all();
     HardwareInfo {
         cpu_count: sys.cpus().len(),
-        cpu_brand: sys.cpus().first().map(|c| c.brand().to_string()).unwrap_or_default(),
+        cpu_brand: sys
+            .cpus()
+            .first()
+            .map(|c| c.brand().to_string())
+            .unwrap_or_default(),
         total_memory: sys.total_memory(),
         hostname: System::host_name().unwrap_or_default(),
         os_name: System::name().unwrap_or_default(),

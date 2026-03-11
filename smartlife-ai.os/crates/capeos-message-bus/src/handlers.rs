@@ -3,22 +3,27 @@
 //! Endpoints for listing/registering event types, publishing events, and
 //! subscribing via WebSocket.
 
-use axum::{
-    extract::{Path, State, WebSocketUpgrade, ws::{Message, WebSocket}},
-    Json,
-    response::IntoResponse,
-};
-use capeos_common::models::ApiResponse;
-use capeos_common::models::event::{EventType, Event};
 use crate::store::BusState;
+use axum::{
+    extract::{
+        ws::{Message, WebSocket},
+        Path, State, WebSocketUpgrade,
+    },
+    response::IntoResponse,
+    Json,
+};
+use capeos_common::models::event::{Event, EventType};
+use capeos_common::models::ApiResponse;
 
 /// Lists all registered event types.
 ///
 /// Returns a JSON array of [`EventType`] entries from the registry.
-pub async fn list_event_types(
-    State(state): State<BusState>,
-) -> Json<ApiResponse<Vec<EventType>>> {
-    let types: Vec<EventType> = state.event_types.iter().map(|e| e.value().clone()).collect();
+pub async fn list_event_types(State(state): State<BusState>) -> Json<ApiResponse<Vec<EventType>>> {
+    let types: Vec<EventType> = state
+        .event_types
+        .iter()
+        .map(|e| e.value().clone())
+        .collect();
     Json(ApiResponse::ok(types))
 }
 
@@ -60,10 +65,7 @@ pub async fn publish_event(
 ///
 /// Upgrades the connection and spawns [`handle_ws`] to stream events as JSON
 /// text messages to the client.
-pub async fn subscribe(
-    State(state): State<BusState>,
-    ws: WebSocketUpgrade,
-) -> impl IntoResponse {
+pub async fn subscribe(State(state): State<BusState>, ws: WebSocketUpgrade) -> impl IntoResponse {
     ws.on_upgrade(move |socket| handle_ws(socket, state))
 }
 
@@ -97,8 +99,14 @@ mod tests {
     fn test_app() -> axum::Router {
         let state = crate::store::BusState::new();
         axum::Router::new()
-            .route("/v1/message_bus/event_types", axum::routing::get(list_event_types).post(register_event_types))
-            .route("/v1/message_bus/event/{source_id}/{name}", axum::routing::post(publish_event))
+            .route(
+                "/v1/message_bus/event_types",
+                axum::routing::get(list_event_types).post(register_event_types),
+            )
+            .route(
+                "/v1/message_bus/event/{source_id}/{name}",
+                axum::routing::post(publish_event),
+            )
             .with_state(state)
     }
 
@@ -111,7 +119,9 @@ mod tests {
             .unwrap();
         let response = app.oneshot(req).await.unwrap();
         assert_eq!(response.status(), 200);
-        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
         assert_eq!(json["success"], 200);
         assert!(json["data"].as_array().unwrap().is_empty());
@@ -140,7 +150,9 @@ mod tests {
             .unwrap();
         let response = app.oneshot(req).await.unwrap();
         assert_eq!(response.status(), 200);
-        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX)
+            .await
+            .unwrap();
         let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
         let data = json["data"].as_array().unwrap();
         assert_eq!(data.len(), 1);
