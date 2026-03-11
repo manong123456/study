@@ -69,3 +69,22 @@ async fn list_containers() -> Json<ApiResponse<Vec<ContainerInfo>>> {
         Err(_) => Json(ApiResponse::ok(vec![])),
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use axum::body::Body;
+    use axum::http::{Request, StatusCode};
+    use tower::ServiceExt;
+
+    #[tokio::test]
+    async fn test_list_containers_handler() {
+        let app = Router::new().route("/v1/app_management/container", get(list_containers));
+        let req = Request::builder()
+            .uri("/v1/app_management/container")
+            .body(Body::empty())
+            .unwrap();
+        let resp = app.oneshot(req).await.unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+    }
+}

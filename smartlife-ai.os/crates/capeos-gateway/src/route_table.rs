@@ -75,3 +75,82 @@ impl RouteTable {
         }).collect()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_new_table_is_empty() {
+        let table = RouteTable::new();
+        let routes = table.list_routes().await;
+        assert!(routes.is_empty());
+    }
+
+    #[tokio::test]
+    async fn test_add_and_find_route() {
+        let table = RouteTable::new();
+        table.add_route(Route {
+            path: "/v1/sys".to_string(),
+            target: "http://127.0.0.1:3000".to_string(),
+        }).await;
+        let target = table.find_target("/v1/sys/version").await;
+        assert_eq!(target, Some("http://127.0.0.1:3000".to_string()));
+    }
+
+    #[tokio::test]
+    async fn test_find_no_match() {
+        let table = RouteTable::new();
+        let target = table.find_target("/v1/sys").await;
+        assert_eq!(target, None);
+    }
+
+    #[tokio::test]
+    async fn test_longest_prefix_match() {
+        let table = RouteTable::new();
+        table.add_route(Route {
+            path: "/v1".to_string(),
+            target: "A".to_string(),
+        }).await;
+        table.add_route(Route {
+            path: "/v1/sys".to_string(),
+            target: "B".to_string(),
+        }).await;
+        let target = table.find_target("/v1/sys/version").await;
+        assert_eq!(target, Some("B".to_string()));
+    }
+
+    #[tokio::test]
+    async fn test_list_routes() {
+        let table = RouteTable::new();
+        table.add_route(Route {
+            path: "/v1/sys".to_string(),
+            target: "http://127.0.0.1:3000".to_string(),
+        }).await;
+        table.add_route(Route {
+            path: "/v1/api".to_string(),
+            target: "http://127.0.0.1:3001".to_string(),
+        }).await;
+        table.add_route(Route {
+            path: "/v1/test".to_string(),
+            target: "http://127.0.0.1:3002".to_string(),
+        }).await;
+        let routes = table.list_routes().await;
+        assert_eq!(routes.len(), 3);
+    }
+
+    #[tokio::test]
+    async fn test_overwrite_route() {
+        let table = RouteTable::new();
+        table.add_route(Route {
+            path: "/v1/sys".to_string(),
+            target: "http://127.0.0.1:3000".to_string(),
+        }).await;
+        table.add_route(Route {
+            path: "/v1/sys".to_string(),
+            target: "http://127.0.0.1:9999".to_string(),
+        }).await;
+        let target = table.find_target("/v1/sys/version").await;
+        assert_eq!(target, Some("http://127.0.0.1:9999".to_string()));
+    }
+}

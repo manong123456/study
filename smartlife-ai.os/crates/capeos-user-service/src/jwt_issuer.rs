@@ -88,3 +88,39 @@ impl JwtIssuer {
         &self.jwks_json
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_jwt_issuer_creation() {
+        let issuer = JwtIssuer::new();
+        assert!(issuer.is_ok());
+    }
+
+    #[test]
+    fn test_issue_token() {
+        let issuer = JwtIssuer::new().unwrap();
+        let token = issuer.issue_token("testuser", 1).unwrap();
+        assert!(!token.is_empty());
+    }
+
+    #[test]
+    fn test_jwks_json_valid() {
+        let issuer = JwtIssuer::new().unwrap();
+        let jwks = issuer.jwks_json();
+        let parsed: serde_json::Value = serde_json::from_str(jwks).unwrap();
+        let keys = parsed["keys"].as_array().unwrap();
+        assert_eq!(keys.len(), 1);
+        assert_eq!(keys[0]["kty"], "EC");
+    }
+
+    #[test]
+    fn test_different_tokens_for_different_users() {
+        let issuer = JwtIssuer::new().unwrap();
+        let token1 = issuer.issue_token("user1", 1).unwrap();
+        let token2 = issuer.issue_token("user2", 2).unwrap();
+        assert_ne!(token1, token2);
+    }
+}

@@ -86,3 +86,79 @@ fn chrono_now() -> String {
         .unwrap_or_default();
     format!("{}", now.as_secs())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use axum::body::Body;
+    use axum::http::Request;
+    use tower::ServiceExt;
+
+    fn test_app() -> axum::Router {
+        let state = crate::store::BusState::new();
+        axum::Router::new()
+            .route("/v1/message_bus/event_types", axum::routing::get(list_event_types).post(register_event_types))
+            .route("/v1/message_bus/event/{source_id}/{name}", axum::routing::post(publish_event))
+            .with_state(state)
+    }
+
+    #[tokio::test]
+    async fn test_list_event_types_empty() {
+        let app = test_app();
+        let req = Request::builder()
+            .uri("/v1/message_bus/event_types")
+            .body(Body::empty())
+            .unwrap();
+        let response = app.oneshot(req).await.unwrap();
+        assert_eq!(response.status(), 200);
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
+        assert_eq!(json["success"], 200);
+        assert!(json["data"].as_array().unwrap().is_empty());
+    }
+
+    #[tokio::test]
+    async fn test_register_and_list_event_types() {
+        let app = test_app();
+        let types = serde_json::json!([{
+            "source_id": "capeos",
+            "name": "test",
+            "properties": []
+        }]);
+        let req = Request::builder()
+            .uri("/v1/message_bus/event_types")
+            .method("POST")
+            .header("content-type", "application/json")
+            .body(Body::from(serde_json::to_string(&types).unwrap()))
+            .unwrap();
+        let response = app.clone().oneshot(req).await.unwrap();
+        assert_eq!(response.status(), 200);
+
+        let req = Request::builder()
+            .uri("/v1/message_bus/event_types")
+            .body(Body::empty())
+            .unwrap();
+        let response = app.oneshot(req).await.unwrap();
+        assert_eq!(response.status(), 200);
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
+        let data = json["data"].as_array().unwrap();
+        assert_eq!(data.len(), 1);
+        assert_eq!(data[0]["source_id"], "capeos");
+        assert_eq!(data[0]["name"], "test");
+    }
+
+    #[tokio::test]
+    async fn test_publish_event() {
+        let app = test_app();
+        let body = serde_json::json!({"foo": "bar"});
+        let req = Request::builder()
+            .uri("/v1/message_bus/event/capeos/test")
+            .method("POST")
+            .header("content-type", "application/json")
+            .body(Body::from(serde_json::to_string(&body).unwrap()))
+            .unwrap();
+        let response = app.oneshot(req).await.unwrap();
+        assert_eq!(response.status(), 200);
+    }
+}

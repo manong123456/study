@@ -81,3 +81,25 @@ pub struct HealthServices {
     /// List of service names that are not active.
     pub not_running: Vec<String>,
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_get_utilization() {
+        let mut sys = System::new_all();
+        sys.refresh_all();
+        let util = get_utilization(&sys);
+        assert!(util.cpu_percent >= 0.0);
+        assert!(util.memory_total > 0);
+    }
+
+    #[test]
+    fn test_get_hardware_info() {
+        let info = get_hardware_info();
+        assert!(!info.hostname.is_empty());
+        assert!(info.cpu_count > 0);
+        assert!(info.total_memory > 0);
+    }
+}

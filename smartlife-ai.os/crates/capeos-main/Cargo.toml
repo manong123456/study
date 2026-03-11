@@ -22,3 +22,6 @@ sysinfo = { workspace = true }
 dashmap = { workspace = true }
 tokio-cron-scheduler = { workspace = true }
 uuid = { workspace = true }
+
+[dev-dependencies]
+tower = { version = "0.5", default-features = false }

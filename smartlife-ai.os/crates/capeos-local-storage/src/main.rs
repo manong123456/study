@@ -55,3 +55,22 @@ async fn list_disks() -> Json<ApiResponse<Vec<DiskInfo>>> {
     }).collect();
     Json(ApiResponse::ok(list))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use axum::body::Body;
+    use axum::http::{Request, StatusCode};
+    use tower::ServiceExt;
+
+    #[tokio::test]
+    async fn test_list_disks_handler() {
+        let app = Router::new().route("/v1/local_storage/disks", get(list_disks));
+        let req = Request::builder()
+            .uri("/v1/local_storage/disks")
+            .body(Body::empty())
+            .unwrap();
+        let resp = app.oneshot(req).await.unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+    }
+}

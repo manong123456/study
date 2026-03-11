@@ -70,3 +70,27 @@ pub async fn register_routes(management_url: &str, routes: &[Route]) -> Result<(
     }
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_get_service_address() {
+        let runtime_path = "/tmp";
+        let filename = "capeos_test_service_url_12345.url";
+        let path = Path::new(runtime_path).join(filename);
+        let url = "http://127.0.0.1:9999";
+        tokio::fs::write(&path, url).await.unwrap();
+        let result = get_service_address(runtime_path, filename).await;
+        tokio::fs::remove_file(&path).await.ok();
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), url);
+    }
+
+    #[tokio::test]
+    async fn test_get_service_address_not_found() {
+        let result = get_service_address("/tmp", "capeos_nonexistent_file_98765.url").await;
+        assert!(result.is_err());
+    }
+}

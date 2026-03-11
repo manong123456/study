@@ -30,3 +30,49 @@ impl BusState {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use capeos_common::models::event::Event;
+
+    #[test]
+    fn test_new_bus_state() {
+        let state = BusState::new();
+        assert!(state.event_types.is_empty());
+    }
+
+    #[tokio::test]
+    async fn test_broadcast_send_receive() {
+        let state = BusState::new();
+        let mut rx = state.sender.subscribe();
+        let event = Event {
+            source_id: "test".to_string(),
+            name: "test_event".to_string(),
+            properties: serde_json::json!({"key": "value"}),
+            timestamp: "12345".to_string(),
+        };
+        let _ = state.sender.send(event.clone());
+        let received = rx.recv().await.unwrap();
+        assert_eq!(received.source_id, event.source_id);
+        assert_eq!(received.name, event.name);
+    }
+
+    #[tokio::test]
+    async fn test_multiple_subscribers() {
+        let state = BusState::new();
+        let mut rx1 = state.sender.subscribe();
+        let mut rx2 = state.sender.subscribe();
+        let event = Event {
+            source_id: "src".to_string(),
+            name: "evt".to_string(),
+            properties: serde_json::json!({}),
+            timestamp: "0".to_string(),
+        };
+        let _ = state.sender.send(event.clone());
+        let r1 = rx1.recv().await.unwrap();
+        let r2 = rx2.recv().await.unwrap();
+        assert_eq!(r1.source_id, r2.source_id);
+        assert_eq!(r1.name, r2.name);
+    }
+}

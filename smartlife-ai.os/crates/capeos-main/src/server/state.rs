@@ -18,3 +18,14 @@ impl AppState {
         Ok(Self { sys: Arc::new(sys) })
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_app_state_creation() {
+        let state = AppState::new().await;
+        assert!(state.is_ok());
+    }
+}

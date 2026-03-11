@@ -17,3 +17,28 @@ pub struct ChangePortRequest {
     /// The new port number to listen on.
     pub port: u16,
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_route_serialization() {
+        let route = Route {
+            path: "/api/v1".to_string(),
+            target: "http://127.0.0.1:8080".to_string(),
+        };
+        let json = serde_json::to_string(&route).unwrap();
+        let deserialized: Route = serde_json::from_str(&json).unwrap();
+        assert_eq!(deserialized.path, route.path);
+        assert_eq!(deserialized.target, route.target);
+    }
+
+    #[test]
+    fn test_change_port_request() {
+        let req = ChangePortRequest { port: 9090 };
+        let json = serde_json::to_string(&req).unwrap();
+        let deserialized: ChangePortRequest = serde_json::from_str(&json).unwrap();
+        assert_eq!(deserialized.port, 9090);
+    }
+}

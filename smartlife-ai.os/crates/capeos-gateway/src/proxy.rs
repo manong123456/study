@@ -68,3 +68,22 @@ async fn proxy_handler(
     }
     response.body(Body::from(resp_body)).map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use axum::body::Body;
+    use axum::http::Request;
+    use tower::ServiceExt;
+
+    #[tokio::test]
+    async fn test_proxy_returns_404_for_unknown_route() {
+        let app = proxy_router(RouteTable::new());
+        let req = Request::builder()
+            .uri("/unknown/path")
+            .body(Body::empty())
+            .unwrap();
+        let resp = app.oneshot(req).await.unwrap();
+        assert_eq!(resp.status(), StatusCode::NOT_FOUND);
+    }
+}

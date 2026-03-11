@@ -127,3 +127,94 @@ async fn health_services() -> Json<ApiResponse<system::HealthServices>> {
     }
     Json(ApiResponse::ok(system::HealthServices { running, not_running }))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use axum::body::Body;
+    use axum::http::{Request, StatusCode};
+    use tower::ServiceExt;
+
+    async fn test_router() -> axum::Router {
+        let state = crate::server::state::AppState::new().await.unwrap();
+        axum::Router::new()
+            .nest("/v1/sys", sys_routes(state.clone()))
+            .nest("/v1/folder", folder_routes(state.clone()))
+            .nest("/v1/capeos", capeos_routes(state.clone()))
+    }
+
+    #[tokio::test]
+    async fn test_get_version() {
+        let app = test_router().await;
+        let req = Request::builder()
+            .uri("/v1/sys/version/current")
+            .body(Body::empty())
+            .unwrap();
+        let resp = app.oneshot(req).await.unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+        let body = axum::body::to_bytes(resp.into_body(), usize::MAX).await.unwrap();
+        let body_str = String::from_utf8_lossy(&body);
+        assert!(body_str.contains("version") || body_str.contains("data"));
+    }
+
+    #[tokio::test]
+    async fn test_get_hardware() {
+        let app = test_router().await;
+        let req = Request::builder()
+            .uri("/v1/sys/hardware")
+            .body(Body::empty())
+            .unwrap();
+        let resp = app.oneshot(req).await.unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+        let body = axum::body::to_bytes(resp.into_body(), usize::MAX).await.unwrap();
+        let body_str = String::from_utf8_lossy(&body);
+        assert!(body_str.contains("cpu_count"));
+    }
+
+    #[tokio::test]
+    async fn test_get_utilization() {
+        let app = test_router().await;
+        let req = Request::builder()
+            .uri("/v1/sys/utilization")
+            .body(Body::empty())
+            .unwrap();
+        let resp = app.oneshot(req).await.unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+    }
+
+    #[tokio::test]
+    async fn test_list_dir() {
+        let app = test_router().await;
+        let req = Request::builder()
+            .uri("/v1/folder?path=/tmp")
+            .body(Body::empty())
+            .unwrap();
+        let resp = app.oneshot(req).await.unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+        let body = axum::body::to_bytes(resp.into_body(), usize::MAX).await.unwrap();
+        let body_str = String::from_utf8_lossy(&body);
+        assert!(body_str.contains("data") || body_str.contains("["));
+    }
+
+    #[tokio::test]
+    async fn test_list_dir_nonexistent() {
+        let app = test_router().await;
+        let req = Request::builder()
+            .uri("/v1/folder?path=/nonexistent_dir_xyz")
+            .body(Body::empty())
+            .unwrap();
+        let resp = app.oneshot(req).await.unwrap();
+        assert!(resp.status().is_client_error() || resp.status().is_server_error());
+    }
+
+    #[tokio::test]
+    async fn test_health_services() {
+        let app = test_router().await;
+        let req = Request::builder()
+            .uri("/v1/capeos/health/services")
+            .body(Body::empty())
+            .unwrap();
+        let resp = app.oneshot(req).await.unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+    }
+}

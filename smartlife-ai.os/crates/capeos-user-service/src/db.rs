@@ -44,3 +44,26 @@ pub async fn init_db(db_path: &str) -> Result<Connection> {
 
     Ok(conn)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_init_db() {
+        let dir = format!("/tmp/capeos_test_db_{}", std::process::id());
+        let conn = init_db(&dir).await.unwrap();
+        let db_file = format!("{}/capeos.db", dir);
+        assert!(std::path::Path::new(&db_file).exists());
+        let exists: bool = conn.call(|conn| -> Result<bool, rusqlite::Error> {
+            let count: i32 = conn.query_row(
+                "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='users'",
+                [],
+                |row| row.get(0),
+            )?;
+            Ok(count > 0)
+        }).await.unwrap();
+        assert!(exists);
+        let _ = tokio::fs::remove_dir_all(&dir).await;
+    }
+}

@@ -153,3 +153,110 @@ pub async fn user_status(
 pub async fn jwks(State(state): State<Arc<AppState>>) -> String {
     state.jwt.jwks_json().to_string()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use axum::body::Body;
+    use axum::http::Request;
+    use tower::ServiceExt;
+
+    async fn test_app() -> axum::Router {
+        let dir = format!("/tmp/capeos_test_{}_{}", std::process::id(), std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos());
+        let conn = crate::db::init_db(&dir).await.unwrap();
+        let jwt = crate::jwt_issuer::JwtIssuer::new().unwrap();
+        let state = std::sync::Arc::new(crate::AppState { db: conn, jwt });
+        axum::Router::new()
+            .route("/v1/user_service/users/register", axum::routing::post(register))
+            .route("/v1/user_service/users/login", axum::routing::post(login))
+            .route("/v1/user_service/users/status", axum::routing::get(user_status))
+            .route("/.well-known/jwks.json", axum::routing::get(jwks))
+            .with_state(state)
+    }
+
+    #[tokio::test]
+    async fn test_register_and_login() {
+        let app = test_app().await;
+        let register_body = serde_json::json!({"username": "test", "password": "pass123"});
+        let req = Request::builder()
+            .uri("/v1/user_service/users/register")
+            .method("POST")
+            .header("content-type", "application/json")
+            .body(Body::from(serde_json::to_string(&register_body).unwrap()))
+            .unwrap();
+        let response = app.clone().oneshot(req).await.unwrap();
+        assert!(response.status().is_success(), "register should succeed (2xx)");
+        let reg_body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let reg_json: serde_json::Value = serde_json::from_slice(&reg_body).unwrap();
+        assert_eq!(reg_json["success"], 201, "register response should indicate 201 Created");
+
+        let login_body = serde_json::json!({"username": "test", "password": "pass123"});
+        let req = Request::builder()
+            .uri("/v1/user_service/users/login")
+            .method("POST")
+            .header("content-type", "application/json")
+            .body(Body::from(serde_json::to_string(&login_body).unwrap()))
+            .unwrap();
+        let response = app.oneshot(req).await.unwrap();
+        assert_eq!(response.status(), 200);
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
+        assert!(json["data"]["token"].as_str().unwrap().len() > 0);
+    }
+
+    #[tokio::test]
+    async fn test_login_wrong_password() {
+        let app = test_app().await;
+        let register_body = serde_json::json!({"username": "test", "password": "pass123"});
+        let req = Request::builder()
+            .uri("/v1/user_service/users/register")
+            .method("POST")
+            .header("content-type", "application/json")
+            .body(Body::from(serde_json::to_string(&register_body).unwrap()))
+            .unwrap();
+        let _ = app.clone().oneshot(req).await.unwrap();
+
+        let login_body = serde_json::json!({"username": "test", "password": "wrongpass"});
+        let req = Request::builder()
+            .uri("/v1/user_service/users/login")
+            .method("POST")
+            .header("content-type", "application/json")
+            .body(Body::from(serde_json::to_string(&login_body).unwrap()))
+            .unwrap();
+        let response = app.oneshot(req).await.unwrap();
+        assert_eq!(response.status(), 401);
+    }
+
+    #[tokio::test]
+    async fn test_user_status() {
+        let app = test_app().await;
+        let req = Request::builder()
+            .uri("/v1/user_service/users/status")
+            .body(Body::empty())
+            .unwrap();
+        let response = app.clone().oneshot(req).await.unwrap();
+        assert_eq!(response.status(), 200);
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
+        assert_eq!(json["data"]["initialized"], false);
+
+        let register_body = serde_json::json!({"username": "test", "password": "pass123"});
+        let req = Request::builder()
+            .uri("/v1/user_service/users/register")
+            .method("POST")
+            .header("content-type", "application/json")
+            .body(Body::from(serde_json::to_string(&register_body).unwrap()))
+            .unwrap();
+        let _ = app.clone().oneshot(req).await.unwrap();
+
+        let req = Request::builder()
+            .uri("/v1/user_service/users/status")
+            .body(Body::empty())
+            .unwrap();
+        let response = app.oneshot(req).await.unwrap();
+        assert_eq!(response.status(), 200);
+        let body = axum::body::to_bytes(response.into_body(), usize::MAX).await.unwrap();
+        let json: serde_json::Value = serde_json::from_slice(&body).unwrap();
+        assert_eq!(json["data"]["initialized"], true);
+    }
+}
