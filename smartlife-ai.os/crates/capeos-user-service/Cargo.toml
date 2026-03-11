@@ -1,0 +1,28 @@
+[package]
+name = "capeos-user-service"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "capeos-user-service"
+path = "src/main.rs"
+
+[dependencies]
+capeos-common = { workspace = true }
+axum = { workspace = true }
+tokio = { workspace = true }
+tokio-rusqlite = { workspace = true }
+rusqlite = { workspace = true }
+rusqlite_migration = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+jsonwebtoken = { workspace = true }
+p256 = { workspace = true }
+tower-http = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow = { workspace = true }
+argon2 = { workspace = true }
+rand = { workspace = true }
+base64 = { workspace = true }

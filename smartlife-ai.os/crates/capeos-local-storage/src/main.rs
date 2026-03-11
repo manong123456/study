@@ -1,0 +1,46 @@
+use std::net::SocketAddr;
+use axum::{Router, routing::get, Json};
+use serde::Serialize;
+use capeos_common::models::ApiResponse;
+use capeos_common::paths::DEFAULT_RUNTIME_PATH;
+use capeos_common::utils::{write_url_file, port::get_available_port};
+use tracing_subscriber::EnvFilter;
+
+#[derive(Serialize)]
+struct DiskInfo {
+    name: String,
+    mount_point: String,
+    total_space: u64,
+    available_space: u64,
+}
+
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    tracing_subscriber::fmt()
+        .with_env_filter(EnvFilter::try_from_default_env().unwrap_or_else(|_| "info".into()))
+        .init();
+
+    let port = get_available_port();
+    let app = Router::new()
+        .route("/ping", get(|| async { "pong" }))
+        .route("/v1/local_storage/disks", get(list_disks));
+
+    let listen_url = format!("http://127.0.0.1:{}", port);
+    write_url_file(DEFAULT_RUNTIME_PATH, "local-storage.url", &listen_url).await?;
+
+    tracing::info!("LocalStorage on 127.0.0.1:{}", port);
+    let listener = tokio::net::TcpListener::bind(SocketAddr::from(([127, 0, 0, 1], port))).await?;
+    axum::serve(listener, app).await?;
+    Ok(())
+}
+
+async fn list_disks() -> Json<ApiResponse<Vec<DiskInfo>>> {
+    let disks = sysinfo::Disks::new_with_refreshed_list();
+    let list: Vec<DiskInfo> = disks.list().iter().map(|d| DiskInfo {
+        name: d.name().to_string_lossy().to_string(),
+        mount_point: d.mount_point().to_string_lossy().to_string(),
+        total_space: d.total_space(),
+        available_space: d.available_space(),
+    }).collect();
+    Json(ApiResponse::ok(list))
+}

@@ -1,0 +1,50 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/capeos-common",
+    "crates/capeos-gateway",
+    "crates/capeos-message-bus",
+    "crates/capeos-user-service",
+    "crates/capeos-main",
+    "crates/capeos-local-storage",
+    "crates/capeos-app-management",
+    "crates/capeos-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/smartlife-ai/smartlife-ai.os"
+
+[workspace.dependencies]
+capeos-common = { path = "crates/capeos-common" }
+axum = { version = "0.8", features = ["ws", "multipart"] }
+tokio = { version = "1", features = ["full"] }
+tokio-rusqlite = "0.7"
+rusqlite = { version = "0.37", features = ["bundled"] }
+rusqlite_migration = "2.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+jsonwebtoken = "9"
+p256 = { version = "0.13", features = ["ecdsa", "jwk"] }
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+tower-http = { version = "0.6", features = ["cors", "compression-gzip", "trace", "fs"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+anyhow = "1"
+thiserror = "2"
+toml = "0.8"
+moka = { version = "0.12", features = ["future"] }
+argon2 = "0.5"
+sysinfo = "0.33"
+bollard = "0.18"
+clap = { version = "4", features = ["derive"] }
+rand = "0.8"
+base64 = "0.22"
+dashmap = "6"
+tokio-cron-scheduler = "0.13"
+hyper = { version = "1", features = ["full"] }
+hyper-util = { version = "0.1", features = ["tokio"] }
+http = "1"

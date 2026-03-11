@@ -1,0 +1,21 @@
+[package]
+name = "capeos-local-storage"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "capeos-local-storage"
+path = "src/main.rs"
+
+[dependencies]
+capeos-common = { workspace = true }
+axum = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+sysinfo = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow = { workspace = true }
+tower-http = { workspace = true }
