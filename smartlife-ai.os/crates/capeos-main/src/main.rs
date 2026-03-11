@@ -1,3 +1,8 @@
+//! CapeOS Main Service
+//!
+//! Core CapeOS service providing system monitoring, file and folder management,
+//! health checks, and routing for other CapeOS components.
+
 mod server;
 
 use std::net::SocketAddr;

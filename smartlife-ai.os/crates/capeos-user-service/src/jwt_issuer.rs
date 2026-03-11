@@ -1,3 +1,7 @@
+//! JWT token issuance and JWKS distribution.
+//!
+//! Uses ES256 (ECDSA P-256) for signing. Generates a new key pair on startup.
+
 use anyhow::Result;
 use base64::Engine;
 use jsonwebtoken::{encode, EncodingKey, Header, Algorithm};
@@ -7,20 +11,27 @@ use p256::pkcs8::EncodePrivateKey;
 use serde::{Serialize, Deserialize};
 use serde_json::json;
 
+/// JWT claims embedded in issued tokens.
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
+    /// Subject: the username.
     pub sub: String,
+    /// User ID from the database.
     pub id: i64,
+    /// Expiration time (Unix timestamp).
     pub exp: usize,
+    /// Issued-at time (Unix timestamp).
     pub iat: usize,
 }
 
+/// Issues and signs JWT tokens; provides JWKS for verification.
 pub struct JwtIssuer {
     encoding_key: EncodingKey,
     jwks_json: String,
 }
 
 impl JwtIssuer {
+    /// Creates a new JWT issuer with a freshly generated ECDSA P-256 key pair.
     pub fn new() -> Result<Self> {
         let signing_key = SigningKey::random(&mut OsRng);
         let verifying_key = signing_key.verifying_key();
@@ -48,6 +59,16 @@ impl JwtIssuer {
         Ok(Self { encoding_key, jwks_json })
     }
 
+    /// Issues a signed JWT for the given user.
+    ///
+    /// # Arguments
+    ///
+    /// * `username` - The user's username (stored in `sub` claim).
+    /// * `user_id` - The user's database ID (stored in `id` claim).
+    ///
+    /// # Returns
+    ///
+    /// A JWT string valid for 3 hours.
     pub fn issue_token(&self, username: &str, user_id: i64) -> Result<String> {
         let now = std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)?
@@ -62,6 +83,7 @@ impl JwtIssuer {
         Ok(token)
     }
 
+    /// Returns the JWKS (JSON Web Key Set) as a JSON string for public key distribution.
     pub fn jwks_json(&self) -> &str {
         &self.jwks_json
     }

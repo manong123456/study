@@ -1,14 +1,32 @@
+//! System information and health services.
+//!
+//! Provides CPU/memory utilization, hardware info, and service health status.
+
 use serde::Serialize;
 use sysinfo::System;
 
+/// CPU and memory utilization metrics.
 #[derive(Serialize)]
 pub struct SystemUtilization {
+    /// Global CPU usage percentage (0-100).
     pub cpu_percent: f32,
+    /// Total physical memory in bytes.
     pub memory_total: u64,
+    /// Used memory in bytes.
     pub memory_used: u64,
+    /// Memory usage percentage (0-100).
     pub memory_percent: f64,
 }
 
+/// Computes current system utilization from the given `System` instance.
+///
+/// # Arguments
+///
+/// * `sys` - A sysinfo `System` (should be refreshed for accurate data).
+///
+/// # Returns
+///
+/// `SystemUtilization` with CPU and memory metrics.
 pub fn get_utilization(sys: &System) -> SystemUtilization {
     let mem_total = sys.total_memory();
     let mem_used = sys.used_memory();
@@ -22,17 +40,26 @@ pub fn get_utilization(sys: &System) -> SystemUtilization {
     }
 }
 
+/// Hardware and OS information.
 #[derive(Serialize)]
 pub struct HardwareInfo {
+    /// Number of CPU cores.
     pub cpu_count: usize,
+    /// CPU brand string (e.g. "Intel Core i7").
     pub cpu_brand: String,
+    /// Total physical memory in bytes.
     pub total_memory: u64,
+    /// System hostname.
     pub hostname: String,
+    /// OS name (e.g. "Linux").
     pub os_name: String,
+    /// OS version string.
     pub os_version: String,
+    /// Kernel version string.
     pub kernel_version: String,
 }
 
+/// Returns hardware and OS information for the current system.
 pub fn get_hardware_info() -> HardwareInfo {
     let sys = System::new_all();
     HardwareInfo {
@@ -46,8 +73,11 @@ pub fn get_hardware_info() -> HardwareInfo {
     }
 }
 
+/// Status of CapeOS services (running vs not running).
 #[derive(Serialize)]
 pub struct HealthServices {
+    /// List of service names that are active.
     pub running: Vec<String>,
+    /// List of service names that are not active.
     pub not_running: Vec<String>,
 }

@@ -1,5 +1,8 @@
+//! File manager page for browsing and managing files.
+
 use leptos::prelude::*;
 
+/// File manager page component with table listing files and directories.
 #[component]
 pub fn FilesPage() -> impl IntoView {
     view! {

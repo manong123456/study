@@ -1,3 +1,12 @@
+//! # CapeOS Gateway Binary
+//!
+//! The gateway serves as a reverse proxy and management API for the CapeOS runtime.
+//! On startup it:
+//! - Binds a management API on localhost (internal) for route registration and health checks
+//! - Binds the gateway on all interfaces (external) to proxy incoming HTTP requests to backend services
+//! - Writes URL files for service discovery (`management.url`, `gateway.url`)
+//! - Runs both servers concurrently via `tokio::select!`
+
 mod route_table;
 mod management;
 mod proxy;

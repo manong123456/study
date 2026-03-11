@@ -1,3 +1,11 @@
+//! # CapeOS Message Bus Binary
+//!
+//! Event pub/sub service for the CapeOS runtime. Provides:
+//! - Event type registration and listing
+//! - Event publishing (HTTP POST)
+//! - WebSocket subscriptions for real-time event delivery
+//! - Service discovery via `message-bus.url` and gateway route registration
+
 mod store;
 mod handlers;
 

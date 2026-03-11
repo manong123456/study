@@ -1,5 +1,8 @@
+//! Dashboard page showing system stats (CPU, memory, services, storage).
+
 use leptos::prelude::*;
 
+/// Dashboard page component displaying system overview and stats cards.
 #[component]
 pub fn DashboardPage() -> impl IntoView {
     view! {

@@ -1,3 +1,8 @@
+//! CapeOS Local Storage Service
+//!
+//! Provides disk management, USB detection, and MergerFS integration for the CapeOS platform.
+//! Exposes HTTP endpoints for querying disk information and storage status.
+
 use std::net::SocketAddr;
 use axum::{Router, routing::get, Json};
 use serde::Serialize;
@@ -6,11 +11,16 @@ use capeos_common::paths::DEFAULT_RUNTIME_PATH;
 use capeos_common::utils::{write_url_file, port::get_available_port};
 use tracing_subscriber::EnvFilter;
 
+/// Information about a disk or storage device.
 #[derive(Serialize)]
 struct DiskInfo {
+    /// Device or disk name (e.g., `/dev/sda1`).
     name: String,
+    /// Mount point path (e.g., `/mnt/data`).
     mount_point: String,
+    /// Total space in bytes.
     total_space: u64,
+    /// Available (free) space in bytes.
     available_space: u64,
 }
 
@@ -34,6 +44,7 @@ async fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
+/// Lists all disks and storage devices detected by the system.
 async fn list_disks() -> Json<ApiResponse<Vec<DiskInfo>>> {
     let disks = sysinfo::Disks::new_with_refreshed_list();
     let list: Vec<DiskInfo> = disks.list().iter().map(|d| DiskInfo {

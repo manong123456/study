@@ -1,3 +1,8 @@
+//! CapeOS App Management Service
+//!
+//! Manages Docker container and compose lifecycle for the CapeOS platform.
+//! Exposes HTTP endpoints for listing, starting, stopping, and managing containers.
+
 use std::net::SocketAddr;
 use axum::{Router, routing::get, Json};
 use serde::Serialize;
@@ -6,11 +11,16 @@ use capeos_common::paths::DEFAULT_RUNTIME_PATH;
 use capeos_common::utils::{write_url_file, port::get_available_port};
 use tracing_subscriber::EnvFilter;
 
+/// Information about a Docker container.
 #[derive(Serialize)]
 struct ContainerInfo {
+    /// Container ID (e.g., `abc123def456`).
     id: String,
+    /// Container name (e.g., `/my-app`).
     name: String,
+    /// Docker image used by the container.
     image: String,
+    /// Container state (e.g., `running`, `exited`, `created`).
     state: String,
 }
 
@@ -34,6 +44,7 @@ async fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
+/// Lists all Docker containers (running and stopped).
 async fn list_containers() -> Json<ApiResponse<Vec<ContainerInfo>>> {
     let docker = bollard::Docker::connect_with_local_defaults();
     match docker {

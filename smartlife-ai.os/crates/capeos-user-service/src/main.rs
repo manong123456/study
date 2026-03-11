@@ -1,3 +1,9 @@
+//! CapeOS User Service
+//!
+//! Provides user authentication, registration, and JWT token issuance for the CapeOS platform.
+//! Exposes JWKS (JSON Web Key Set) at `/.well-known/jwks.json` for public key distribution
+//! to enable JWT verification by other services.
+
 mod handlers;
 mod db;
 mod jwt_issuer;
@@ -11,8 +17,11 @@ use capeos_common::utils::{write_url_file, port::get_available_port};
 use capeos_common::utils::service_discovery::register_routes;
 use tracing_subscriber::EnvFilter;
 
+/// Shared application state passed to request handlers.
 pub struct AppState {
+    /// SQLite database connection for user storage.
     pub db: tokio_rusqlite::Connection,
+    /// JWT issuer for token creation and JWKS distribution.
     pub jwt: jwt_issuer::JwtIssuer,
 }
 

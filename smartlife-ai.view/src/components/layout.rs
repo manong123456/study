@@ -1,5 +1,8 @@
+//! Layout components including sidebar navigation and main content area.
+
 use leptos::prelude::*;
 
+/// Main sidebar navigation layout wrapping page content with Dashboard and Files links.
 #[component]
 pub fn Layout(children: Children) -> impl IntoView {
     view! {

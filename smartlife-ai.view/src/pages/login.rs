@@ -1,7 +1,10 @@
+//! Login page with username/password form and JWT storage.
+
 use leptos::prelude::*;
 use leptos_router::hooks::use_navigate;
 use wasm_bindgen_futures::spawn_local;
 
+/// Login page component. POSTs credentials to user service, stores JWT on success, redirects to dashboard.
 #[component]
 pub fn LoginPage() -> impl IntoView {
     let username = RwSignal::new(String::new());

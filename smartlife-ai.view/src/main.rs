@@ -1,3 +1,8 @@
+//! CapeOS Frontend
+//!
+//! Leptos-based web application running in client-side rendering (CSR) mode.
+//! Provides login, dashboard, and file management UI for the CapeOS platform.
+
 mod api;
 mod pages;
 mod components;
@@ -12,6 +17,7 @@ fn main() {
     mount_to_body(App);
 }
 
+/// Root application component with routing for login, dashboard, and files.
 #[component]
 fn App() -> impl IntoView {
     view! {

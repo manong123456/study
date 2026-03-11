@@ -1,3 +1,9 @@
+//! Reverse proxy for the gateway.
+//!
+//! Forwards incoming HTTP requests to backend targets based on the route table.
+//! Uses longest-prefix matching to select the target, then proxies the request
+//! (method, headers, body) and returns the backend response.
+
 use axum::{
     body::Body,
     extract::State,
@@ -6,12 +12,24 @@ use axum::{
 };
 use crate::route_table::RouteTable;
 
+/// Builds the proxy router. All requests fall through to [`proxy_handler`].
+///
+/// # Arguments
+/// * `table` - Shared [`RouteTable`] for looking up backend targets by path.
+///
+/// # Returns
+/// An Axum [`Router`] that proxies unmatched requests to backends.
 pub fn proxy_router(table: RouteTable) -> Router {
     Router::new()
         .fallback(proxy_handler)
         .with_state(table)
 }
 
+/// Reverse-proxies the request to the backend target.
+///
+/// Looks up the target via [`RouteTable::find_target`] (longest-prefix match),
+/// forwards the request (method, headers, body) to the target URL, and returns
+/// the backend response. Returns 404 if no route matches, 502 on proxy errors.
 async fn proxy_handler(
     State(table): State<RouteTable>,
     req: Request<Body>,
